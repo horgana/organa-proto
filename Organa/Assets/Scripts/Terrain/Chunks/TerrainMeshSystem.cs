@@ -27,37 +27,45 @@ namespace Organa.Terrain
 
             var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
 
-            foreach (var entityGroup in meshGroups)
-            {
-                var entity = entityGroup.Value;
-                var mesh = EntityManager.GetSharedComponentData<RenderMesh>(entity).mesh;
-
-                var buffer = GetBuffer<MeshJobData>(entity);
-
-                var vertexCount = 0;
-                var indexCount = 0;
-                foreach (var meshData in buffer)
+            Job
+                .WithoutBurst()
+                .WithCode(() =>
                 {
-                    vertexCount += meshData.Vertices.Length;
-                    indexCount += meshData.Indices.Length;
-                }
-
-                mesh.SetVertexBufferParams(vertexCount);
-                mesh.SetIndexBufferParams(indexCount, 0);
-
-                foreach (var meshData in buffer)
-                {
-                    var vertices = meshData.Vertices;
-                    var indices = meshData.Indices;
-                    unsafe
+                    foreach (var entityGroup in meshGroups)
                     {
-                        mesh.SetVertexBufferData(NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<float3>(vertices.Ptr, vertices.Length, Allocator.Temp), 
-                            0, mesh.vertexCount, vertices.Length);
-                        mesh.SetIndices(NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<int>(indices.Ptr, indices.Length, Allocator.Temp), 
-                            MeshTopology.Triangles, 0);
+                        var entity = entityGroup.Value;
+                        var mesh = EntityManager.GetSharedComponentData<RenderMesh>(entity).mesh;
+
+                        var buffer = GetBuffer<MeshJobData>(entity);
+                        for (int i = 0; i < buffer.Length; i++)
+                        {
+                            var meshJob = buffer[i];
+                            if (!meshJob.IsCompleted) continue;
+                            meshJob.Complete();
+
+                            var vertices = meshJob.Vertices;
+                            var indices = meshJob.Indices;
+                        
+                            mesh.SetVertexBufferParams(vertices.Length + mesh.vertexCount);
+                            mesh.SetIndexBufferParams(indices.Length + mesh.vertexCount, 0);
+
+                            //Debug.Log(vertices.Length);
+                            unsafe
+                            {
+                                //mesh.SetVertexBufferData(vertices.ToArray(), 0, mesh.vertexCount, vertices.Length);
+                                //mesh.SetIndices(indices.ToArray(), MeshTopology.Triangles, 0);
+                                mesh.SetVertexBufferData(NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<float3>(vertices.Ptr, vertices.Length, Allocator.Temp), 
+                                    0, mesh.vertexCount, vertices.Length);
+                                mesh.SetIndices(NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<int>(indices.Ptr, indices.Length, Allocator.Temp), 
+                                    MeshTopology.Triangles, 0);
+                            }
+                    
+                            meshJob.Dispose();
+                            buffer.RemoveAtSwapBack(i);
+                            i--;
+                        }
                     }
-                }
-            }
+                }).Run();
         }
     }
 }
