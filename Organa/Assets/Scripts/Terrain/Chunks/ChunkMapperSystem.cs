@@ -10,19 +10,19 @@ namespace Organa.Terrain
 {
     public partial class ChunkMapperSystem : SystemBase
     {
-        BeginSimulationEntityCommandBufferSystem _commandBuffer;
+        BeginSimulationEntityCommandBufferSystem beginSimulationECB;
         
         protected override void OnCreate()
         {
             RequireSingletonForUpdate<ChunkLoader>();
             base.OnCreate();
             
-            _commandBuffer = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+            beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
         }
 
         protected override void OnUpdate()
         {
-            var ecb = _commandBuffer.CreateCommandBuffer();
+            var ecb = beginSimulationECB.CreateCommandBuffer();
 
             var terrain = GetSingleton<TerrainSettings>();
             var chunkSize = terrain.ChunkSize;

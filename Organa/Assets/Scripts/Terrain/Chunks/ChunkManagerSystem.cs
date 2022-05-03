@@ -10,6 +10,8 @@ namespace Organa.Terrain
 {
     public partial class ChunkManagerSystem : SystemBase
     {
+        public JobHandle LoaderJob => Dependency;
+        
         EndInitializationEntityCommandBufferSystem _endInitializationECB;
         
         EntityArchetype _chunkArchetype;
@@ -89,8 +91,6 @@ namespace Organa.Terrain
                     loadedChunks.Remove(chunk.Index);
                     ecb.DestroyEntity(entityInQueryIndex, entity);
                 }).Schedule();
-
-                CompleteDependency();
             }
         }
         
