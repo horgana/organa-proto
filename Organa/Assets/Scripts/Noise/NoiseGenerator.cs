@@ -10,6 +10,8 @@ using static Noise;
 [BurstCompile]
 public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 {
+    public int Capacity => map.Capacity;
+    
     NoiseProfile profile;
     NativeHashMap<float2, float> map;
     N generator;

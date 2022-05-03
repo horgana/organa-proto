@@ -36,4 +36,12 @@ public static class Noise
         public float lacunarity;
         public float persistence;
     }
+
+    public struct Perlin : INoiseMethod2D
+    {
+        public float NoiseAt(float2 p)
+        {
+            return noise.cnoise(p);
+        }
+    }
 }

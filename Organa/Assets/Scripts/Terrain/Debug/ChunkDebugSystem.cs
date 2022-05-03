@@ -9,7 +9,7 @@ using UnityEngine.Rendering;
 
 namespace Organa.Terrain
 {
-    [BurstCompile]
+    /*[BurstCompile]
     public partial class ChunkDebugSystem : SystemBase
     {
         BeginSimulationEntityCommandBufferSystem _beginSimulationECB;
@@ -121,5 +121,5 @@ namespace Organa.Terrain
             return n * (1 << depth) / ((2 << depth) - 1);
         }
         #endregion
-    }
+    }*/
 }

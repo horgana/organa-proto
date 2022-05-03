@@ -62,7 +62,8 @@ namespace Organa.Terrain
                                 chunk = ecb.CreateEntity(entityInQueryIndex, chunkArchetype);
                                 ecb.SetComponent(entityInQueryIndex, chunk, new Chunk
                                 {
-                                    Index = index
+                                    Index = index,
+                                    Division = 0
                                 });
                                 //ecb.SetSharedComponent(chunk, new RenderGroup{Filter = 0});
 

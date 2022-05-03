@@ -8,6 +8,7 @@ namespace Organa.Terrain
     public struct Chunk : IComponentData
     {
         public int2 Index;
+        public int Division;
     }
     
     public struct ChunkMap : IComponentData
