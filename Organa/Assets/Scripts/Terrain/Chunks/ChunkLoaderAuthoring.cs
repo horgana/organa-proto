@@ -39,7 +39,8 @@ namespace Organa.Terrain
                 var chunkGroup = ecb.CreateEntity(lodArchetype);
                 var renderMesh = new RenderMesh
                 {
-                    mesh = new Mesh()
+                    mesh = new Mesh(),
+                    material = Resources.Load("New Material", typeof(Material)) as Material
                 };
                 ecb.SetSharedComponent(chunkGroup, renderMesh);
                 RenderMeshUtility.AddComponents(chunkGroup, ecb, new RenderMeshDescription

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Organa.Terrain
 {
-    public class TerrainMeshSystem : SystemBase
+    public partial class TerrainMeshSystem : SystemBase
     {
         EndSimulationEntityCommandBufferSystem endSimulationECB;
 
@@ -18,7 +18,7 @@ namespace Organa.Terrain
 
             endSimulationECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         }
-
+        
         protected override void OnUpdate()
         {
             var ecb = endSimulationECB.CreateCommandBuffer();
@@ -27,6 +27,7 @@ namespace Organa.Terrain
 
             var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
 
+            //Debug.Log(meshGroups.Length);
             Job
                 .WithoutBurst()
                 .WithCode(() =>
@@ -37,6 +38,7 @@ namespace Organa.Terrain
                         var mesh = EntityManager.GetSharedComponentData<RenderMesh>(entity).mesh;
 
                         var buffer = GetBuffer<MeshJobData>(entity);
+                        Debug.Log(buffer.Length);
                         for (int i = 0; i < buffer.Length; i++)
                         {
                             var meshJob = buffer[i];
@@ -45,7 +47,8 @@ namespace Organa.Terrain
 
                             var vertices = meshJob.Vertices;
                             var indices = meshJob.Indices;
-                        
+
+                            Debug.Log(vertices.Length);
                             mesh.SetVertexBufferParams(vertices.Length + mesh.vertexCount);
                             mesh.SetIndexBufferParams(indices.Length + mesh.vertexCount, 0);
 
@@ -60,7 +63,7 @@ namespace Organa.Terrain
                                     MeshTopology.Triangles, 0);
                             }
                     
-                            meshJob.Dispose();
+                            //meshJob.Dispose();
                             buffer.RemoveAtSwapBack(i);
                             i--;
                         }

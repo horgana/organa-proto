@@ -16,7 +16,7 @@ namespace Organa.Terrain
         public bool IsCompleted => Dependency.IsCompleted;
         public void Complete() => Dependency.Complete();
 
-        public void Dispose()
+        public void Dispose(JobHandle dependency = default)
         {
             Vertices.Dispose(Dependency);
             Indices.Dispose(Dependency);

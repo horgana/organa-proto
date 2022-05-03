@@ -91,6 +91,8 @@ namespace Organa.Terrain
                     loadedChunks.Remove(chunk.Index);
                     ecb.DestroyEntity(entityInQueryIndex, entity);
                 }).Schedule();
+                
+                CompleteDependency();
             }
         }
         

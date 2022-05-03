@@ -2,6 +2,7 @@ using System;
 using System.CodeDom.Compiler;
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
 using Unity.Mathematics;
 
@@ -13,7 +14,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
     public int Capacity => map.Capacity;
     
     NoiseProfile profile;
-    NativeHashMap<float2, float> map;
+    UnsafeHashMap<float2, float> map;
     N generator;
 
     float this[float2 p]
@@ -36,9 +37,12 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
         JobHandle dependency = default) => new NoiseJob2D
         {
             Generator = this,
+            
             Start = start,
             Dim = dimensions,
-            Step = stepSize
+            Step = stepSize,
+            
+            Noise = noise
         }.Schedule(noise.Length, batchCount, dependency);
 
     public JobHandle ScheduleBatch(NativeArray<float> noise, float2 start, float2 dimensions, int batchSize, JobHandle dependency = default)
@@ -46,12 +50,14 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
         throw new NotImplementedException();
     }
 
+    public void Dispose(JobHandle dependency) => map.Dispose(dependency);
+
     public void Dispose() => map.Dispose();
 
     public NoiseGenerator2D(NoiseProfile profile, int count, Allocator allocator)
     {
         this.profile = profile;
-        map = new NativeHashMap<float2, float>(count, allocator);
+        map = new UnsafeHashMap<float2, float>(count, allocator);
         generator = new N();
     }
     
@@ -60,6 +66,8 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
     struct NoiseJob2D : IJobParallelFor
     {
         public NoiseGenerator2D<N> Generator;
+
+        public NoiseProfile Profile;
         public float2 Start;
         public float2 Dim;
         public float Step;
@@ -76,7 +84,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
             float n = 0f;
             for (int o = 0; o < Generator.profile.octaves; o++)
             {
-                n += Generator[p] * amplitude;
+                n += Generator[p / freq] * amplitude;
                 amplitudeSum += amplitude;
                 freq *= Generator.profile.lacunarity;
                 amplitude *= Generator.profile.persistence;
