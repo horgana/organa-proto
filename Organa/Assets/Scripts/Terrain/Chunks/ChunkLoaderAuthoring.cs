@@ -1,5 +1,7 @@
 using System;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -9,6 +11,7 @@ namespace Organa.Terrain
     public class ChunkLoaderAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         [SerializeField] int radius = 1;
+        [SerializeField, Range(1, 10)] int lodLevels = 1;
         [SerializeField, Range(1, 2)] float unloadOffset = 1.5f;
         [SerializeField] GameObject parent;
 
@@ -24,6 +27,33 @@ namespace Organa.Terrain
             dstManager.AddComponent<CopyTransformFromGameObject>(entity);
             dstManager.AddComponent<UpdateValues>(entity);
 
+            // creates dynamicbuffer of LOD entities to group mesh data
+            var lodArchetype = dstManager.CreateArchetype(
+                typeof(RenderMesh), 
+                typeof(RenderBounds));
+            var ecb = new EntityCommandBuffer(Allocator.TempJob);
+            
+            var buffer = ecb.AddBuffer<LinkedEntityGroup>(entity);
+            for (int i = 0; i < lodLevels; i++)
+            {
+                var chunkGroup = ecb.CreateEntity(lodArchetype);
+                var renderMesh = new RenderMesh
+                {
+                    mesh = new Mesh()
+                };
+                ecb.SetSharedComponent(chunkGroup, renderMesh);
+                RenderMeshUtility.AddComponents(chunkGroup, ecb, new RenderMeshDescription
+                {
+                    RenderMesh = renderMesh
+                });
+                buffer.Add(chunkGroup);
+
+                ecb.AddBuffer<MeshJobData>(chunkGroup);
+            }
+            
+            ecb.Playback(dstManager);
+            ecb.Dispose();
+            
             // parent to related terrain entity
             var parentTerrainEntity = conversionSystem.GetPrimaryEntity(parent);
             dstManager.AddComponentData(entity, new Parent

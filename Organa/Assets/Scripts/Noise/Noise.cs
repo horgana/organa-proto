@@ -20,17 +20,19 @@ public static class Noise
         public static NoiseProfile Default => new NoiseProfile()
         {
             seed = 0,
-            depth = 1,
+            octaves = 1,
             frequency = 16f,
+            amplitude = 16f,
             lacunarity = 1f,
             persistence = 0.5f
         };
         
         public int seed;
         
-        public int depth;
+        public int octaves;
         
         public float frequency;
+        public float amplitude;
         public float lacunarity;
         public float persistence;
     }
