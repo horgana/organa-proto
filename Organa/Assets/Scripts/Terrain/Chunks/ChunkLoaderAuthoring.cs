@@ -1,6 +1,7 @@
 using System;
 using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
@@ -40,13 +41,16 @@ namespace Organa.Terrain
                 var renderMesh = new RenderMesh
                 {
                     mesh = new Mesh(),
-                    material = Resources.Load("New Material", typeof(Material)) as Material
+                    material = Resources.Load("New Material", typeof(Material)) as Material,
+                    layerMask = 1,
                 };
                 ecb.SetSharedComponent(chunkGroup, renderMesh);
                 RenderMeshUtility.AddComponents(chunkGroup, ecb, new RenderMeshDescription
                 {
                     RenderMesh = renderMesh
                 });
+                ecb.AddComponent<LocalToWorld>(chunkGroup);
+                ecb.AddComponent(chunkGroup, new Rotation{Value = quaternion.identity});
                 buffer.Add(chunkGroup);
 
                 ecb.AddBuffer<MeshJobData>(chunkGroup);

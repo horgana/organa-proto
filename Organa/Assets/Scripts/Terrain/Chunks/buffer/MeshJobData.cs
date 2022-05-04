@@ -10,16 +10,18 @@ namespace Organa.Terrain
     public struct MeshJobData : IBufferElementData
     {
         public JobHandle Dependency;
-        public UnsafeList<float3> Vertices;
-        public UnsafeList<int> Indices;
+        //public UnsafeList<float3> Vertices;
+        //public UnsafeList<int> Indices;
+        public UnsafeStream Vertices;
+        public UnsafeStream Indices; 
 
         public bool IsCompleted => Dependency.IsCompleted;
         public void Complete() => Dependency.Complete();
 
-        public void Dispose(JobHandle dependency = default)
+        public void Dispose()
         {
-            Vertices.Dispose(dependency);
-            Indices.Dispose(dependency);
+            Vertices.Dispose(Dependency);
+            Indices.Dispose(Dependency);
         }
     }
 }

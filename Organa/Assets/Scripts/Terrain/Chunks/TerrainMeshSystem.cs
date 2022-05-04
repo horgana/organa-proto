@@ -1,9 +1,11 @@
+using System;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Rendering;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Organa.Terrain
 {
@@ -21,7 +23,7 @@ namespace Organa.Terrain
         
         protected override void OnUpdate()
         {
-            /*var ecb = endSimulationECB.CreateCommandBuffer();
+            var ecb = endSimulationECB.CreateCommandBuffer();
 
             World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
 
@@ -35,39 +37,42 @@ namespace Organa.Terrain
                     foreach (var entityGroup in meshGroups)
                     {
                         var entity = entityGroup.Value;
-                        var mesh = EntityManager.GetSharedComponentData<RenderMesh>(entity).mesh;
-
                         var buffer = GetBuffer<MeshJobData>(entity);
-                        Debug.Log(buffer.Length);
+                        if (buffer.Length == 0) continue;
+
+                        var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(entity);
+                        var mesh = renderMesh.mesh;
+
+                        //Debug.Log(buffer.Length);
                         for (int i = 0; i < buffer.Length; i++)
                         {
                             var meshJob = buffer[i];
                             if (!meshJob.IsCompleted) continue;
                             meshJob.Complete();
 
-                            var vertices = meshJob.Vertices;
-                            var indices = meshJob.Indices;
-
-                            Debug.Log(vertices.Length);
-                            mesh.SetVertexBufferParams(vertices.Length + mesh.vertexCount);
-                            mesh.SetIndexBufferParams(indices.Length + mesh.vertexCount, 0);
+                            var vertices = meshJob.Vertices.ToNativeArray<float3>(Allocator.Temp);
+                            var indices = meshJob.Indices.ToNativeArray<ushort>(Allocator.Temp);
 
                             //Debug.Log(vertices.Length);
-                            unsafe
-                            {
-                                //mesh.SetVertexBufferData(vertices.ToArray(), 0, mesh.vertexCount, vertices.Length);
-                                //mesh.SetIndices(indices.ToArray(), MeshTopology.Triangles, 0);
-                                mesh.SetVertexBufferData(NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<float3>(vertices.Ptr, vertices.Length, Allocator.Temp), 
-                                    0, mesh.vertexCount, vertices.Length);
-                                mesh.SetIndices(NativeArrayUnsafeUtility.ConvertExistingDataToNativeArray<int>(indices.Ptr, indices.Length, Allocator.Temp), 
-                                    MeshTopology.Triangles, 0);
-                            }
+                            mesh.SetVertexBufferParams(vertices.Length + mesh.vertexCount, new VertexAttributeDescriptor(VertexAttribute.Position));
+                            mesh.SetIndexBufferParams(indices.Length + mesh.vertexCount, IndexFormat.UInt16);
+                            
+                            mesh.SetVertexBufferData(vertices, 0, mesh.vertexCount-vertices.Length, vertices.Length);
+                            mesh.SetIndices(indices, 0, indices.Length, MeshTopology.Triangles, 0);
+                            
+                            mesh.RecalculateBounds();
+                            mesh.RecalculateNormals();
+                            SetComponent(entity, new RenderBounds{Value = mesh.bounds.ToAABB()});
+
+                            //renderMesh.mesh = mesh;
+                            //mesh.SetIndexBufferData(indices, 0, mesh.vertexCount-vertices.Length, indices.Length);
                     
                             meshJob.Dispose();
+                            buffer.RemoveAtSwapBack(i);
+                            i--;
                         }
-                        buffer.Clear();
                     }
-                }).Run();*/
+                }).Run();
         }
     }
 }
