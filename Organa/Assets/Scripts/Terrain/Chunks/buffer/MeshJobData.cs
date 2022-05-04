@@ -18,8 +18,8 @@ namespace Organa.Terrain
 
         public void Dispose(JobHandle dependency = default)
         {
-            Vertices.Dispose(Dependency);
-            Indices.Dispose(Dependency);
+            Vertices.Dispose(dependency);
+            Indices.Dispose(dependency);
         }
     }
 }

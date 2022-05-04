@@ -19,8 +19,8 @@ namespace Organa.Terrain
             
             beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
             var chunkSize = 64;
-            //generator = new NoiseGenerator2D<Perlin>(NoiseProfile.Default, 
-              //  (chunkSize+1)*(chunkSize+1), Allocator.Persistent);
+            generator = new NoiseGenerator2D<Perlin>(NoiseProfile.Default, 
+              (chunkSize+1)*(chunkSize+1), Allocator.Persistent);
         }
         NoiseGenerator2D<Perlin> generator; 
         protected override void OnUpdate()
@@ -30,23 +30,23 @@ namespace Organa.Terrain
             var terrain = GetSingleton<TerrainSettings>();
             var chunkSize = terrain.ChunkSize;
             
-            
-            
             var meshBuffers = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
 
+            JobHandle noiseJobDependency = Dependency;
             Entities
                 .WithoutBurst()
                 .WithAll<MapChunk>()
                 .ForEach((Entity entity, in Chunk chunk) =>
                 {
-                    var noise = new NativeArray<float>((chunkSize+1)*(chunkSize+1), Allocator.Persistent);
+                    var noise = new NativeArray<float>(generator.Capacity, Allocator.TempJob);
 
-                    //var chunkNoiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize, 1);
-
-                    var jobData = new MeshJobData
+                    noiseJobDependency = JobHandle.CombineDependencies(noiseJobDependency, 
+                        generator.Schedule(noise, chunk.Index * chunkSize, chunkSize, 1, dependency: noiseJobDependency));
+                    
+                    /*var jobData = new MeshJobData
                     {
-                        Vertices = new UnsafeList<float3>(chunkSize * chunkSize * 6, Allocator.Persistent),
-                        Indices = new UnsafeList<int>(chunkSize * chunkSize * 6, Allocator.Persistent)
+                        Vertices = new UnsafeList<float3>(noise.Length*6, Allocator.TempJob),
+                        Indices = new UnsafeList<int>(noise.Length*6, Allocator.TempJob)
                     };
 
                     var meshJob = new TerrainMeshJob
@@ -60,10 +60,12 @@ namespace Organa.Terrain
                     };
 
                     jobData.Dependency = meshJob.Schedule(noise.Length, 1);// chunkNoiseJob);
-                    GetBuffer<MeshJobData>(meshBuffers[chunk.Division].Value).Add(jobData);
-
+                    GetBuffer<MeshJobData>(meshBuffers[chunk.Division].Value).Add(jobData);*/
+                    
                     ecb.RemoveComponent<MapChunk>(entity);
-                    noise.Dispose();
+                    noiseJobDependency.Complete();
+
+                    noise.Dispose(noiseJobDependency);
 
                 }).Run();
             

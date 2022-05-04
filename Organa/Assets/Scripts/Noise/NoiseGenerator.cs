@@ -1,11 +1,13 @@
 using System;
 using System.CodeDom.Compiler;
+using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
+using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
-
+using UnityEngine;
 using static Noise;
 
 [BurstCompile]
@@ -19,7 +21,6 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 
     float this[float2 p]
     {
-        
         [BurstCompile]
         get
         {
@@ -33,17 +34,51 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
         }
     }
 
-    public JobHandle Schedule(NativeArray<float> noise, float2 start, float2 dimensions, float stepSize, int batchCount = 1,
-        JobHandle dependency = default) => new NoiseJob2D
+    public bool GetOrCreateValue(float2 p, out float n)
+    {
+        if (map.TryGetValue(p, out n)) return true;
+        
+        n = generator.NoiseAt(p);
+        return false;
+    }
+
+    
+    public struct ParallelReader
+    {
+        UnsafeHashMap<float2, float> map;
+        N generator;
+
+    }
+
+    public bool TryGetValue(float2 p, out float n) => map.TryGetValue(p, out n);
+
+    public JobHandle Schedule(NativeArray<float> noise, float2 start, float2 dimensions, float stepSize,
+        int batchCount = 1,
+        JobHandle dependency = default)
+    {
+        var noiseBuffer =
+            new NativeList<KeyValuePair<float2, float>>(noise.Length * profile.octaves, Allocator.TempJob);
+        noiseBuffer.SetCapacity(noise.Length * profile.octaves * 2);
+        var noiseJob = new NoiseJob2D
         {
             Generator = this,
-            
+
             Start = start,
             Dim = dimensions,
             Step = stepSize,
-            
-            Noise = noise
-        }.Schedule(noise.Length, batchCount, dependency);
+
+            Noise = noise,
+            NoiseBuffer = noiseBuffer.AsParallelWriter()
+        };
+        var mergeBufferJob = new MapBufferJob
+        {
+            Map = map.AsParallelWriter(),
+            Buffer = noiseBuffer
+        }.Schedule(noiseBuffer.Length, 1,  noiseJob.Schedule(noise.Length, 1, dependency));
+        
+        noiseBuffer.Dispose(mergeBufferJob);
+        return mergeBufferJob;
+    } 
 
     public JobHandle ScheduleBatch(NativeArray<float> noise, float2 start, float2 dimensions, int batchSize, JobHandle dependency = default)
     {
@@ -65,7 +100,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 
     struct NoiseJob2D : IJobParallelFor
     {
-        public NoiseGenerator2D<N> Generator;
+        [ReadOnly] public NoiseGenerator2D<N> Generator;
 
         public NoiseProfile Profile;
         public float2 Start;
@@ -73,6 +108,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
         public float Step;
 
         [WriteOnly] public NativeArray<float> Noise;
+        [WriteOnly] public NativeList<KeyValuePair<float2, float>>.ParallelWriter NoiseBuffer;
         
         public void Execute(int index)
         {
@@ -84,13 +120,27 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
             float n = 0f;
             for (int o = 0; o < Generator.profile.octaves; o++)
             {
-                n += Generator[p / freq] * amplitude;
+                if (!Generator.GetOrCreateValue(p, out float next))
+                    NoiseBuffer.AddNoResize(new KeyValuePair<float2, float>(p, next));
+
+                n += next * amplitude;
                 amplitudeSum += amplitude;
                 freq *= Generator.profile.lacunarity;
                 amplitude *= Generator.profile.persistence;
             }
 
             Noise[index] = n / amplitudeSum;
+        }
+    }
+
+    unsafe struct MapBufferJob : IJobParallelFor
+    {
+        [WriteOnly] public UnsafeHashMap<float2, float>.ParallelWriter Map;
+        [ReadOnly] public NativeList<KeyValuePair<float2, float>> Buffer;
+        
+        public void Execute(int index)
+        {
+            Map.TryAdd(Buffer[index].Key, Buffer[index].Value);
         }
     }
 }

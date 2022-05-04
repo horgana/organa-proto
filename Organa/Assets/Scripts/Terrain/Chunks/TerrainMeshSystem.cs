@@ -21,7 +21,7 @@ namespace Organa.Terrain
         
         protected override void OnUpdate()
         {
-            var ecb = endSimulationECB.CreateCommandBuffer();
+            /*var ecb = endSimulationECB.CreateCommandBuffer();
 
             World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
 
@@ -63,12 +63,11 @@ namespace Organa.Terrain
                                     MeshTopology.Triangles, 0);
                             }
                     
-                            //meshJob.Dispose();
-                            buffer.RemoveAtSwapBack(i);
-                            i--;
+                            meshJob.Dispose();
                         }
+                        buffer.Clear();
                     }
-                }).Run();
+                }).Run();*/
         }
     }
 }
