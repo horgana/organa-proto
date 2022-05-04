@@ -56,6 +56,7 @@ namespace Organa.Terrain
                         Noise = noise,
                         
                         Dim = chunkSize,
+                        Start = chunk.Index*chunkSize,
                         
                         VertexStream = jobData.Vertices.AsWriter(),
                         IndexStream = jobData.Indices.AsWriter()
@@ -78,6 +79,7 @@ namespace Organa.Terrain
             [ReadOnly] public NativeArray<float> Noise;
 
             public int2 Dim;
+            public float2 Start;
             
             //[WriteOnly] public UnsafeList<float3> Vertices;
             //[WriteOnly] public UnsafeList<int> Indices;
@@ -91,9 +93,9 @@ namespace Organa.Terrain
 
                 for (int i = startIndex; i < startIndex + count; i++)
                 {
-                    var x =  i % Dim.x;
-                    var z = i / Dim.x;
-                    var offsetIndex = i + z;
+                    var x =  i % Dim.x + Start.x;
+                    var z = i / Dim.x + Start.y;
+                    var offsetIndex = i + (int)(z - Start.y);
                 
                     VertexStream.Write(new float3(x, Noise[offsetIndex], z));
                     VertexStream.Write(new float3(x, Noise[offsetIndex+1], z+1));

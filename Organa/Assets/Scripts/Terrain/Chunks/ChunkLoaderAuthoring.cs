@@ -51,6 +51,7 @@ namespace Organa.Terrain
                 });
                 ecb.AddComponent<LocalToWorld>(chunkGroup);
                 ecb.AddComponent(chunkGroup, new Rotation{Value = quaternion.identity});
+                ecb.AddComponent<Translation>(chunkGroup);
                 buffer.Add(chunkGroup);
 
                 ecb.AddBuffer<MeshJobData>(chunkGroup);

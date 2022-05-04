@@ -62,17 +62,22 @@ namespace Organa.Terrain
                             
                             mesh.RecalculateBounds();
                             mesh.RecalculateNormals();
-                            SetComponent(entity, new RenderBounds{Value = mesh.bounds.ToAABB()});
-
+                            ecb.SetComponent(entity, new RenderBounds{Value = mesh.bounds.ToAABB()});
                             //renderMesh.mesh = mesh;
                             //mesh.SetIndexBufferData(indices, 0, mesh.vertexCount-vertices.Length, indices.Length);
-                    
+                            
+                            
                             meshJob.Dispose();
                             buffer.RemoveAtSwapBack(i);
                             i--;
                         }
+
+                        //renderMesh.mesh = mesh;
+                        ecb.AddComponent<ChunkWorldRenderBounds>(entity);
                     }
                 }).Run();
+            
+            CompleteDependency();
         }
     }
 }
