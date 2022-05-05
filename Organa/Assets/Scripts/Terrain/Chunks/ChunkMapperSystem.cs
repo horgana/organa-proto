@@ -1,3 +1,4 @@
+using System.CodeDom.Compiler;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
@@ -19,12 +20,58 @@ namespace Organa.Terrain
             base.OnCreate();
             
             beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-            var chunkSize = 64;
-            generator = new NoiseGenerator2D<Perlin>(NoiseProfile.Default, 
-              (chunkSize+1)*(chunkSize+1), Allocator.Persistent);
+            generator = new NoiseGenerator2D<Perlin>(NoiseProfile.Default, 65 * 65, Allocator.Persistent); //temp
         }
-        NoiseGenerator2D<Perlin> generator; 
+
+        NoiseGenerator2D<Perlin> generator;
+
         protected override void OnUpdate()
+        {
+            var ecb = beginSimulationECB.CreateCommandBuffer();
+
+            var terrain = GetSingleton<TerrainSettings>();
+            var chunkSize = terrain.ChunkSize;
+
+            var lodGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<TerrainSettings>());
+            
+            Entities
+                .WithAll<MapChunk>()
+                .ForEach((Entity entity, in Chunk chunk) =>
+                {
+                    var noise = new NativeArray<float>((chunkSize+1)*(chunkSize+1), Allocator.TempJob);
+
+                    var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize, 1);
+                    
+                    var jobData = new MeshJobDataBuffer
+                    {
+                        Vertices = new UnsafeStream(noise.Length*6, Allocator.Persistent),
+                        Indices = new UnsafeStream(noise.Length*6, Allocator.Persistent)
+                    };
+
+                    var meshJob = new TerrainMeshJob
+                    {
+                        Noise = noise,
+                        
+                        Dim = chunkSize,
+                        Start = chunk.Index*chunkSize,
+                        
+                        VertexStream = jobData.Vertices.AsWriter(),
+                        IndexStream = jobData.Indices.AsWriter()
+                    };
+
+                    jobData.Dependency = meshJob.ScheduleBatch(chunkSize*chunkSize, 64, noiseJob);
+
+                    var lodGroup = GetComponent<LODGroup>(lodGroups[chunk.Division].Value);
+                    GetBuffer<MeshJobDataBuffer>(lodGroup[chunk.Index]).Add(jobData);
+
+                    ecb.RemoveComponent<MapChunk>(entity);
+
+                    noise.Dispose(jobData.Dependency);
+                });
+        }
+
+
+        protected void oldOnUpdate()
         {
             var ecb = beginSimulationECB.CreateCommandBuffer();
 
@@ -45,7 +92,7 @@ namespace Organa.Terrain
                         generator.Schedule(noise, chunk.Index * chunkSize, chunkSize, 1, dependency: noiseJobDependency));
                     
                     noiseJobDependency.Complete();
-                    var jobData = new MeshJobData
+                    var jobData = new MeshJobDataBuffer
                     {
                         Vertices = new UnsafeStream(noise.Length*6, Allocator.Persistent),
                         Indices = new UnsafeStream(noise.Length*6, Allocator.Persistent)
@@ -63,7 +110,7 @@ namespace Organa.Terrain
                     };
 
                     jobData.Dependency = meshJob.ScheduleBatch(chunkSize*chunkSize, 64, noiseJobDependency);
-                    GetBuffer<MeshJobData>(meshBuffers[chunk.Division].Value).Add(jobData);
+                    GetBuffer<MeshJobDataBuffer>(meshBuffers[chunk.Division].Value).Add(jobData);
                     
                     ecb.RemoveComponent<MapChunk>(entity);
                     //noiseJobDependency.Complete();
@@ -94,15 +141,15 @@ namespace Organa.Terrain
                 for (int i = startIndex; i < startIndex + count; i++)
                 {
                     var x =  i % Dim.x + Start.x;
-                    var z = i / Dim.x + Start.y;
+                    var z = (int)(i / Dim.x) + Start.y;
                     var offsetIndex = i + (int)(z - Start.y);
                 
                     VertexStream.Write(new float3(x, Noise[offsetIndex], z));
-                    VertexStream.Write(new float3(x, Noise[offsetIndex+1], z+1));
-                    VertexStream.Write(new float3(x+1, Noise[offsetIndex+Dim.x], z));
-                    VertexStream.Write(new float3(x+1, Noise[offsetIndex+Dim.x], z));
-                    VertexStream.Write(new float3(x, Noise[offsetIndex+1], z+1));
-                    VertexStream.Write(new float3(x+1, Noise[offsetIndex+Dim.x+1], z+1));
+                    VertexStream.Write(new float3(x, Noise[offsetIndex+Dim.x+1], z+1));
+                    VertexStream.Write(new float3(x+1, Noise[offsetIndex+1], z));
+                    VertexStream.Write(new float3(x+1, Noise[offsetIndex+1], z));
+                    VertexStream.Write(new float3(x, Noise[offsetIndex+Dim.x+1], z+1));
+                    VertexStream.Write(new float3(x+1, Noise[offsetIndex+Dim.x+1+1], z+1));
                     
                     for (int j = 0; j < 6; j++) IndexStream.Write((ushort)(i*6+j));
                 }

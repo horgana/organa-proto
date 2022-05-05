@@ -24,7 +24,7 @@ namespace Organa.Terrain
         protected override void OnUpdate()
         {
             var ecb = endSimulationECB.CreateCommandBuffer();
-
+            
             World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
 
             var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
@@ -34,15 +34,15 @@ namespace Organa.Terrain
                 .WithoutBurst()
                 .WithCode(() =>
                 {
-                    foreach (var entityGroup in meshGroups)
+                    foreach (var meshGroup in meshGroups)
                     {
-                        var entity = entityGroup.Value;
-                        var buffer = GetBuffer<MeshJobData>(entity);
+                        var entity = meshGroup.Value;
+                        var buffer = GetBuffer<MeshJobDataBuffer>(entity);
                         if (buffer.Length == 0) continue;
 
                         var renderMesh = EntityManager.GetSharedComponentData<RenderMesh>(entity);
                         var mesh = renderMesh.mesh;
-
+                        
                         //Debug.Log(buffer.Length);
                         for (int i = 0; i < buffer.Length; i++)
                         {
@@ -65,7 +65,6 @@ namespace Organa.Terrain
                             ecb.SetComponent(entity, new RenderBounds{Value = mesh.bounds.ToAABB()});
                             //renderMesh.mesh = mesh;
                             //mesh.SetIndexBufferData(indices, 0, mesh.vertexCount-vertices.Length, indices.Length);
-                            
                             
                             meshJob.Dispose();
                             buffer.RemoveAtSwapBack(i);

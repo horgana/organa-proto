@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Organa.Terrain
 {
-    public struct MeshJobData : IBufferElementData
+    public struct MeshJobDataBuffer : IBufferElementData
     {
         public JobHandle Dependency;
         //public UnsafeList<float3> Vertices;

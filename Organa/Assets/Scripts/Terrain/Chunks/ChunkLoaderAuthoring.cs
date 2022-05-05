@@ -54,7 +54,7 @@ namespace Organa.Terrain
                 ecb.AddComponent<Translation>(chunkGroup);
                 buffer.Add(chunkGroup);
 
-                ecb.AddBuffer<MeshJobData>(chunkGroup);
+                ecb.AddBuffer<MeshJobDataBuffer>(chunkGroup);
             }
             
             ecb.Playback(dstManager);

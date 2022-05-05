@@ -29,7 +29,8 @@ namespace Organa.Terrain
     public class TerrainAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         [SerializeField] int chunkSize = 64;
-
+        [SerializeField] int lodLevels = 1;
+        
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponentObject(entity, transform);
@@ -40,7 +41,21 @@ namespace Organa.Terrain
                 LoadedChunks = new UnsafeHashMap<int2, Entity>(1, Allocator.Persistent)
             });
 
-            // dstManager.AddBuffer<LinkedEntityGroup>(entity);
+            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            var lodGroupArchetype = dstManager.CreateArchetype(typeof(LODGroup));
+            
+            var buffer = dstManager.AddBuffer<LinkedEntityGroup>(entity);
+            for (int i = 0; i < lodLevels; i++)
+            {
+                var lodGroup = ecb.CreateEntity(lodGroupArchetype);
+                
+                ecb.SetComponent(lodGroup, new LODGroup
+                {
+                    ChunkRenderGroups = new UnsafeHashMap<int2, Entity>(0, Allocator.Persistent)
+                });
+                
+                
+            }
         }
     }
 

@@ -112,7 +112,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
         
         public void Execute(int index)
         {
-            var p = new float2(index % Dim.x, index / Dim.x) * Step + Start;
+            var p = new float2(index % Dim.x, (int)(index / Dim.x)) * Step + Start;
 
             var freq = Generator.profile.frequency;
             float amplitude = Generator.profile.amplitude, amplitudeSum = 0f;
@@ -120,8 +120,8 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
             float n = 0f;
             for (int o = 0; o < Generator.profile.octaves; o++)
             {
-                if (!Generator.GetOrCreateValue(p, out float next))
-                    NoiseBuffer.AddNoResize(new KeyValuePair<float2, float>(p, next));
+                if (!Generator.GetOrCreateValue(p / freq, out float next))
+                    NoiseBuffer.AddNoResize(new KeyValuePair<float2, float>(p / freq, next));
 
                 n += next * amplitude;
                 amplitudeSum += amplitude;
