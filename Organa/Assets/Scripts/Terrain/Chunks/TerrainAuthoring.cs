@@ -29,19 +29,26 @@ namespace Organa.Terrain
     public class TerrainAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         [SerializeField] int chunkSize = 64;
+        [SerializeField] int regionSize = 1024;
         [SerializeField] int lodLevels = 1;
         
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponentObject(entity, transform);
-            dstManager.AddComponentData(entity, new TerrainSettings
+            dstManager.AddComponentData(entity, new TerrainData
             {
+                Root = float3.zero,
                 Bounds = -1,
+                
+                LODLevels = lodLevels,
                 ChunkSize = chunkSize,
-                LoadedChunks = new UnsafeHashMap<int2, Entity>(1, Allocator.Persistent)
+                RegionSize = regionSize,
+                
+                LoadedChunks = new UnsafeHashMap<int2, Entity>(1, Allocator.Persistent),
+                LoadedRenderGroups = new UnsafeHashMap<(int2, int), Entity>(1, Allocator.Persistent)
             });
 
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            /*var ecb = new EntityCommandBuffer(Allocator.Temp);
             var lodGroupArchetype = dstManager.CreateArchetype(typeof(LODGroup));
             
             var buffer = dstManager.AddBuffer<LinkedEntityGroup>(entity);
@@ -51,21 +58,35 @@ namespace Organa.Terrain
                 
                 ecb.SetComponent(lodGroup, new LODGroup
                 {
+                    RegionSize = regionSize / (1 << i),
                     ChunkRenderGroups = new UnsafeHashMap<int2, Entity>(0, Allocator.Persistent)
                 });
                 
                 
-            }
+            }*/
         }
     }
 
-    struct TerrainSettings : IComponentData
+    struct TerrainData : IComponentData
     {
         public float3 Root;
         public int2 Bounds;
+        public int LODLevels;
         public int ChunkSize;
-
+        public int RegionSize;
+        
         public UnsafeHashMap<int2, Entity> LoadedChunks;
-    } 
+        public UnsafeHashMap<(int2, int), Entity> LoadedRenderGroups;
+
+        public Entity GetChunkEntity(int2 index) => LoadedChunks[index];
+
+        public Entity GetRenderGroupEntity(Chunk chunk)
+        {
+            var entity = LoadedRenderGroups[((int2) math.round(chunk.Index * ChunkSize / RegionSize), chunk.Division)];
+            return entity;
+        }
+        public Entity GetRenderGroupEntity(int2 index, int division) => 
+            LoadedRenderGroups[((int2)math.round(index * ChunkSize / RegionSize), division)];
+    }
 }
 

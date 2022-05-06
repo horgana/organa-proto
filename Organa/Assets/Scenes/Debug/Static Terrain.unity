@@ -225,7 +225,8 @@ MonoBehaviour:
   radius: 1
   lodLevels: 1
   unloadOffset: 1.5
-  parent: {fileID: 2138348875}
+  loadingVolume: 1
+  parent: {fileID: 0}
 --- !u!114 &231624156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -451,6 +452,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chunkSize: 16
+  regionSize: 1024
+  lodLevels: 1
 --- !u!4 &2138348877
 Transform:
   m_ObjectHideFlags: 0

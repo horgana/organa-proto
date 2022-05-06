@@ -27,7 +27,49 @@ namespace Organa.Terrain
             
             World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
 
-            var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
+            Entities
+                .WithoutBurst()
+                .WithAll<UpdateTag>()
+                .ForEach((Entity entity, ref DynamicBuffer<MeshJobDataBuffer> meshJobBuffer, 
+                    in ChunkRenderGroup renderGroup, in RenderMesh renderMesh) =>
+                {
+                    if (meshJobBuffer.Length == 0) return;
+
+                    var mesh = renderMesh.mesh;
+
+                    for (int i = 0; i < meshJobBuffer.Length; i++)
+                    {
+                        var meshJob = meshJobBuffer[i];
+                        
+                        if (!meshJob.IsCompleted) continue;
+                        meshJob.Complete();
+                        
+                        var vertices = meshJob.Vertices.ToNativeArray<float3>(Allocator.Temp);
+                        var indices = meshJob.Indices.ToNativeArray<ushort>(Allocator.Temp);
+
+                        //Debug.Log(vertices.Length);
+                        mesh.SetVertexBufferParams(vertices.Length + mesh.vertexCount, new VertexAttributeDescriptor(VertexAttribute.Position));
+                        mesh.SetIndexBufferParams(indices.Length + mesh.vertexCount, IndexFormat.UInt16);
+                            
+                        mesh.SetVertexBufferData(vertices, 0, mesh.vertexCount-vertices.Length, vertices.Length);
+                        mesh.SetIndices(indices, 0, indices.Length, MeshTopology.Triangles, 0);
+                        
+                        //renderMesh.mesh = mesh;
+                        //mesh.SetIndexBufferData(indices, 0, mesh.vertexCount-vertices.Length, indices.Length);
+                            
+                        meshJob.Dispose();
+                        meshJobBuffer.RemoveAtSwapBack(i);
+                        i--;
+                    }
+                    mesh.RecalculateBounds();
+                    mesh.RecalculateNormals();
+                    var aabb = mesh.bounds.ToAABB();
+                    ecb.SetComponent(entity, new RenderBounds{Value = aabb});
+                    ecb.SetComponent(entity, new ChunkWorldRenderBounds{Value = aabb});
+                }).Run();
+            
+            
+            /*var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
 
             //Debug.Log(meshGroups.Length);
             Job
@@ -76,7 +118,7 @@ namespace Organa.Terrain
                     }
                 }).Run();
             
-            CompleteDependency();
+            CompleteDependency();*/
         }
     }
 }

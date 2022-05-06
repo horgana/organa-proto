@@ -4,12 +4,14 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static Noise;
 
 namespace Organa.Terrain
 {
+    //[UpdateBefore(typeof(ChunkManagerSystem))]
     public partial class ChunkMapperSystem : SystemBase
     {
         BeginSimulationEntityCommandBufferSystem beginSimulationECB;
@@ -29,45 +31,46 @@ namespace Organa.Terrain
         {
             var ecb = beginSimulationECB.CreateCommandBuffer();
 
-            var terrain = GetSingleton<TerrainSettings>();
-            var chunkSize = terrain.ChunkSize;
-
-            var lodGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<TerrainSettings>());
+            var terrainData = GetSingleton<TerrainData>();
+            var chunkSize = terrainData.ChunkSize;
             
             Entities
+                .WithoutBurst()
                 .WithAll<MapChunk>()
-                .ForEach((Entity entity, in Chunk chunk) =>
+                .ForEach((Entity entity, in Chunk chunk, in Parent parent) =>
                 {
-                    var noise = new NativeArray<float>((chunkSize+1)*(chunkSize+1), Allocator.TempJob);
+                    var parentEntity = parent.Value;
+                    
+                    var noise = new NativeArray<float>((chunkSize + 1) * (chunkSize + 1), Allocator.TempJob);
 
                     var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize, 1);
-                    
+
                     var jobData = new MeshJobDataBuffer
                     {
-                        Vertices = new UnsafeStream(noise.Length*6, Allocator.Persistent),
-                        Indices = new UnsafeStream(noise.Length*6, Allocator.Persistent)
+                        Vertices = new UnsafeStream(noise.Length * 6, Allocator.Persistent),
+                        Indices = new UnsafeStream(noise.Length * 6, Allocator.Persistent)
                     };
 
                     var meshJob = new TerrainMeshJob
                     {
                         Noise = noise,
-                        
+
                         Dim = chunkSize,
-                        Start = chunk.Index*chunkSize,
-                        
+                        Start = chunk.Index * chunkSize,
+
                         VertexStream = jobData.Vertices.AsWriter(),
                         IndexStream = jobData.Indices.AsWriter()
                     };
 
-                    jobData.Dependency = meshJob.ScheduleBatch(chunkSize*chunkSize, 64, noiseJob);
-
-                    var lodGroup = GetComponent<LODGroup>(lodGroups[chunk.Division].Value);
-                    GetBuffer<MeshJobDataBuffer>(lodGroup[chunk.Index]).Add(jobData);
+                    jobData.Dependency = meshJob.ScheduleBatch(chunkSize * chunkSize, 64, noiseJob);
+                    GetBuffer<MeshJobDataBuffer>(parentEntity).Add(jobData);
+                    if (!HasComponent<UpdateTag>(parentEntity)) ecb.AddComponent<UpdateTag>(parentEntity);
+                    
 
                     ecb.RemoveComponent<MapChunk>(entity);
 
                     noise.Dispose(jobData.Dependency);
-                });
+                }).Run();
         }
 
 
@@ -75,7 +78,7 @@ namespace Organa.Terrain
         {
             var ecb = beginSimulationECB.CreateCommandBuffer();
 
-            var terrain = GetSingleton<TerrainSettings>();
+            var terrain = GetSingleton<TerrainData>();
             var chunkSize = terrain.ChunkSize;
             
             var meshBuffers = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());

@@ -9,24 +9,28 @@ using UnityEngine;
 namespace Organa.Terrain
 {
     [AddComponentMenu("Organa/Chunk Loader")]
+    [UpdateAfter(typeof(TerrainAuthoring))]
     public class ChunkLoaderAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         [SerializeField] int radius = 1;
         [SerializeField, Range(1, 10)] int lodLevels = 1;
         [SerializeField, Range(1, 2)] float unloadOffset = 1.5f;
+        [SerializeField, Range(1, 128)] int loadingVolume;
         [SerializeField] GameObject parent;
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
+            dstManager.SetName(entity, dstManager.GetName(entity) + " (Chunk Loader)");
             dstManager.AddComponentObject(entity, transform);
             dstManager.AddComponentData(entity, new ChunkLoader
             {
                 Radius = radius,
+                LoadingVolume = loadingVolume,
                 UnloadOffset = unloadOffset
             });
             
             dstManager.AddComponent<CopyTransformFromGameObject>(entity);
-            dstManager.AddComponent<UpdateValues>(entity);
+            dstManager.AddComponent<UpdateTag>(entity);
 
             // creates dynamicbuffer of LOD entities to group mesh data
             var lodArchetype = dstManager.CreateArchetype(
@@ -44,7 +48,7 @@ namespace Organa.Terrain
                     material = Resources.Load("New Material", typeof(Material)) as Material,
                     layerMask = 1,
                 };
-                ecb.SetSharedComponent(chunkGroup, renderMesh);
+                //ecb.SetSharedComponent(chunkGroup, renderMesh);
                 RenderMeshUtility.AddComponents(chunkGroup, ecb, new RenderMeshDescription
                 {
                     RenderMesh = renderMesh
@@ -81,6 +85,7 @@ namespace Organa.Terrain
     struct ChunkLoader : IComponentData
     {
         public int Radius;
+        public int LoadingVolume;
         public float UnloadOffset;
     }
 }

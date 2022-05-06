@@ -3,6 +3,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace Organa.Terrain
         EndInitializationEntityCommandBufferSystem _endInitializationECB;
         
         EntityArchetype _chunkArchetype;
+        EntityArchetype _renderGroupArchetype;
 
         protected override void OnCreate()
         {
@@ -23,8 +25,18 @@ namespace Organa.Terrain
 
             _chunkArchetype = EntityManager.CreateArchetype(
                 typeof(Chunk),
-                typeof(MapChunk)
+                typeof(MapChunk),
+                typeof(Parent),
+                typeof(LocalToWorld),
+                typeof(LocalToParent)
             );
+            _renderGroupArchetype = EntityManager.CreateArchetype(
+                typeof(ChunkRenderGroup),
+                typeof(ChunkWorldRenderBounds),
+                typeof(Parent),
+                typeof(LocalToWorld),
+                typeof(LocalToParent)
+                );
             
             _endInitializationECB = World.GetOrCreateSystem<EndInitializationEntityCommandBufferSystem>();
         }
@@ -34,48 +46,112 @@ namespace Organa.Terrain
             var ecb = _endInitializationECB.CreateCommandBuffer().AsParallelWriter();
 
             var chunkArchetype = _chunkArchetype;
+            var renderGroupArchetype = _renderGroupArchetype;
             
             var terrains = EntityManager.CreateEntityQuery(
-                typeof(TerrainSettings)).ToEntityArray(Allocator.Temp);
+                typeof(TerrainData)).ToEntityArray(Allocator.Temp);
             foreach (var terrainEntity in terrains)
             {
-                var terrain = GetComponent<TerrainSettings>(terrainEntity);
+                var terrainData     = GetComponent<TerrainData>(terrainEntity);
+                
                 var chunkLoaders = GetBuffer<LinkedEntityGroup>(terrainEntity).AsNativeArray().Reinterpret<Entity>();
-                var loadedChunks = terrain.LoadedChunks;
+                var loadedChunks = terrainData.LoadedChunks;
+                var loadedRenderGroups = terrainData.LoadedRenderGroups;
+
+                var found = TryGetSingletonEntity<ChunkRenderGroup>(out Entity parent);
+                Debug.Log(TryGetSingleton(out ChunkRenderGroup test));
 
                 // load chunks around each chunkloader
                 Entities
                     .WithFilter(chunkLoaders)
+                    .WithoutBurst()
                     .ForEach((int entityInQueryIndex, in ChunkLoader chunkLoader, in LocalToWorld localToWorld) =>
                     {
                         var radius = chunkLoader.Radius;
+                        
                         var loadOrder = new NativeArray<int2>(radius * (2 * radius - 2) + 1, Allocator.Temp);
                         GenerateLoadOrder(loadOrder);
 
-                        var loaderIndex = localToWorld.Position.xz / terrain.ChunkSize + 0.5f;
-                        var length = 1;
+                        var loaderRenderIndex = (int2) math.floor(localToWorld.Position.xz / terrainData.RegionSize + 0.5f);
+                        var renderRadius = radius * terrainData.ChunkSize / terrainData.RegionSize + 1;
+                        for (int lod = 0; lod < terrainData.LODLevels; lod++)
+                        {
+                            for (int i = 0; i < renderRadius * (2 * renderRadius - 2) + 1; i++)
+                            {
+                                var index = loadOrder[i] + loaderRenderIndex / terrainData.RegionSize;
+
+                                if (!loadedRenderGroups.ContainsKey((index, lod)))
+                                {
+                                    var renderGroup = ecb.CreateEntity(entityInQueryIndex, renderGroupArchetype);
+                                    //ecb.SetName(entityInQueryIndex, renderGroup, "Render Group");
+                                    
+                                    ecb.SetComponent(entityInQueryIndex, renderGroup, new ChunkRenderGroup(index, lod));
+                                    ecb.SetComponent(entityInQueryIndex, renderGroup, new Parent
+                                    {
+                                        Value = terrainEntity
+                                    });
+
+                                    ecb.AddBuffer<MeshJobDataBuffer>(entityInQueryIndex, renderGroup);
+
+                                    loadedRenderGroups.Add((index, lod), renderGroup);
+                                }
+                            }
+                        }
+
+                        if (!found) return;
+                        var loaderIndex = (int2) math.floor(localToWorld.Position.xz / terrainData.ChunkSize + 0.5f);
+                        var length = chunkLoader.LoadingVolume;
                         for (int i = 0; i < length; i++)
                         {
-                            var index = loadOrder[i] + (int2) math.round(loaderIndex);
+                            var index = loadOrder[i] + loaderIndex;
 
-                            var chunk = Entity.Null;
+                            //var chunkEntity = Entity.Null;
                             if (!loadedChunks.ContainsKey(index))
                             {
-                                chunk = ecb.CreateEntity(entityInQueryIndex, chunkArchetype);
-                                ecb.SetComponent(entityInQueryIndex, chunk, new Chunk
+                                var chunkEntity = ecb.CreateEntity(entityInQueryIndex, chunkArchetype);
+                               // ecb.SetName(entityInQueryIndex, chunkEntity, "Terrain Chunk (" + index.x + ", " + index.y + ")");
+                                var chunk = new Chunk
                                 {
                                     Index = index,
                                     Division = 0
+                                };
+                                ecb.SetComponent(entityInQueryIndex, chunkEntity, chunk);
+                                ecb.SetComponent(entityInQueryIndex, chunkEntity, new Parent
+                                {
+                                    Value = parent
                                 });
                                 //ecb.SetSharedComponent(chunk, new RenderGroup{Filter = 0});
-
-                                loadedChunks.Add(index, chunk);
+                                
+                                loadedChunks.Add(index, chunkEntity);
                             }
                             else if (length < loadOrder.Length - 1) length++;
                             else break;
                         }
+                        
                     }).WithScheduleGranularity(ScheduleGranularity.Entity).ScheduleParallel();
 
+                var renderMeshBuffer = _endInitializationECB.CreateCommandBuffer();
+                Entities
+                    .WithoutBurst()
+                    .WithNone<RenderMesh>()
+                    .WithAll<ChunkRenderGroup>()
+                    .ForEach((Entity entity) =>
+                    {
+                       /*RenderMeshUtility.AddComponents(entity, renderMeshBuffer, new RenderMeshDescription
+                        {
+                            RenderMesh = new RenderMesh
+                            {
+                                mesh = new Mesh(),
+                                material = Resources.Load<Material>("New Material"),
+                                layerMask = 1
+                            }
+                        });*/
+                        renderMeshBuffer.SetComponent(entity, new LocalToWorld
+                        {
+                            Value = float4x4.identity
+                        });
+                    }).Run();
+                
                 Entities.ForEach((int entityInQueryIndex, Entity entity, in Chunk chunk) =>
                 {
                     var inRange = false;
@@ -83,7 +159,7 @@ namespace Organa.Terrain
                     {
                         var loader = GetComponent<ChunkLoader>(loaderEntity);
                         var loaderIndex = GetComponent<LocalToWorld>(loaderEntity).Position.xz
-                            / terrain.ChunkSize + 0.5f;
+                            / terrainData    .ChunkSize + 0.5f;
 
                         if (math.distance(loaderIndex, chunk.Index) < loader.Radius * loader.UnloadOffset) return;
                     }
