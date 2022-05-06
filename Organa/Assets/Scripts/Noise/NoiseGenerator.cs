@@ -64,7 +64,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
         {
             Generator = this,
 
-            Start = start,
+            Start = start+100000,
             Dim = dimensions,
             Step = stepSize,
 

@@ -44,17 +44,22 @@ namespace Organa.Terrain
                 _generator = new NoiseGenerator2D<Perlin>(profile,
                     (chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
+                World.GetOrCreateSystem<TerrainMeshSystem>().meshes.Clear();
+                
+                var count = 0;
                 Entities
-                    .WithNone<MapChunk, JobProgress>()
+                    .WithNone<MapChunk>()
                     .WithNone<IndexBuffer, VertexBuffer>()
                     .ForEach((Entity entity, in MeshStream meshStream) =>
                     {
-                        ecb.AddBuffer<VertexBuffer>(entity)
+                        if (count >= terrainData.LoadVolume) return;
+                        //count++;
+                        /*ecb.AddBuffer<VertexBuffer>(entity)
                             .CopyFrom(meshStream.Vertices.ToNativeArray<VertexBuffer>(Allocator.Temp));
                         ecb.AddBuffer<IndexBuffer>(entity)
-                            .CopyFrom(meshStream.Indices.ToNativeArray<IndexBuffer>(Allocator.Temp));
+                            .CopyFrom(meshStream.Indices.ToNativeArray<IndexBuffer>(Allocator.Temp));*/
                         ecb.AddComponent<MapChunk>(entity);
-                        ecb.AddComponent<UpdateMesh>(entity);
+                        //ecb.AddComponent<UpdateMesh>(entity);
                     }).Run();
             }
 
@@ -89,6 +94,15 @@ namespace Organa.Terrain
 
                     meshStream.Dependency = meshJob.ScheduleBatch(chunkSize * chunkSize, 64, noiseJob);
                     ecb.SetComponent(entity, meshStream);
+                    if (HasComponent<JobProgress>(entity))
+                    {
+                        GetComponent<JobProgress>(entity).Dependency.Complete();
+                        ecb.SetComponent(entity, new JobProgress
+                        {
+                            Dependency = meshStream.Dependency,
+                            MaxFrameLength = 3
+                        });
+                    }
                     ecb.AddComponent(entity, new JobProgress
                     {
                         Dependency = meshStream.Dependency,
@@ -121,12 +135,12 @@ namespace Organa.Terrain
 
                 for (int i = startIndex; i < startIndex + count; i++)
                 {
-                    var v = new float3((int)(i / Length), 0, i % Length) + new float3(Start.x, 0, Start.y);
+                    var v = new float3((i % Length), 0, (int)(i / Length)) + new float3(Start.x, 0, Start.y);
                     var ni = i + i / Length;
             
                     var v1 = v + new float3(0, Noise[ni], 0);
-                    var v2 = v + new float3(0, Noise[ni+1], 1);
-                    var v3 = v + new float3(1, Noise[ni+Length+1], 0);
+                    var v2 = v + new float3(0, Noise[ni+Length+1], 1);
+                    var v3 = v + new float3(1, Noise[ni+1], 0);
                     var n = math.cross(v2 - v1, v3 - v1);
                     
                     VertexStream.Write(v1);

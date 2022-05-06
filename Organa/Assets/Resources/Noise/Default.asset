@@ -19,3 +19,4 @@ MonoBehaviour:
     amplitude: 16
     lacunarity: 1
     persistence: 0.5
+  reloadRadius: 1

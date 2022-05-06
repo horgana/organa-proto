@@ -16,7 +16,7 @@ namespace Organa.Terrain
     {
         EndSimulationEntityCommandBufferSystem endSimulationECB;
 
-        List<Mesh> meshes;
+        public List<Mesh> meshes;
         
         protected override void OnCreate()
         {
@@ -59,6 +59,7 @@ namespace Organa.Terrain
                     mesh.SetSubMesh(0, new SubMeshDescriptor(0, indices.Length));
                     
                     mesh.RecalculateBounds();
+                    
                     meshes.Add(mesh);
                     ecb.RemoveComponent<UpdateMesh>(entity);
                 }).Run();
@@ -69,7 +70,7 @@ namespace Organa.Terrain
                 Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 0);
             }
 
-            /*Entities
+            Entities
                 .WithoutBurst()
                 .ForEach((Entity entity, in Chunk chunk, in DynamicBuffer<VertexBuffer> vertexBuffer,
                     in DynamicBuffer<IndexBuffer> indexBuffer) =>
@@ -81,15 +82,18 @@ namespace Organa.Terrain
 
                         return;
                     }
-                    
+
+                    var mesh = new Mesh();
                     mesh.SetVertexBufferParams(vertexBuffer.Length, 
                         new VertexAttributeDescriptor(VertexAttribute.Position),
                         new VertexAttributeDescriptor(VertexAttribute.Normal));
                     mesh.SetVertexBufferData(vertexBuffer.AsNativeArray(), 0, 0, vertexBuffer.Length);
+                    mesh.SetIndexBufferParams(indexBuffer.AsNativeArray().Length, IndexFormat.UInt32);
+                    mesh.SetIndexBufferData(indexBuffer.AsNativeArray(), 0, 0, indexBuffer.AsNativeArray().Length);
                     
                     Graphics.DrawMesh(mesh, new Vector3(chunk.Index.x*terrainData.ChunkSize, 0, chunk.Index.y*terrainData.ChunkSize), 
                         Quaternion.identity, Resources.Load<Material>("New Material"), 0);
-                }).Run();*/
+                }).Run();
 
 
             /*var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
