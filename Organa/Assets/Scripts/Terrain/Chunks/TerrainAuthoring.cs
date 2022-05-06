@@ -10,27 +10,28 @@ using UnityEngine;
 namespace Organa.Terrain
 {
     /*[UpdateBefore(typeof(ChunkManagerSystem))]
-    class TerrainManager : SystemBase
-    {
-        static 
-        protected override void OnUpdate()
+        class TerrainManager : SystemBase
         {
-            
-            Entities
-                .WithAll<UpdateValues>()
-                .ForEach((in ChunkLoader loader) =>
-                {
-
-                });
-        }
-    }*/
+            static 
+            protected override void OnUpdate()
+            {
+                
+                Entities
+                    .WithAll<UpdateValues>()
+                    .ForEach((in ChunkLoader loader) =>
+                    {
     
+                    });
+            }
+        }*/
+        
     [AddComponentMenu("Organa/Terrain")]
     public class TerrainAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         [SerializeField] int chunkSize = 64;
         [SerializeField] int regionSize = 1024;
         [SerializeField] int lodLevels = 1;
+        [SerializeField] int maxLoadVolume = 1;
         
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
@@ -43,6 +44,7 @@ namespace Organa.Terrain
                 LODLevels = lodLevels,
                 ChunkSize = chunkSize,
                 RegionSize = regionSize,
+                LoadVolume = maxLoadVolume,
                 
                 LoadedChunks = new UnsafeHashMap<int2, Entity>(1, Allocator.Persistent),
                 LoadedRenderGroups = new UnsafeHashMap<(int2, int), Entity>(1, Allocator.Persistent)
@@ -74,6 +76,7 @@ namespace Organa.Terrain
         public int LODLevels;
         public int ChunkSize;
         public int RegionSize;
+        public int LoadVolume;
         
         public UnsafeHashMap<int2, Entity> LoadedChunks;
         public UnsafeHashMap<(int2, int), Entity> LoadedRenderGroups;
