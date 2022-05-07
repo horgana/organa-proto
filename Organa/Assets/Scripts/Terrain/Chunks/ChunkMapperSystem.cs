@@ -22,12 +22,6 @@ namespace Organa.Terrain
             base.OnCreate();
             
             beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-
-            var g1 = new NoiseGenerator2D<Perlin>(NoiseProfile.Default, 10, Allocator.Temp);
-            for (int i = 0; i < 10; i++)
-            {
-                var n = g1[i / 100f];
-            }
         }
 
         NoiseProfile _profile;
