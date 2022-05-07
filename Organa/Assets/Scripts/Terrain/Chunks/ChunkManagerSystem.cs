@@ -40,13 +40,13 @@ namespace Organa.Terrain
             var chunkArchetype = _chunkArchetype;
             
             var terrains = EntityManager.CreateEntityQuery(
-                typeof(TerrainData)).ToEntityArray(Allocator.Temp);
+                typeof(TerrainSettings)).ToEntityArray(Allocator.Temp);
             foreach (var terrainEntity in terrains)
             {
-                var terrainData     = GetComponent<TerrainData>(terrainEntity);
+                var terrainSettings     = GetComponent<TerrainSettings>(terrainEntity);
 
                 var chunkLoaders = GetBuffer<LinkedEntityGroup>(terrainEntity).AsNativeArray().Reinterpret<Entity>();
-                var loadedChunks = terrainData.LoadedChunks;
+                var loadedChunks = terrainSettings.LoadedChunks;
                 
                 // load chunks around each chunkloader
                 Entities
@@ -60,8 +60,8 @@ namespace Organa.Terrain
                         GenerateLoadOrder(loadOrder);
 
                         
-                        var loaderIndex = (int2) math.floor(localToWorld.Position.xz / terrainData.ChunkSize + 0.5f);
-                        var length = terrainData.LoadVolume;
+                        var loaderIndex = (int2) math.floor(localToWorld.Position.xz / terrainSettings.ChunkSize + 0.5f);
+                        var length = terrainSettings.LoadVolume;
                         for (int i = 0; i < length; i++)
                         {
                             var index = loadOrder[i] + loaderIndex;
@@ -93,7 +93,7 @@ namespace Organa.Terrain
                     {
                         var loader = GetComponent<ChunkLoader>(loaderEntity);
                         var loaderIndex = GetComponent<LocalToWorld>(loaderEntity).Position.xz
-                            / terrainData    .ChunkSize + 0.5f;
+                            / terrainSettings    .ChunkSize + 0.5f;
 
                         if (math.distance(loaderIndex, chunk.Index) < loader.Radius * loader.UnloadOffset) return;
                     }

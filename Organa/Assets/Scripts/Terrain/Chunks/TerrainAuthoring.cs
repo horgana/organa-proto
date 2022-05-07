@@ -36,7 +36,7 @@ namespace Organa.Terrain
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponentObject(entity, transform);
-            dstManager.AddComponentData(entity, new TerrainData
+            dstManager.AddComponentData(entity, new TerrainSettings
             {
                 Root = float3.zero,
                 Bounds = -1,
@@ -69,7 +69,7 @@ namespace Organa.Terrain
         }
     }
 
-    struct TerrainData : IComponentData
+    struct TerrainSettings : IComponentData
     {
         public float3 Root;
         public int2 Bounds;

@@ -20,7 +20,7 @@ namespace Organa.Terrain
         
         protected override void OnCreate()
         {
-            RequireSingletonForUpdate<TerrainData>();
+            RequireSingletonForUpdate<TerrainSettings>();
             base.OnCreate();
 
             endSimulationECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
@@ -31,7 +31,7 @@ namespace Organa.Terrain
         {
             var ecb = endSimulationECB.CreateCommandBuffer();
 
-            var terrainData = GetSingleton<TerrainData>();
+            var terrainSettings = GetSingleton<TerrainSettings>();
             //var mesh = new Mesh();
             //mesh.SetVertexBufferParams(0, 
                 //new VertexAttributeDescriptor(VertexAttribute.Position),
@@ -91,7 +91,7 @@ namespace Organa.Terrain
                     mesh.SetIndexBufferParams(indexBuffer.AsNativeArray().Length, IndexFormat.UInt32);
                     mesh.SetIndexBufferData(indexBuffer.AsNativeArray(), 0, 0, indexBuffer.AsNativeArray().Length);
                     
-                    Graphics.DrawMesh(mesh, new Vector3(chunk.Index.x*terrainData.ChunkSize, 0, chunk.Index.y*terrainData.ChunkSize), 
+                    Graphics.DrawMesh(mesh, new Vector3(chunk.Index.x*terrainSettings.ChunkSize, 0, chunk.Index.y*terrainSettings.ChunkSize), 
                         Quaternion.identity, Resources.Load<Material>("New Material"), 0);
                 }).Run();
 

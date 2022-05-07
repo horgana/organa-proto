@@ -22,6 +22,12 @@ namespace Organa.Terrain
             base.OnCreate();
             
             beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+
+            var g1 = new NoiseGenerator2D<Perlin>(NoiseProfile.Default, 10, Allocator.Temp);
+            for (int i = 0; i < 10; i++)
+            {
+                var n = g1[i / 100f];
+            }
         }
 
         NoiseProfile _profile;
@@ -31,36 +37,41 @@ namespace Organa.Terrain
         {
             var ecb = beginSimulationECB.CreateCommandBuffer();
             
-            var terrainData = GetSingleton<TerrainData>();
-            var chunkSize = terrainData.ChunkSize;
+            var terrainSettings = GetSingleton<TerrainSettings>();
+            var chunkSize = terrainSettings.ChunkSize;
             
             var profile = Resources.Load<NoisePreset>("Noise/Default").profile;
             
-            if (_profile.Equals(null))
-                _profile = profile;
+            
             if (!profile.Equals(_profile))
             {
-                _profile = profile;
-                _generator = new NoiseGenerator2D<Perlin>(profile,
-                    (chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
+                if (_profile.Equals(null))
+                    _profile = profile;
+                else
+                {
+                    _profile = profile;
+                    
+                    _generator = new NoiseGenerator2D<Perlin>(profile,
+                        (chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
-                World.GetOrCreateSystem<TerrainMeshSystem>().meshes.Clear();
+                    World.GetOrCreateSystem<TerrainMeshSystem>().meshes.Clear();
                 
-                var count = 0;
-                Entities
-                    .WithNone<MapChunk>()
-                    .WithNone<IndexBuffer, VertexBuffer>()
-                    .ForEach((Entity entity, in MeshStream meshStream) =>
-                    {
-                        if (count >= terrainData.LoadVolume) return;
-                        //count++;
-                        /*ecb.AddBuffer<VertexBuffer>(entity)
-                            .CopyFrom(meshStream.Vertices.ToNativeArray<VertexBuffer>(Allocator.Temp));
-                        ecb.AddBuffer<IndexBuffer>(entity)
-                            .CopyFrom(meshStream.Indices.ToNativeArray<IndexBuffer>(Allocator.Temp));*/
-                        ecb.AddComponent<MapChunk>(entity);
-                        //ecb.AddComponent<UpdateMesh>(entity);
-                    }).Run();
+                    var count = 0;
+                    Entities
+                        .WithNone<MapChunk>()
+                        .WithNone<IndexBuffer, VertexBuffer>()
+                        .ForEach((Entity entity, in MeshStream meshStream) =>
+                        {
+                            if (count >= terrainSettings.LoadVolume) return;
+                            //count++;
+                            /*ecb.AddBuffer<VertexBuffer>(entity)
+                                .CopyFrom(meshStream.Vertices.ToNativeArray<VertexBuffer>(Allocator.Temp));
+                            ecb.AddBuffer<IndexBuffer>(entity)
+                                .CopyFrom(meshStream.Indices.ToNativeArray<IndexBuffer>(Allocator.Temp));*/
+                            ecb.AddComponent<MapChunk>(entity);
+                            //ecb.AddComponent<UpdateMesh>(entity);
+                        }).Run();
+                }
             }
 
             var generator = _generator;
@@ -86,7 +97,7 @@ namespace Organa.Terrain
                         Noise = noise,
 
                         Length = chunkSize,
-                        Start = chunk.Index*terrainData.ChunkSize,
+                        Start = chunk.Index*terrainSettings.ChunkSize,
 
                         VertexStream = meshStream.Vertices.AsWriter(),
                         IndexStream = meshStream.Indices.AsWriter()

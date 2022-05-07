@@ -24,6 +24,7 @@ namespace Organa.Terrain
         {
             LayerMap = new UnsafeMultiHashMap<int2, MaterialStack>(dim.x * dim.y, allocator);
         }
+        
     }
 
     public struct MaterialStack

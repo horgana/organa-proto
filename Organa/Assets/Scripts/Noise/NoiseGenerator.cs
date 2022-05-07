@@ -14,12 +14,13 @@ using static Noise;
 public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 {
     public int Capacity => map.Capacity;
+    public int Count => map.Count();
     
     NoiseProfile profile;
     UnsafeHashMap<float2, float> map;
     N generator;
 
-    float this[float2 p]
+    public float this[float2 p]
     {
         [BurstCompile]
         get
@@ -98,7 +99,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
     }
     
     public NoiseGenerator2D(NoiseProfile profile, Allocator allocator) { this = new NoiseGenerator2D<N>(profile, 0, allocator); }
-
+    
     struct NoiseJob2D : IJobParallelFor
     {
         [ReadOnly] public NoiseGenerator2D<N> Generator;
