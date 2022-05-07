@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Noise/NoisePreset
   profile:
     seed: 0
-    octaves: 1
-    frequency: 16
-    amplitude: 16
-    lacunarity: 1
-    persistence: 0.5
+    octaves: 5
+    frequency: 88
+    amplitude: 62
+    lacunarity: 1.5
+    persistence: 1
   reloadRadius: 1

@@ -21,7 +21,7 @@ public static class Noise
     [Serializable]
     public struct NoiseProfile
     {
-        public static NoiseProfile Default => new NoiseProfile()
+        public static NoiseProfile Default => new NoiseProfile
         {
             seed = 0,
             octaves = 1,
@@ -38,7 +38,7 @@ public static class Noise
         public float frequency;
         [SerializeField, Range(1, 256)]
         public float amplitude;
-        [SerializeField, Range(1, 2)]
+        [SerializeField, Range(1, 8)]
         public float lacunarity;
         [SerializeField, Range(0, 1)]
         public float persistence;
@@ -47,36 +47,11 @@ public static class Noise
     [CreateAssetMenu(fileName = "NoiseProfile", menuName = "Organa/Noise Profile", order = 1)]
     public class NoisePreset : ScriptableObject
     {
-        public static NoisePreset Default => CreateInstance<NoisePreset>();
+        //public static NoisePreset Default => CreateInstance<NoisePreset>();
         
         public NoiseProfile profile = NoiseProfile.Default;
 
         [SerializeField, Range(1, 16)] public int reloadRadius = 1;
-    }
-    
-    [CustomPropertyDrawer(typeof(NoisePreset))]
-    public class IngredientDrawerUIE : PropertyDrawer
-    {
-        public override VisualElement CreatePropertyGUI(SerializedProperty property)
-        {
-            var container = new VisualElement();
-
-            var seed = new PropertyField(property.FindPropertyRelative("seed"));
-            var octaves = new PropertyField(property.FindPropertyRelative("octaves"));
-            var frequency = new PropertyField(property.FindPropertyRelative("frequency"));
-            var amplitude = new PropertyField(property.FindPropertyRelative("amplitude"));
-            var lacunarity = new PropertyField(property.FindPropertyRelative("lacunarity"));
-            var persistence = new PropertyField(property.FindPropertyRelative("persistence"));
-
-            container.Add(seed);
-            container.Add(octaves);
-            container.Add(frequency);
-            container.Add(amplitude);
-            container.Add(lacunarity);
-            container.Add(persistence);
-
-            return container;
-        }
     }
 
     public struct Perlin : INoiseMethod2D

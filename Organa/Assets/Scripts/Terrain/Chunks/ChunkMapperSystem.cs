@@ -70,7 +70,7 @@ namespace Organa.Terrain
                 .WithAll<MapChunk>()
                 .ForEach((Entity entity, in Chunk chunk) =>
                 {
-                    if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainData.LoadVolume) return; 
+                    //if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainData.LoadVolume) return; 
                     var noise = new NativeArray<float>((chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
                     var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize+1, 1);
