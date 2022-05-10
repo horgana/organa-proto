@@ -65,6 +65,19 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.graphtools.foundation": {
+      "version": "0.10.1-preview",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.searcher": "4.7.0-preview",
+        "nuget.moq": "1.0.0",
+        "com.unity.properties": "1.6.0-preview",
+        "com.unity.properties.ui": "1.6.2-preview.1",
+        "com.unity.ext.nunit": "1.0.6"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.ide.rider": {
       "version": "2.0.7",
       "depth": 0,
@@ -236,8 +249,8 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.searcher": {
-      "version": "4.3.2",
-      "depth": 2,
+      "version": "4.7.0-preview",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
@@ -324,6 +337,22 @@
         "com.unity.modules.ui": "1.0.0",
         "com.unity.modules.imgui": "1.0.0"
       }
+    },
+    "nuget.castle-core": {
+      "version": "1.0.1",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "nuget.moq": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "nuget.castle-core": "1.0.1"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.modules.ai": {
       "version": "1.0.0",
