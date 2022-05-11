@@ -55,7 +55,7 @@ MonoBehaviour:
         - .Movable
         - .Collapsible
         - .Colorable
-        m_Position: {x: 656.08997, y: 129.88}
+        m_Position: {x: 674.4899, y: 128.28}
         m_Title: Preview
         m_InputConstantsById:
           m_KeyList: []
@@ -80,7 +80,7 @@ MonoBehaviour:
         - .Movable
         - .Collapsible
         - .Colorable
-        m_Position: {x: 374.78992, y: 129.77998}
+        m_Position: {x: 367.5899, y: 128.97998}
         m_Title: Generator
         m_InputConstantsById:
           m_KeyList: []
@@ -91,8 +91,8 @@ MonoBehaviour:
           profile:
             seed: 0
             octaves: 1
-            frequency: 16
-            amplitude: 16
+            frequency: 44
+            amplitude: 24.18
             lacunarity: 1
             persistence: 0.5
     00000003:

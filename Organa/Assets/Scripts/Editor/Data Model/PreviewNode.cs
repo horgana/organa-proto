@@ -27,7 +27,6 @@ namespace Organa.Editor
             var noise = new NativeArray<float>(size, Allocator.TempJob);
             generator.Schedule(noise, float2.zero, new float2(height, width)).Complete();
 
-            Debug.Log("ran");
             var colors = new Color[size];
             var texture = new Texture2D(width, height);
 

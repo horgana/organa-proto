@@ -95,7 +95,7 @@ namespace Organa.Editor
                 }
             };
             var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            
+
             var material = Resources.Load<Material>("new Material");
             
             var drawRect = new Rect(0, 0, 100, 100);
@@ -112,7 +112,8 @@ namespace Organa.Editor
             Image.image = preview.EndPreview();*/
             //InternalEditorUtility.RemoveCustomLighting();
             MeshImage.image = AssetPreview.GetAssetPreview(obj);
-
+            GameObject.DestroyImmediate(obj);
+            
             container.Add(MeshImage);
         }
 
