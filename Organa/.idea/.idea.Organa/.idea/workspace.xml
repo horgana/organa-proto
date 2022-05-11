@@ -5,198 +5,155 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81f6a75d-57df-46f2-88bf-62d9fc9ad350" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Recipe.asset" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Recipe.asset.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/.sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/ContextSample.asmdef" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/ContextSample.asmdef.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSample.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSample.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSampleAsset.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSampleAsset.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSampleOnboardingProvider.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSampleOnboardingProvider.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSampleStencil.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/ContextSampleStencil.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/SampleContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/SampleContext.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/SampleContextVertical.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/DataModel/SampleContextVertical.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/GraphView.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/GraphView/ContextGraphView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/GraphView/ContextGraphView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/GraphView/ContextGraphViewWindow.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts/Editor/GraphView/ContextGraphViewWindow.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/.sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BakeNodeModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BakeNodeModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BeatNodeModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BeatNodeModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/FryNodeModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/FryNodeModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/MixNodeModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/MixNodeModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeBlackboardGraphModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeBlackboardGraphModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphAssetModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphAssetModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphWindow.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphWindow.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeOnboardingProvider.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeOnboardingProvider.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeStencil.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeStencil.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeUIFactoryExtensions.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeUIFactoryExtensions.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipesEditor.asmdef" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipesEditor.asmdef.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/BakeNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/BakeNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/AddPortCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/AddPortCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/RemovePortCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/RemovePortCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetDurationCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetDurationCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetTemperatureCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetTemperatureCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Stylesheets.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Stylesheets/BakeNodePart.uss" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Stylesheets/BakeNodePart.uss.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/TemperatureAndTimePart.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/TemperatureAndTimePart.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/VariablePortNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/VariablePortNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/.sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/AcosFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/AcosFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/AsinFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/AsinFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/AtanFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/AtanFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/ClampFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/ClampFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/CosFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/CosFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/ExpFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/ExpFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/LogFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/LogFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathAdditionOperator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathAdditionOperator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathBook.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathBook.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathBookVariableDeclarationModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathBookVariableDeclarationModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathDivisionOperator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathDivisionOperator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathMultiplicationOperator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathMultiplicationOperator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathOperator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathOperator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathResult.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathResult.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathSubtractionOperator.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathSubtractionOperator.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathValueNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MathValueNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MaxFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MaxFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MinFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/MinFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/PIConstant.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/PIConstant.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/PowFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/PowFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/RoundFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/RoundFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/SinFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/SinFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/SqrtFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/SqrtFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/TanFunction.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/DataModel/TanFunction.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/MathResultUI.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/MathResultUI.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/MathbookBBVarPropertyView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/MathbookBBVarPropertyView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/PrintResultPart.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/PrintResultPart.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookAsset.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookAsset.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookMainToolbar.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookMainToolbar.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookOnboardingProvider.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookOnboardingProvider.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookStencil.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/MathBookStencil.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/SimpleGraphView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/SimpleGraphView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/SimpleGraphViewWindow.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/SimpleGraphViewWindow.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/SimpleMathBook.asmdef" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/SimpleMathBook.asmdef.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/.sample.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/Nodes.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/Nodes/VerticalNodeModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/Nodes/VerticalNodeModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/Commands.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/Commands/AddPortCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/Commands/AddPortCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/Commands/RemovePortCommand.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/Commands/RemovePortCommand.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/VariablePortNode.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/UI/VariablePortNode.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalBlackboardGraphModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalBlackboardGraphModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalFlow.asmdef" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalFlow.asmdef.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphAssetModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphAssetModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphModel.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphModel.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphState.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphState.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphView.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphView.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphWindow.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalGraphWindow.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalOnboardingProvider.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalOnboardingProvider.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalStencil.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalStencil.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalUIFactoryExtensions.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow/Editor/VerticalUIFactoryExtensions.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/New Shader Graph.shadergraph" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/New Shader Graph.shadergraph.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Contexts.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Math Book.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Math Book.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/.sample.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/BakeNodeModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/BakeNodeModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/BeatNodeModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/BeatNodeModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/FryNodeModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/FryNodeModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/MixNodeModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/Nodes/MixNodeModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeBlackboardGraphModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeBlackboardGraphModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphAssetModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphAssetModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphWindow.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeGraphWindow.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeOnboardingProvider.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeOnboardingProvider.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeStencil.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeStencil.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeUIFactoryExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeUIFactoryExtensions.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipesEditor.asmdef" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipesEditor.asmdef.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/BakeNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/BakeNode.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/AddPortCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/AddPortCommand.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/RemovePortCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/RemovePortCommand.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/SetDurationCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/SetDurationCommand.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/SetTemperatureCommand.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Commands/SetTemperatureCommand.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Stylesheets.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Stylesheets/BakeNodePart.uss" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/Stylesheets/BakeNodePart.uss.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/TemperatureAndTimePart.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/TemperatureAndTimePart.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/VariablePortNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/Recipes/Editor/UI/VariablePortNode.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/VerticalFlow.asset.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/com.unity.graphtools.foundation-Samples_.zip" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Samples/com.unity.graphtools.foundation-Samples_.zip.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNodeModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNodeModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/PreviewNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/PreviewNode.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/TerrainGraphModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/TerrainGraphModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/New Folder.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainBlackboardGraphModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainBlackboardGraphModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphUIFactoryExtensions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphUIFactoryExtensions.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphView.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphView.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphWindow.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphWindow.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainOnboardingProvider.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainOnboardingProvider.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainState.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainState.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainStencil.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainStencil.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/Graph Elements.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/Graph Elements/PreviewPart.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/Graph Elements/PreviewPart.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Terrain Graph.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Terrain Graph.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/manifest.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Packages/packages-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/Packages/packages-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Recipe.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Recipe.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Samples/Recipes.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/.sample.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BakeNodeModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BakeNodeModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BeatNodeModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/BeatNodeModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/FryNodeModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/FryNodeModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/MixNodeModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/Nodes/MixNodeModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeBlackboardGraphModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeBlackboardGraphModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphAssetModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphAssetModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphModel.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphView.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphView.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphWindow.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeGraphWindow.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeOnboardingProvider.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeOnboardingProvider.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeState.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeState.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeStencil.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeStencil.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeUIFactoryExtensions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipeUIFactoryExtensions.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipesEditor.asmdef" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/RecipesEditor.asmdef.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/BakeNode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/BakeNode.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/AddPortCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/AddPortCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/RemovePortCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/RemovePortCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetDurationCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetDurationCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetTemperatureCommand.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Commands/SetTemperatureCommand.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Stylesheets.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Stylesheets/BakeNodePart.uss" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/Stylesheets/BakeNodePart.uss.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/TemperatureAndTimePart.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/TemperatureAndTimePart.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/VariablePortNode.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/Recipe/Editor/UI/VariablePortNode.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/PrintResultPart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Samples/SimpleMathBook/Editor/GraphElements/PrintResultPart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Debug/Static Terrain.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Debug/Static Terrain.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Noise/NoiseGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Noise/NoiseGenerator.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,13 +173,20 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/e4/2ccfef8a/IJob.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeBlackboardGraphModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/buffer/MeshStream.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../ecs-terrain/ecs-terrain/Assets/Scripts/Noise/NoiseRenderer.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/06/f503e119/LensFlare.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNodeModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/6f/2ccad46d/IJobFor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f79d3e63281a46a1a061d66eff76f483c5400/3f/70602078/Vertex.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/e4/aa814d03/IJobParallelFor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/TerrainBlackboardGraphModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/50/9c05cac7/Material.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/84/a23ee91f/JobProducerTypeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/06/f503e119/LensFlare.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/6f/2ccad46d/IJobFor.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f79d3e63281a46a1a061d66eff76f483c5400/ac/0ebf984d/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/ec/45d607e5/Mesh.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="28LyxtMpwTGTP51NfzHc8xDXfLb" />
   <component name="ProjectLevelVcsManager">
@@ -285,7 +249,7 @@
       <workItem from="1651776489256" duration="5989000" />
       <workItem from="1651847584051" duration="7840000" />
       <workItem from="1651940145113" duration="12152000" />
-      <workItem from="1652208780384" duration="713000" />
+      <workItem from="1652208780384" duration="17214000" />
     </task>
     <servers />
   </component>

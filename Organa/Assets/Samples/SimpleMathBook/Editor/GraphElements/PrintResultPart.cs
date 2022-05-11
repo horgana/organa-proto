@@ -1,3 +1,4 @@
+using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -18,6 +19,8 @@ namespace UnityEditor.GraphToolsFoundation.Overdrive.Samples.MathBook.UI
         }
 
         public Button Button { get; private set; }
+        public Image Image;
+
         public override VisualElement Root => Button;
 
         protected PrintResultPart(string name, IGraphElementModel model, IModelUI ownerElement, string parentClassName)
@@ -37,6 +40,43 @@ namespace UnityEditor.GraphToolsFoundation.Overdrive.Samples.MathBook.UI
             Button = new Button() { text = "Print Result" };
             Button.clicked += OnPrintResult;
             container.Add(Button);
+
+            Image = new Image();
+            
+            var mesh = new Mesh
+            {
+                vertices = new[]
+                {
+                    new Vector3(0, 0, 0),
+                    new Vector3(0, 0, 10),
+                    new Vector3(10, 0, 0),
+                    new Vector3(10, 0, 10)
+                },
+                triangles = new[]
+                {
+                    0, 1, 2, 2, 1, 3
+                }
+            };
+            var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            
+            var material = Resources.Load<Material>("new Material");
+            
+            var drawRect = new Rect(0, 0, 100, 100);
+            /*var preview = new PreviewRenderUtility();
+
+            preview.BeginPreview(drawRect, GUIStyle.none);
+            
+            //InternalEditorUtility.SetCustomLighting(preview.lights, new Color(0.6f, 0.6f, 0.6f, 1f));
+
+            preview.DrawMesh(mesh, Matrix4x4.identity, material, 0);
+            
+            preview.camera.Render();
+
+            Image.image = preview.EndPreview();*/
+            //InternalEditorUtility.RemoveCustomLighting();
+            Image.image = AssetPreview.GetAssetPreview(obj);
+
+            container.Add(Image);
         }
 
         protected override void UpdatePartFromModel()

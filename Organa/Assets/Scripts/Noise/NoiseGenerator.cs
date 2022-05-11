@@ -11,12 +11,14 @@ using UnityEngine;
 using static Noise;
 
 [BurstCompile]
+[Serializable]
 public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 {
     public int Capacity => map.Capacity;
     public int Count => map.Count();
     
-    NoiseProfile profile;
+    [SerializeField]
+    public NoiseProfile profile;
     UnsafeHashMap<float2, float> map;
     N generator;
 
@@ -54,7 +56,7 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 
     public bool TryGetValue(float2 p, out float n) => map.TryGetValue(p, out n);
 
-    public JobHandle Schedule(NativeArray<float> noise, float2 start, float2 dimensions, float stepSize,
+    public JobHandle Schedule(NativeArray<float> noise, float2 start, float2 dimensions, float stepSize = 1,
         int batchCount = 1,
         JobHandle dependency = default)
     {

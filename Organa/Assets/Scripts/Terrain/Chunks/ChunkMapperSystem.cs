@@ -37,7 +37,6 @@ namespace Organa.Terrain
             var profile = Resources.Load<NoisePreset>("Noise/Default").profile;
             
             
-            
             if (!profile.Equals(_profile))
             {
                 if (_profile.Equals(null))
