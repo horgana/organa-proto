@@ -4,18 +4,35 @@ using Unity.Collections;
 using Unity.Mathematics;
 using UnityEditor.GraphToolsFoundation.Overdrive;
 using UnityEditor.GraphToolsFoundation.Overdrive.BasicModel;
-using UnityEditor.GraphToolsFoundation.Overdrive.Samples.MathBook;
+using UnityEditor.GraphToolsFoundation.Overdrive.Samples.Recipes;
 using UnityEngine;
 using UnityEngine.GraphToolsFoundation.Overdrive;
-using TypeHandleExtensions = UnityEditor.GraphToolsFoundation.Overdrive.TypeHandleExtensions;
 
 namespace Organa.Editor
 {
     [Serializable]
-    [SearcherItem(typeof(TerrainStencil), SearcherContext.Graph, "Preview")]
-    public class PreviewNode : NodeModel
+    [SearcherItem(typeof(TerrainStencil), SearcherContext.Graph, "Generator")]
+    public class GeneratorNode<N> : NodeModel where N: struct, Noise.INoiseMethod2D
     {
-        public Texture2D Preview(int height, int width)
+        [SerializeField] public NoiseGenerator2D<N> Generator;
+        
+        protected override void OnDefineNode()
+        {
+            base.OnDefineNode();
+            
+            Generator = new NoiseGenerator2D<N>(Noise.NoiseProfile.Default, Allocator.Persistent);
+            
+            AddInputPort("Input", PortType.Data, TerrainStencil.PlaceHolder,
+                options: PortModelOptions.NoEmbeddedConstant);
+
+            //AddInputPort("Ingredients", PortType.Data, RecipeStencil.Ingredient, options: PortModelOptions.NoEmbeddedConstant);
+            AddOutputPort("Result", PortType.Data, TerrainStencil.Generator, options: PortModelOptions.NoEmbeddedConstant);
+        }
+
+        public Texture2D Sample(float2 start, Rect sourceRect, float scale = 1) =>
+            Sample(start, (int)sourceRect.height, (int)sourceRect.width, scale);
+
+        public Texture2D Sample(float2 start, int height, int width, float scale = 1)
         {
             if (!(this.GetInputPorts().FirstOrDefault()?.GetConnectedEdges().FirstOrDefault()?.FromPort.NodeModel is GeneratorNode port))
                 return Texture2D.blackTexture;
@@ -48,14 +65,6 @@ namespace Organa.Editor
             noise.Dispose();
             
             return texture;
-        }
-        
-        protected override void OnDefineNode()
-        {
-            base.OnDefineNode();
-
-            AddInputPort("Generator", PortType.Data, TerrainStencil.Generator,
-                options: PortModelOptions.NoEmbeddedConstant);
         }
     }
 }

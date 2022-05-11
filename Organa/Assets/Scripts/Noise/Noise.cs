@@ -53,7 +53,7 @@ public static class Noise
 
         [SerializeField, Range(1, 16)] public int reloadRadius = 1;
     }
-
+    
     public struct Perlin : INoiseMethod2D
     {
         public float NoiseAt(float2 p)

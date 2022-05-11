@@ -34,7 +34,6 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
             }
             
             return n;
-            
         }
     }
 

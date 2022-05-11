@@ -69,6 +69,7 @@ namespace Organa.Editor
 
         protected override void BuildPartUI(VisualElement container)
         {
+            return;
             Button = new Button() { text = "Preview" };
             Button.clicked += OnPreview;
             container.Add(Button);
@@ -76,7 +77,7 @@ namespace Organa.Editor
             TextureImage = new Image();
             var texture = new Texture2D(100, 100);
             TextureImage.image = texture;
-            
+
             container.Add(TextureImage);
             MeshImage = new Image();
             
@@ -95,6 +96,7 @@ namespace Organa.Editor
                 }
             };
             var obj = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            
 
             var material = Resources.Load<Material>("new Material");
             

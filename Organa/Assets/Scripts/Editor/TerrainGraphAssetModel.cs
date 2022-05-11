@@ -30,18 +30,16 @@ namespace Organa.Editor
         public static bool OpenGraphAsset(int instanceId, int line)
         {
             var obj = EditorUtility.InstanceIDToObject(instanceId);
-            if (obj is TerrainGraphAssetModel)
-            {
-                string path = AssetDatabase.GetAssetPath(instanceId);
-                var asset = AssetDatabase.LoadAssetAtPath<TerrainGraphAssetModel>(path);
-                if (asset == null)
-                    return false;
+            if (!(obj is TerrainGraphAssetModel)) return false;
+            
+            var path = AssetDatabase.GetAssetPath(instanceId);
+            var asset = AssetDatabase.LoadAssetAtPath<TerrainGraphAssetModel>(path);
+            if (asset == null)
+                return false;
 
-                var window = GraphViewEditorWindow.FindOrCreateGraphWindow<TerrainGraphWindow>();
-                return window != null;
-            }
+            var window = GraphViewEditorWindow.FindOrCreateGraphWindow<TerrainGraphWindow>();
+            return window != null;
 
-            return false;
         }
 
         protected override Type GraphModelType => typeof(TerrainGraphModel);

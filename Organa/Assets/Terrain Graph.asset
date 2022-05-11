@@ -23,16 +23,30 @@ MonoBehaviour:
         m_GraphNodeModels:
         - id: 1
         - id: 2
+        - id: 3
+        - id: 4
+        - id: 5
+        - id: 6
+        - id: 7
+        - id: 8
+        - id: 9
         m_EdgeModels: []
         m_BadgeModels: []
         m_GraphEdgeModels:
-        - id: 3
+        - id: 10
+        - id: 11
+        - id: 12
+        - id: 13
+        - id: 14
+        - id: 15
         m_PolymorphicEdgeModels: []
         m_StickyNoteModels: []
         m_GraphStickyNoteModels: []
         m_PlacematModels: []
-        m_GraphPlacematModels: []
-        m_GraphVariableModels: []
+        m_GraphPlacematModels:
+        - id: 16
+        m_GraphVariableModels:
+        - id: 17
         m_GraphPortalModels: []
         m_Name: 
         m_StencilTypeName: Organa.Editor.TerrainStencil, Assembly-CSharp-Editor,
@@ -55,7 +69,7 @@ MonoBehaviour:
         - .Movable
         - .Collapsible
         - .Colorable
-        m_Position: {x: 674.4899, y: 128.28}
+        m_Position: {x: 710.4899, y: 65.079994}
         m_Title: Preview
         m_InputConstantsById:
           m_KeyList: []
@@ -80,7 +94,7 @@ MonoBehaviour:
         - .Movable
         - .Collapsible
         - .Colorable
-        m_Position: {x: 367.5899, y: 128.97998}
+        m_Position: {x: 367.5899, y: 82.57997}
         m_Title: Generator
         m_InputConstantsById:
           m_KeyList: []
@@ -91,11 +105,216 @@ MonoBehaviour:
           profile:
             seed: 0
             octaves: 1
-            frequency: 44
-            amplitude: 24.18
+            frequency: 16
+            amplitude: 16
             lacunarity: 1
             persistence: 0.5
     00000003:
+      type: {class: GeneratorNodeModel, ns: Organa.Editor, asm: Assembly-CSharp-Editor}
+      data:
+        m_Guid:
+          m_Value0: 14573079662496691794
+          m_Value1: 10761211796670722861
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        m_Position: {x: 397.2, y: 249.2}
+        m_Title: Generator
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+        Generator:
+          profile:
+            seed: 0
+            octaves: 1
+            frequency: 16
+            amplitude: 16
+            lacunarity: 1
+            persistence: 0.5
+    00000004:
+      type: {class: GeneratorNodeModel, ns: Organa.Editor, asm: Assembly-CSharp-Editor}
+      data:
+        m_Guid:
+          m_Value0: 12915251781836633449
+          m_Value1: 10714505974374853630
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        m_Position: {x: -1198.6, y: -649.2}
+        m_Title: Generator
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+        Generator:
+          profile:
+            seed: 0
+            octaves: 1
+            frequency: 16
+            amplitude: 16
+            lacunarity: 1
+            persistence: 0.5
+    00000005:
+      type: {class: GeneratorNodeModel, ns: Organa.Editor, asm: Assembly-CSharp-Editor}
+      data:
+        m_Guid:
+          m_Value0: 11871905264916093929
+          m_Value1: 17126197748659566898
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        m_Position: {x: -835.99994, y: -499.39987}
+        m_Title: Generator
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+        Generator:
+          profile:
+            seed: 0
+            octaves: 1
+            frequency: 16
+            amplitude: 16
+            lacunarity: 1
+            persistence: 0.5
+    00000006:
+      type: {class: VariableNodeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 5443550053476648091
+          m_Value1: 1111058102661646751
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        - .Renamable
+        m_Position: {x: 174.67174, y: 192.9448}
+        m_Title: Placeholder
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+        m_DeclarationModel:
+          id: 17
+    00000007:
+      type: {class: VariableNodeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 5019702938614547496
+          m_Value1: 3982657957794058889
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        - .Renamable
+        m_Position: {x: -1157.4521, y: -399.60272}
+        m_Title: Placeholder
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+        m_DeclarationModel:
+          id: 17
+    00000008:
+      type: {class: PreviewNode, ns: Organa.Editor, asm: Assembly-CSharp-Editor}
+      data:
+        m_Guid:
+          m_Value0: 11096911275780319824
+          m_Value1: 15704627365047146868
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0.7830189, g: 0.40923816, b: 0.7104291, a: 0.5}
+        m_HasUserColor: 1
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        m_Position: {x: -537.92944, y: -297.2618}
+        m_Title: Preview
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+    00000009:
+      type: {class: PreviewNode, ns: Organa.Editor, asm: Assembly-CSharp-Editor}
+      data:
+        m_Guid:
+          m_Value0: 267927132761674511
+          m_Value1: 3266421053213077507
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        - .Collapsible
+        - .Colorable
+        m_Position: {x: -55.62828, y: -631.4273}
+        m_Title: Preview
+        m_InputConstantsById:
+          m_KeyList: []
+          m_ValueList: []
+        m_State: 0
+        m_Collapsed: 0
+    0000000A:
       type: {class: EdgeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
       data:
         m_Guid:
@@ -125,3 +344,209 @@ MonoBehaviour:
         m_EdgeControlPoints: []
         m_EditMode: 0
         m_EdgeLabel: 
+    0000000B:
+      type: {class: EdgeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 2587027961678652779
+          m_Value1: 15051122697195023140
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        m_FromPortReference:
+          NodeModelGuid:
+            m_Value0: 5019702938614547496
+            m_Value1: 3982657957794058889
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: MainPortName
+        m_ToPortReference:
+          NodeModelGuid:
+            m_Value0: 11871905264916093929
+            m_Value1: 17126197748659566898
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: Input
+        m_EdgeControlPoints: []
+        m_EditMode: 0
+        m_EdgeLabel: 
+    0000000C:
+      type: {class: EdgeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 12104358575589721741
+          m_Value1: 11067995167031488631
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        m_FromPortReference:
+          NodeModelGuid:
+            m_Value0: 5019702938614547496
+            m_Value1: 3982657957794058889
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: MainPortName
+        m_ToPortReference:
+          NodeModelGuid:
+            m_Value0: 12915251781836633449
+            m_Value1: 10714505974374853630
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: Input
+        m_EdgeControlPoints: []
+        m_EditMode: 0
+        m_EdgeLabel: 
+    0000000D:
+      type: {class: EdgeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 2773225959304365700
+          m_Value1: 6604457596683934539
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        m_FromPortReference:
+          NodeModelGuid:
+            m_Value0: 11871905264916093929
+            m_Value1: 17126197748659566898
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: Result
+        m_ToPortReference:
+          NodeModelGuid:
+            m_Value0: 11096911275780319824
+            m_Value1: 15704627365047146868
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: Generator
+        m_EdgeControlPoints: []
+        m_EditMode: 0
+        m_EdgeLabel: 
+    0000000E:
+      type: {class: EdgeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 15372934419481794433
+          m_Value1: 16236516617072513818
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        m_FromPortReference:
+          NodeModelGuid:
+            m_Value0: 5443550053476648091
+            m_Value1: 1111058102661646751
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: MainPortName
+        m_ToPortReference:
+          NodeModelGuid:
+            m_Value0: 7758074886887141048
+            m_Value1: 13448733595540666213
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: Input
+        m_EdgeControlPoints: []
+        m_EditMode: 0
+        m_EdgeLabel: 
+    0000000F:
+      type: {class: EdgeModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 14304586560845295152
+          m_Value1: 16164784015415558127
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Copiable
+        - .Selectable
+        - .Movable
+        m_FromPortReference:
+          NodeModelGuid:
+            m_Value0: 5443550053476648091
+            m_Value1: 1111058102661646751
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: MainPortName
+        m_ToPortReference:
+          NodeModelGuid:
+            m_Value0: 14573079662496691794
+            m_Value1: 10761211796670722861
+          GraphAssetModel: {fileID: 11400000}
+          UniqueId: Input
+        m_EdgeControlPoints: []
+        m_EditMode: 0
+        m_EdgeLabel: 
+    00000010:
+      type: {class: PlacematModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 11517743730497886058
+          m_Value1: 6144573364099086747
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Copiable
+        - .Selectable
+        - .Renamable
+        - .Movable
+        - .Resizable
+        - .Collapsible
+        - .Colorable
+        m_Title: Test
+        m_Position:
+          serializedVersion: 2
+          x: -1304
+          y: -739.2001
+          width: 1008
+          height: 755.19995
+        m_Collapsed: 0
+        m_ZOrder: 1
+        m_HiddenElements: []
+    00000011:
+      type: {class: VariableDeclarationModel, ns: UnityEditor.GraphToolsFoundation.Overdrive.BasicModel, asm: Unity.GraphTools.Foundation.Overdrive.Model}
+      data:
+        m_Guid:
+          m_Value0: 10860269525536473323
+          m_Value1: 15718282949548708379
+        m_AssetModel: {fileID: 11400000}
+        m_Color: {r: 0, g: 0, b: 0, a: 0}
+        m_HasUserColor: 0
+        m_Version: 1
+        m_SerializedCapabilities:
+        - .Deletable
+        - .Droppable
+        - .Copiable
+        - .Selectable
+        - .Renamable
+        m_Name: Placeholder
+        m_DataType:
+          Identification: Placeholder
+        m_IsExposed: 1
+        m_Tooltip: 
+        m_InitializationValue:
+          id: 18
+        m_Modifiers: 0
+        variableFlags: 0
+    00000012:
+      type: {class: , ns: , asm: }
