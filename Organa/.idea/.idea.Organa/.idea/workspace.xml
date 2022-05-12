@@ -5,27 +5,53 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81f6a75d-57df-46f2-88bf-62d9fc9ad350" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseGeneratorPart.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseGeneratorPart.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseSample.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseSample.cs.meta" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/NoiseSampleUI.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/NoiseSampleUI.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SampleTerrain.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/SampleTerrain.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TestNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/TestNode.cs.meta" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Terrain Graph 1.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Terrain Graph1.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Terrain Graph1.asset.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp-Editor.csproj.DotSettings" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/New Shader Graph.shadergraph" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/New Shader Graph.shadergraph.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNodeModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNodeModel.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNode.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/PreviewNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/PreviewNode.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainStencil.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainStencil.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/Graph Elements.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/Graph Elements/PreviewPart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/PreviewPart.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/Graph Elements/PreviewPart.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/PreviewPart.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Noise/Noise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Noise/Noise.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Noise/NoiseGenerator.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Noise/NoiseGenerator.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Terrain Graph.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Terrain Graph.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Terrain Graph 1.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/GeneratorNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNode.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/GeneratorNode.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/PreviewNode.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/PreviewNode.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/PreviewNode.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/PreviewNode.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/TerrainGraphModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/TerrainGraphModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/TerrainGraphModel.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/TerrainGraphModel.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/New Folder.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/New Folder.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainBlackboardGraphModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainBlackboardGraphModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainBlackboardGraphModel.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainBlackboardGraphModel.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphAssetModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphAssetModel.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphUIFactoryExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphUIFactoryExtensions.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphUIFactoryExtensions.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphUIFactoryExtensions.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphView.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphView.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphView.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphWindow.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphWindow.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphWindow.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphWindow.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainOnboardingProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainOnboardingProvider.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainOnboardingProvider.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainOnboardingProvider.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainState.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainState.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainState.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainState.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainStencil.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainStencil.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/TerrainStencil.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainStencil.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseGeneratorPart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements/NoiseGeneratorPart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseGeneratorPart.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements/NoiseGeneratorPart.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseSample.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements/NoiseSample.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/NoiseSample.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements/NoiseSample.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/PreviewPart.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements/PreviewPart.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/GraphElements/PreviewPart.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/GraphElements/PreviewPart.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/NoiseSampleUI.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/NoiseSampleUI.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/UI/NoiseSampleUI.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TerrainEditor/UI/NoiseSampleUI.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/TerrainMeshSystem.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/TerrainMeshSystem.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Util.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Util.meta" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,20 +73,21 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/e4/2ccfef8a/IJob.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Samples/Recipes/Editor/RecipeBlackboardGraphModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/buffer/MeshStream.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/SampleTerrain.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f79d3e63281a46a1a061d66eff76f483c5400/b1/d642e5c0/VisualElement.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../ecs-terrain/ecs-terrain/Assets/Scripts/Noise/NoiseRenderer.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/06/f503e119/LensFlare.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/Data Model/GeneratorNode.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TerrainEditor/Data Model/GeneratorNode.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/6f/2ccad46d/IJobFor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f79d3e63281a46a1a061d66eff76f483c5400/18/48135cbe/Image.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f79d3e63281a46a1a061d66eff76f483c5400/3f/70602078/Vertex.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/e4/aa814d03/IJobParallelFor.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/TerrainBlackboardGraphModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainBlackboardGraphModel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/50/9c05cac7/Material.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/84/a23ee91f/JobProducerTypeAttribute.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/f79d3e63281a46a1a061d66eff76f483c5400/ac/0ebf984d/Button.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/db7f68c084e842d98504c53b2b4dd3db13ca00/ec/45d607e5/Mesh.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Editor/TerrainGraphAssetModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/TerrainEditor/TerrainGraphAssetModel.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="28LyxtMpwTGTP51NfzHc8xDXfLb" />
   <component name="ProjectLevelVcsManager">

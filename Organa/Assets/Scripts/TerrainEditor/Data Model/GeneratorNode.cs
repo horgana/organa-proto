@@ -12,15 +12,15 @@ namespace Organa.Editor
 {
     [Serializable]
     [SearcherItem(typeof(TerrainStencil), SearcherContext.Graph, "Generator")]
-    public class GeneratorNode<N> : NodeModel where N: struct, Noise.INoiseMethod2D
+    public class GeneratorNode : NodeModel
     {
-        [SerializeField] public NoiseGenerator2D<N> Generator;
+        [SerializeField] public NoiseGenerator2D<Noise.Perlin> Generator;
         
         protected override void OnDefineNode()
         {
             base.OnDefineNode();
             
-            Generator = new NoiseGenerator2D<N>(Noise.NoiseProfile.Default, Allocator.Persistent);
+            Generator = new NoiseGenerator2D<Noise.Perlin>(Noise.NoiseProfile.Default, Allocator.Persistent);
             
             AddInputPort("Input", PortType.Data, TerrainStencil.PlaceHolder,
                 options: PortModelOptions.NoEmbeddedConstant);

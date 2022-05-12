@@ -15,7 +15,7 @@ namespace Organa.Editor
         public static readonly string graphName = "Terrain Graph";
         public static TypeHandle PlaceHolder { get; } = TypeSerializer.GenerateCustomTypeHandle("Placeholder");
 
-        public static TypeHandle Generator { get; } = TypeSerializer.GenerateTypeHandle<NoiseGenerator2D<N>>();
+        public static TypeHandle Generator { get; } = TypeSerializer.GenerateTypeHandle<NoiseGenerator2D<Noise.Perlin>>();
         
         //public static TypeHandle Cookware { get; } = TypeSerializer.GenerateCustomTypeHandle("Cookware");
 
