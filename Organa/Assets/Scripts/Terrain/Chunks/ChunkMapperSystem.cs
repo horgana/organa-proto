@@ -1,3 +1,4 @@
+using System;
 using System.CodeDom.Compiler;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
@@ -30,12 +31,19 @@ namespace Organa.Terrain
         protected override void OnUpdate()
         {
             var ecb = beginSimulationECB.CreateCommandBuffer();
+
+            NoiseProfile profile;
+            try
+            {
+                profile = Resources.Load<NoisePreset>("Noise/Default").profile;
+            }
+            catch (NullReferenceException)
+            {
+                return;
+            }
             
             var terrainSettings = GetSingleton<TerrainSettings>();
             var chunkSize = terrainSettings.ChunkSize;
-            
-            var profile = Resources.Load<NoisePreset>("Noise/Default").profile;
-            
             
             if (!profile.Equals(_profile))
             {
