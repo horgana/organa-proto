@@ -43,10 +43,10 @@ namespace Organa
                 typeof(TerrainSettings)).ToEntityArray(Allocator.Temp);
             foreach (var terrainEntity in terrains)
             {
-                var terrainSettings     = GetComponent<TerrainSettings>(terrainEntity);
+                var terrainSettings = GetComponent<TerrainSettings>(terrainEntity);
 
                 var chunkLoaders = GetBuffer<LinkedEntityGroup>(terrainEntity).AsNativeArray().Reinterpret<Entity>();
-                var loadedChunks = terrainSettings.LoadedChunks;
+                var loadedChunks = GetComponent<TerrainData>(terrainEntity).LoadedChunks;
                 
                 // load chunks around each chunkloader
                 Entities

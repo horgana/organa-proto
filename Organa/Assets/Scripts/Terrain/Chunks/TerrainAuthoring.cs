@@ -24,15 +24,16 @@ namespace Organa
                     });
             }
         }*/
-        
+
     [AddComponentMenu("Organa/Terrain")]
     public class TerrainAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     {
         [SerializeField] int chunkSize = 64;
-        [SerializeField] int regionSize = 1024;
         [SerializeField] int lodLevels = 1;
         [SerializeField] int maxLoadVolume = 1;
-        
+
+        [SerializeField] List<BiomeParam<IGenerator2D<float>>> biomeParams;
+
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {
             dstManager.AddComponentObject(entity, transform);
@@ -48,7 +49,7 @@ namespace Organa
             dstManager.AddComponentData(entity, new TerrainData
             {
                 LoadedChunks = new UnsafeHashMap<int2, Entity>(1, Allocator.Persistent),
-                BiomeMap = new BiomeGenerator()
+                //BiomeMap = new BiomeGenerator()
             });
 
             /*var ecb = new EntityCommandBuffer(Allocator.Temp);
@@ -83,7 +84,8 @@ namespace Organa
     struct TerrainData : IComponentData
     {
         public UnsafeHashMap<int2, Entity> LoadedChunks;
-        public IGenerator2D<Biome> BiomeMap; 
+        
+        //public IGenerator2D<Biome> BiomeMap; 
 
         public Entity GetChunkEntity(int2 index) => LoadedChunks[index];
     }

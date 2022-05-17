@@ -9,6 +9,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using UnityEditor;
 using UnityEngine;
 
 namespace Organa
@@ -16,7 +17,8 @@ namespace Organa
     using static Noise;
 
     [BurstCompile]
-    public struct NoiseGenerator2D<N> : IDisposable, IGenerator2D<float> where N : struct, INoiseMethod2D
+    [Serializable]
+    public class NoiseGenerator2D<N> : IDisposable, IGenerator2D<float> where N : struct, INoiseMethod2D
     {
         public int Capacity => map.Capacity;
         public int Count => map.Count();

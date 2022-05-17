@@ -8,10 +8,11 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static Noise;
 
 namespace Organa
 {
+    using static Noise;
+
     //[UpdateBefore(typeof(ChunkManagerSystem))]
     public partial class ChunkMapperSystem : SystemBase
     {
@@ -26,7 +27,7 @@ namespace Organa
         }
 
         NoiseProfile _profile;
-        IGenerator2D<> _generator;
+        GeneratorJob<float> _generator;
 
         protected override void OnUpdate()
         {

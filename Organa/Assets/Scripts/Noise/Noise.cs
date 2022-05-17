@@ -13,6 +13,12 @@ using static Unity.Mathematics.math;
 
 namespace Organa
 {
+    public abstract class GeneratorJob<T> : ScriptableObject where T: struct
+    {
+        public abstract JobHandle Schedule(NativeArray<T> output, float2 start, float2 dimensions, float stepSize = 1, 
+            int batchCount = 1, JobHandle dependency = default);
+    }
+    
     public interface IGenerator2D<T> where T: struct
     {
         public JobHandle Schedule(NativeArray<T> output, float2 start, float2 dimensions, float stepSize = 1, 
