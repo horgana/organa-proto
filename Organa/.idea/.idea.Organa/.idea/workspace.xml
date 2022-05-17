@@ -5,7 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81f6a75d-57df-46f2-88bf-62d9fc9ad350" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/TerrainMaterial.asset" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Resources/TerrainMaterial.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.Player.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.Player.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assembly-CSharp.csproj.DotSettings" beforeDir="false" afterPath="$PROJECT_DIR$/Assembly-CSharp.csproj.DotSettings" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Noise/Default.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Noise/Default.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Noise/Default.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Noise/Default.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Noise/Noise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Noise/Noise.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Biome.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Biome.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Layer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Layer.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Partition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Partition.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/TerrainData.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/TerrainData.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/TerrainMaterial.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/TerrainMaterial.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,6 +106,7 @@
       <workItem from="1651776489256" duration="5989000" />
       <workItem from="1651847584051" duration="7840000" />
       <workItem from="1651940145113" duration="6908000" />
+      <workItem from="1652740873288" duration="4728000" />
     </task>
     <servers />
   </component>

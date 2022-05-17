@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Terrain.Data
+namespace Terrain
 {
     public struct Layer<S, E> 
         where S: struct, Noise.INoiseMethod2D 
@@ -8,5 +8,7 @@ namespace Terrain.Data
     {
         public NoiseGenerator2D<S> Start;
         public NoiseGenerator2D<E> End;
+
+        public TerrainMaterial Material;
     }
 }

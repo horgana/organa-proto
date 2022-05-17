@@ -1,4 +1,4 @@
-namespace Terrain.Data
+namespace Terrain
 {
     public struct TerrainData
     {

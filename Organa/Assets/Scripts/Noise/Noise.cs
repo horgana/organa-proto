@@ -49,9 +49,14 @@ public static class Noise
     {
         //public static NoisePreset Default => CreateInstance<NoisePreset>();
         
-        public NoiseProfile profile = NoiseProfile.Default;
+        public NoiseProfile profile;
 
         [SerializeField, Range(1, 16)] public int reloadRadius = 1;
+
+        void Awake()
+        {
+            profile = NoiseProfile.Default;
+        }
     }
 
     public struct Perlin : INoiseMethod2D
