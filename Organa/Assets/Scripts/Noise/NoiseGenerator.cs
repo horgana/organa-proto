@@ -1,6 +1,8 @@
 using System;
 using System.CodeDom.Compiler;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
@@ -10,8 +12,15 @@ using Unity.Mathematics;
 using UnityEngine;
 using static Noise;
 
+public interface INoiseGenerator
+{
+    public JobHandle Schedule(NativeArray<float> noise, float2 start = default, float2 dimensions = default, float stepSize = 1, 
+        int batchCount = 1,
+        JobHandle dependency = default);
+}
+
 [BurstCompile]
-public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
+public struct NoiseGenerator2D<N> : IDisposable, INoiseGenerator where N : struct, INoiseMethod2D
 {
     public int Capacity => map.Capacity;
     public int Count => map.Count();
@@ -91,14 +100,12 @@ public struct NoiseGenerator2D<N> : IDisposable where N : struct, INoiseMethod2D
 
     public void Dispose() => map.Dispose();
 
-    public NoiseGenerator2D(NoiseProfile profile, int count, Allocator allocator)
+    public NoiseGenerator2D(NoiseProfile profile, int count = 0, Allocator allocator = Allocator.None)
     {
         this.profile = profile;
         map = new UnsafeHashMap<float2, float>(count, allocator);
         generator = new N();
     }
-    
-    public NoiseGenerator2D(NoiseProfile profile, Allocator allocator) { this = new NoiseGenerator2D<N>(profile, 0, allocator); }
     
     struct NoiseJob2D : IJobParallelFor
     {

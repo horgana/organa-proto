@@ -1,13 +1,13 @@
+using System;
 using UnityEngine;
 
-namespace Terrain
+namespace Organa.Terrain
 {
-    public struct Layer<S, E> 
-        where S: struct, Noise.INoiseMethod2D 
-        where E: struct, Noise.INoiseMethod2D
+    [Serializable]
+    public struct Layer
     {
-        public NoiseGenerator2D<S> Start;
-        public NoiseGenerator2D<E> End;
+        public INoiseGenerator Start;
+        public INoiseGenerator End;
 
         public TerrainMaterial Material;
     }

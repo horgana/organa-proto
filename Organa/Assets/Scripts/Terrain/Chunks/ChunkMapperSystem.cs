@@ -26,7 +26,7 @@ namespace Organa.Terrain
         }
 
         NoiseProfile _profile;
-        NoiseGenerator2D<Perlin> _generator;
+        INoiseGenerator _generator;
 
         protected override void OnUpdate()
         {

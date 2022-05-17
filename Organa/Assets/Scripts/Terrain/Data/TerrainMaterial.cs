@@ -2,7 +2,7 @@ using System;
 using Unity.Rendering;
 using UnityEngine;
 
-namespace Terrain
+namespace Organa.Terrain
 {
     public struct TerrainMaterial
     {

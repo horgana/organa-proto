@@ -1,4 +1,4 @@
-namespace Terrain
+namespace Organa.Terrain
 {
     public struct TerrainData
     {

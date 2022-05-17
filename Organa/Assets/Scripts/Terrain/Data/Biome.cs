@@ -1,9 +1,16 @@
-using Unity.Collections;
+using System;
+using System.Collections.Generic;
 
-namespace Terrain
+namespace Organa.Terrain
 {
+    [Serializable]
     public struct Biome
     {
-        public NativeList<
+        public List<Layer> layers;
+
+        public Biome(int listCapacity = 0)
+        {
+            layers = new List<Layer>(listCapacity);
+        }
     }
 }
