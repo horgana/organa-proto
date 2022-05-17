@@ -3,7 +3,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace Organa.Terrain
+namespace Organa
 {
     public struct Chunk : IComponentData
     {

@@ -6,7 +6,7 @@ using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace Organa.Terrain
+namespace Organa
 {
     [AddComponentMenu("Organa/Chunk Loader")]
     [UpdateAfter(typeof(TerrainAuthoring))]

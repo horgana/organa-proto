@@ -1,4 +1,4 @@
-namespace Organa.Terrain
+namespace Organa
 {
     public struct Partition
     {

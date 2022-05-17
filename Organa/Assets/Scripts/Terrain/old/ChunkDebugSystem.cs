@@ -7,7 +7,7 @@ using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Organa.Terrain
+namespace Organa
 {
     /*[BurstCompile]
     public partial class ChunkDebugSystem : SystemBase

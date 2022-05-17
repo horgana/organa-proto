@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static Noise;
 
-namespace Organa.Terrain
+namespace Organa
 {
     //[UpdateBefore(typeof(ChunkManagerSystem))]
     public partial class ChunkMapperSystem : SystemBase
@@ -26,7 +26,7 @@ namespace Organa.Terrain
         }
 
         NoiseProfile _profile;
-        INoiseGenerator _generator;
+        IGenerator2D<> _generator;
 
         protected override void OnUpdate()
         {
@@ -86,7 +86,7 @@ namespace Organa.Terrain
                     //if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainData.LoadVolume) return; 
                     var noise = new NativeArray<float>((chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
-                    var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize+1, 1);
+                    var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize+1);
 
                     var meshStream = new MeshStream
                     {

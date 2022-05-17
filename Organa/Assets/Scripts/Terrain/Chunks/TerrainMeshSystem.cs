@@ -10,7 +10,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-namespace Organa.Terrain
+namespace Organa
 {
     public partial class TerrainMeshSystem : SystemBase
     {

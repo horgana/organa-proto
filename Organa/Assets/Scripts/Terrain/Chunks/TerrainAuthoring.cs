@@ -7,7 +7,7 @@ using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace Organa.Terrain
+namespace Organa
 {
     /*[UpdateBefore(typeof(ChunkManagerSystem))]
         class TerrainManager : SystemBase
@@ -43,11 +43,12 @@ namespace Organa.Terrain
                 
                 LODLevels = lodLevels,
                 ChunkSize = chunkSize,
-                RegionSize = regionSize,
-                LoadVolume = maxLoadVolume,
-                
+                LoadVolume = maxLoadVolume
+            });
+            dstManager.AddComponentData(entity, new TerrainData
+            {
                 LoadedChunks = new UnsafeHashMap<int2, Entity>(1, Allocator.Persistent),
-                LoadedRenderGroups = new UnsafeHashMap<(int2, int), Entity>(1, Allocator.Persistent)
+                BiomeMap = new BiomeGenerator()
             });
 
             /*var ecb = new EntityCommandBuffer(Allocator.Temp);
@@ -73,23 +74,18 @@ namespace Organa.Terrain
     {
         public float3 Root;
         public int2 Bounds;
+        
         public int LODLevels;
         public int ChunkSize;
-        public int RegionSize;
         public int LoadVolume;
-        
+    }
+
+    struct TerrainData : IComponentData
+    {
         public UnsafeHashMap<int2, Entity> LoadedChunks;
-        public UnsafeHashMap<(int2, int), Entity> LoadedRenderGroups;
+        public IGenerator2D<Biome> BiomeMap; 
 
         public Entity GetChunkEntity(int2 index) => LoadedChunks[index];
-
-        public Entity GetRenderGroupEntity(Chunk chunk)
-        {
-            var entity = LoadedRenderGroups[((int2) math.round(chunk.Index * ChunkSize / RegionSize), chunk.Division)];
-            return entity;
-        }
-        public Entity GetRenderGroupEntity(int2 index, int division) => 
-            LoadedRenderGroups[((int2)math.round(index * ChunkSize / RegionSize), division)];
     }
 }
 

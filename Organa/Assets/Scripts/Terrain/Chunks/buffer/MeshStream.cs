@@ -5,7 +5,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Organa.Terrain
+namespace Organa
 {
     public struct MeshStream : IComponentData
     {

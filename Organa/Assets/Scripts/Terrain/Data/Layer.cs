@@ -1,13 +1,13 @@
 using System;
 using UnityEngine;
 
-namespace Organa.Terrain
+namespace Organa
 {
     [Serializable]
     public struct Layer
     {
-        public INoiseGenerator Start;
-        public INoiseGenerator End;
+        public IGenerator2D<> Start;
+        public IGenerator2D<> End;
 
         public TerrainMaterial Material;
     }

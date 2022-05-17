@@ -8,7 +8,7 @@ using Unity.Rendering;
 using Unity.Transforms;
 using UnityEngine;
 
-namespace Organa.Terrain
+namespace Organa
 {
     public partial class ChunkManagerSystem : SystemBase
     {

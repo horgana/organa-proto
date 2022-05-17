@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Organa.Terrain
+namespace Organa
 {
     [Serializable]
     public struct Biome

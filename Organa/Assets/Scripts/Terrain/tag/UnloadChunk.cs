@@ -1,6 +1,6 @@
 using Unity.Entities;
 
-namespace Organa.Terrain
+namespace Organa
 {
     public struct UnloadChunk : IComponentData
     {
