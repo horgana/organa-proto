@@ -2,39 +2,38 @@ using Unity.Entities;
 using Unity.Jobs;
 using Unity.Jobs.LowLevel.Unsafe;
 
-namespace Organa
+
+public struct JobProgress : IComponentData
 {
-    public struct JobProgress : IComponentData
+    public int MaxFrameLength;
+    public int FrameCount;
+    public JobHandle Dependency;
+}
+
+public partial class ProgressManagerSystem : SystemBase
+{
+    BeginInitializationEntityCommandBufferSystem _beginInitializationECB;
+
+    protected override void OnCreate()
     {
-        public int MaxFrameLength;
-        public int FrameCount;
-        public JobHandle Dependency;
+        base.OnCreate();
+
+        _beginInitializationECB = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
     }
 
-    public partial class ProgressManagerSystem : SystemBase
+    protected override void OnUpdate()
     {
-        BeginInitializationEntityCommandBufferSystem _beginInitializationECB;
-        
-        protected override void OnCreate()
-        {
-            base.OnCreate();
+        var ecb = _beginInitializationECB.CreateCommandBuffer();
 
-            _beginInitializationECB = World.GetOrCreateSystem<BeginInitializationEntityCommandBufferSystem>();
-        }
-        protected override void OnUpdate()
+        Entities.ForEach((Entity entity, ref JobProgress jobProgress) =>
         {
-            var ecb = _beginInitializationECB.CreateCommandBuffer();
-
-            Entities.ForEach((Entity entity, ref JobProgress jobProgress) =>
+            jobProgress.FrameCount++;
+            var dependency = jobProgress.Dependency;
+            if (dependency.IsCompleted || jobProgress.FrameCount > jobProgress.MaxFrameLength)
             {
-                jobProgress.FrameCount++;
-                var dependency = jobProgress.Dependency;
-                if (dependency.IsCompleted || jobProgress.FrameCount > jobProgress.MaxFrameLength)
-                {
-                    dependency.Complete();
-                    ecb.RemoveComponent<JobProgress>(entity);
-                }
-            }).Run();
-        }
+                dependency.Complete();
+                ecb.RemoveComponent<JobProgress>(entity);
+            }
+        }).Run();
     }
 }

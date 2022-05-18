@@ -1,9 +1,6 @@
 using Unity.Entities;
 
-namespace Organa
+
+public struct UpdateTag : IComponentData
 {
-    public struct UpdateTag : IComponentData
-    {
-        
-    }
 }

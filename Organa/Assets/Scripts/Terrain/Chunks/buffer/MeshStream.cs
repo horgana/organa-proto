@@ -5,23 +5,22 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace Organa
+
+public struct MeshStream : IComponentData
 {
-    public struct MeshStream : IComponentData
+    public JobHandle Dependency;
+
+    //public UnsafeList<float3> Vertices;
+    //public UnsafeList<int> Indices;
+    public UnsafeStream Vertices;
+    public UnsafeStream Indices;
+
+    public bool IsCompleted => Dependency.IsCompleted;
+    public void Complete() => Dependency.Complete();
+
+    public void Dispose()
     {
-        public JobHandle Dependency;
-        //public UnsafeList<float3> Vertices;
-        //public UnsafeList<int> Indices;
-        public UnsafeStream Vertices;
-        public UnsafeStream Indices; 
-
-        public bool IsCompleted => Dependency.IsCompleted;
-        public void Complete() => Dependency.Complete();
-
-        public void Dispose()
-        {
-            Vertices.Dispose(Dependency);
-            Indices.Dispose(Dependency);
-        }
+        Vertices.Dispose(Dependency);
+        Indices.Dispose(Dependency);
     }
 }

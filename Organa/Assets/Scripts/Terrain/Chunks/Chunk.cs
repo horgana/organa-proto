@@ -3,34 +3,31 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Mathematics;
 
-namespace Organa
+
+public struct Chunk : IComponentData
 {
-    public struct Chunk : IComponentData
-    {
-        public int2 Index;
-        public int Division;
-    }
-    
-    public struct ChunkMap : IComponentData
-    {
-        UnsafeMultiHashMap<int2, MaterialStack> LayerMap;
+    public int2 Index;
+    public int Division;
+}
 
-        public ChunkMap(int2 dim)
-        {
-            this = new ChunkMap(dim, Allocator.Persistent);
-        }
+public struct ChunkMap : IComponentData
+{
+    UnsafeMultiHashMap<int2, MaterialStack> LayerMap;
 
-        public ChunkMap(int2 dim, Allocator allocator)
-        {
-            LayerMap = new UnsafeMultiHashMap<int2, MaterialStack>(dim.x * dim.y, allocator);
-        }
-        
+    public ChunkMap(int2 dim)
+    {
+        this = new ChunkMap(dim, Allocator.Persistent);
     }
 
-    public struct MaterialStack
+    public ChunkMap(int2 dim, Allocator allocator)
     {
-        NativeArray<float> Nodes;
-
-        public NativeArray<int> ExposedIndices;
+        LayerMap = new UnsafeMultiHashMap<int2, MaterialStack>(dim.x * dim.y, allocator);
     }
+}
+
+public struct MaterialStack
+{
+    NativeArray<float> Nodes;
+
+    public NativeArray<int> ExposedIndices;
 }

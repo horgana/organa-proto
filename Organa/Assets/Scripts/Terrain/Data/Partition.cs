@@ -1,7 +1,3 @@
-namespace Organa
+public struct Partition
 {
-    public struct Partition
-    {
-         
-    }
 }

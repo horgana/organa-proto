@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7372b9914fc4c03a133aff23ea49bed, type: 3}
-  m_Name: TerrainMaterial
+  m_Script: {fileID: 11500000, guid: ddcea5d14e7f4c5ab4ab2b5dc969c878, type: 3}
+  m_Name: NoiseGenerator
   m_EditorClassIdentifier: 
-  material: {fileID: 0}
-  blend: 0

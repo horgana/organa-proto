@@ -1,7 +1,3 @@
-namespace Organa
+public struct TerrainDato
 {
-    public struct TerrainDato
-    {
-        
-    }
 }

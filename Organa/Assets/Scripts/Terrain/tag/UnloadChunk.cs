@@ -1,9 +1,6 @@
 using Unity.Entities;
 
-namespace Organa
+
+public struct UnloadChunk : IComponentData
 {
-    public struct UnloadChunk : IComponentData
-    {
-        
-    }
 }
