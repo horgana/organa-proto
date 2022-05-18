@@ -19,19 +19,19 @@ using static Unity.Mathematics.math;
 [Serializable]
 public class NoiseGenerator : ScriptableObject
 {
-    public INoiseProcessor2D<float> generatorObj;
+    public INoiseJob<float> generatorObj;
 
-    public void Set<T>(T obj) where T : struct, INoiseProcessor2D<float>
+    public void Set<T>(T obj) where T : struct, INoiseJob<float>
     {
         generatorObj = obj;
     }
 
-    public T Get<T>() where T : struct, INoiseProcessor2D<float>
+    public T Get<T>() where T : struct, INoiseJob<float>
     {
         return (T) generatorObj;
     }
 
-    public void Set(INoiseProcessor2D<float> obj)
+    public void Set(INoiseJob<float> obj)
     {
         generatorObj = obj;
     }
@@ -49,9 +49,17 @@ public class TestScriptable : ScriptableObject
 
 public class NoiseMenu : Attribute
 {
+    public string Label;
+
+    public NoiseMenu(string displayName)
+    {
+        Label = displayName;
+    }
+    
     public static class NoiseGroup<TIn, TOut>
     {
         public static Type[] Sources;
+        public static string[] Labels;
 
         static NoiseGroup()
         {
@@ -60,11 +68,14 @@ public class NoiseMenu : Attribute
                 from type in assembly.GetTypes()
                 where type.IsDefined(typeof(NoiseMenu))
                 select type).ToArray();
+            Labels = new string[Sources.Length];
+            for (int i = 0; i < Labels.Length; i++)
+                Labels[i] = ((NoiseMenu)Sources[i].GetCustomAttribute(typeof(NoiseMenu))).Label;
         }
     }
 }
 
-public interface INoiseProcessor2D<T> where T : struct
+public interface INoiseJob<T> where T : struct
 {
     public JobHandle Schedule(NativeArray<T> output, float2 start, float2 dimensions, float stepSize = 1,
         int batchCount = 1, JobHandle dependency = default);
@@ -114,7 +125,7 @@ public static class Noise
         }
     }
 
-    [NoiseMenu]
+    [NoiseMenu("Perlin")]
     public struct Perlin : INoiseSource<float2, float>, INoiseSource<float3, float>, INoiseSource<float4, float>
     {
         public float NoiseAt(float2 p) => noise.cnoise(p);

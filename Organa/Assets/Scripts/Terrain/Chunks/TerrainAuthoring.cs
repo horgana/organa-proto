@@ -31,7 +31,7 @@ public class TerrainAuthoring : MonoBehaviour, IConvertGameObjectToEntity
     [SerializeField] int lodLevels = 1;
     [SerializeField] int maxLoadVolume = 1;
 
-    [SerializeField] List<BiomeParam<INoiseProcessor2D<float>>> biomeParams;
+    [SerializeField] List<BiomeParam<INoiseJob<float>>> biomeParams;
 
     public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
     {

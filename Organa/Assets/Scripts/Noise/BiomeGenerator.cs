@@ -8,7 +8,7 @@ using UnityEngine;
 
 
 [Serializable]
-public struct BiomeGenerator : INoiseProcessor2D<Biome>
+public struct BiomeGenerator : INoiseJob<Biome>
 {
     UnsafeMultiHashMap<int2, Biome> biomes;
 

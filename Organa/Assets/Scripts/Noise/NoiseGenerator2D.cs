@@ -3,6 +3,7 @@ using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using Unity.Burst;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
@@ -23,25 +24,41 @@ public abstract class Generator : ScriptableObject
 [Serializable]
 public class NoiseGenerator2D : Generator
 {
-    public int i;
+    public object selectedNoise;
+    public NoiseProfile profile;
     void Init()
     {
         //NoiseMenu.NoiseGroup<float2, float>.Sources
     }
 
+    void Awake()
+    {
+        profile = NoiseProfile.Default;
+    }
+
+    T GetType<T>() where T: struct, INoiseSource<float2, float>
+    {
+        return (T) selectedNoise;
+    }
+    
     public JobHandle Schedule(NativeArray<float> output, float2 start, float2 dimensions, float stepSize = 1,
         int batchCount = 1,
         JobHandle dependency = default)
     {
+        
+        var type = typeof(NoiseJob<>).MakeGenericType(selectedNoise.GetType());
+        var context = (INoiseJob<float>)Activator.CreateInstance(type);
+        // todo: implement noisejob schedule
+
         throw new NotImplementedException();
     }
 
-    struct NoiseJob<T> : IJobParallelFor where T : struct, INoiseSource<float2, float>
-    {
-        public NoiseProfile Profile;
-        public float2 Start;
-        public float2 Dim;
-        public float Step;
+    struct NoiseJob<T> : IJobParallelFor, INoiseJob<float> where T : struct, INoiseSource<float2, float>
+    { 
+        NoiseProfile Profile;
+        float2 Start;
+        float2 Dim;
+        float Step;
 
         static T generator = new T();
 
@@ -69,13 +86,19 @@ public class NoiseGenerator2D : Generator
 
             Noise[index] = n / pSum; // / amplitudeSum;
         }
+
+        public JobHandle Schedule(NativeArray<float> output, float2 start, float2 dimensions, float stepSize = 1, int batchCount = 1,
+            JobHandle dependency = default)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
 
 
 [BurstCompile]
 [Serializable]
-public struct NoiseGenerator2D<N> : IDisposable, INoiseProcessor2D<float>
+public struct NoiseGenerator2D<N> : IDisposable, INoiseJob<float>
     where N : struct, INoiseSource<float2, float>
 {
     public int Capacity => map.Capacity;
