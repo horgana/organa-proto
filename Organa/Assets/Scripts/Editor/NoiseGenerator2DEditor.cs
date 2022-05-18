@@ -1,3 +1,4 @@
+using System;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
@@ -8,11 +9,17 @@ namespace Editor
     [CustomEditor(typeof(NoiseGenerator2D))]
     class NoiseGenerator2DEditor : UnityEditor.Editor
     {
+        SerializedProperty profileProperty;
         int index = 0;
+
+        void OnEnable()
+        {
+            profileProperty = serializedObject.FindProperty("profile");
+        }
 
         public override void OnInspectorGUI()
         {
-            //base.OnInspectorGUI();
+            base.OnInspectorGUI();
 
             var script = (NoiseGenerator2D) target;
             
@@ -26,10 +33,11 @@ namespace Editor
 
             EditorGUILayout.BeginVertical("Box");
 
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("profile"), new GUIContent("Noise Profile"));
+            EditorGUILayout.PropertyField(profileProperty, new GUIContent("Noise Profile"));
             
             EditorGUILayout.EndVertical();
-            
+
+            serializedObject.ApplyModifiedProperties();
         }
     }
 }

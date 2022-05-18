@@ -31,6 +31,12 @@ public struct BiomeGenerator : INoiseJob<Biome>
             var p = new float2(index % Dim.x, (int) (index / Dim.x)) * Res;
         }
     }
+
+    public JobHandle Schedule(NativeArray<Biome> output, Noise.NoiseProfile profile, float2 start, float2 dimensions, float stepSize = 1,
+        int innerLoopBatchCount = 1, JobHandle dependency = default)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public class Test

@@ -14,60 +14,53 @@ using UnityEditor;
 using UnityEngine;
 using static Noise;
 
-
-
-
+[Serializable]
 public abstract class Generator : ScriptableObject
 {
+    public abstract JobHandle Schedule(NativeArray<float> output, float2 start, float2 dimensions, float stepSize = 1,
+        int batchCount = 1, JobHandle dependency = default);
 }
 
 [Serializable]
 public class NoiseGenerator2D : Generator
 {
+    public static NoiseJob<Perlin> _test;
     public object selectedNoise;
-    public NoiseProfile profile;
+    public NoiseProfile profile = NoiseProfile.Default;
+    
     void Init()
     {
         //NoiseMenu.NoiseGroup<float2, float>.Sources
-    }
-
-    void Awake()
-    {
-        profile = NoiseProfile.Default;
     }
 
     T GetType<T>() where T: struct, INoiseSource<float2, float>
     {
         return (T) selectedNoise;
     }
-    
-    public JobHandle Schedule(NativeArray<float> output, float2 start, float2 dimensions, float stepSize = 1,
-        int batchCount = 1,
-        JobHandle dependency = default)
-    {
-        
-        var type = typeof(NoiseJob<>).MakeGenericType(selectedNoise.GetType());
-        var context = (INoiseJob<float>)Activator.CreateInstance(type);
-        // todo: implement noisejob schedule
 
-        throw new NotImplementedException();
+    public override JobHandle Schedule(NativeArray<float> output, float2 start, float2 dimensions, float stepSize = 1,
+        int batchCount = 1, JobHandle dependency = default)
+    {
+        var type = typeof(NoiseJob<>).MakeGenericType((Type) selectedNoise);
+        var noiseJob = (INoiseJob<float>) Activator.CreateInstance(type);
+
+        return noiseJob.Schedule(output, profile, start, dimensions, stepSize, batchCount, dependency);
     }
 
-    struct NoiseJob<T> : IJobParallelFor, INoiseJob<float> where T : struct, INoiseSource<float2, float>
+    public struct NoiseJob<T> : IJobParallelFor, INoiseJob<float> where T : struct, INoiseSource<float2, float>
     { 
-        NoiseProfile Profile;
-        float2 Start;
-        float2 Dim;
-        float Step;
+        public NoiseProfile Profile;
+        public float2 Start;
+        public float2 Dim;
+        public float Step;
 
-        static T generator = new T();
+        static T _generator = new T();
 
         [WriteOnly] public NativeArray<float> Noise;
-        [WriteOnly] public NativeList<KeyValuePair<float2, float>>.ParallelWriter NoiseBuffer;
 
         public void Execute(int index)
         {
-            var p = new float2(index % Dim.x, (int) (index / Dim.x)) * Step + Start;
+            var p = new float2(index % Dim.x, (int) (index / Dim.x)) * Step + Start + 50000;
 
             var freq = Profile.frequency;
             float amplitude = Profile.amplitude, aSum = 0f, pSum = 0f;
@@ -75,23 +68,29 @@ public class NoiseGenerator2D : Generator
             float n = 0f;
             for (int o = 0; o < Profile.octaves; o++)
             {
-                var next = generator.NoiseAt(p);
+                var next = _generator.NoiseAt(p * freq);
 
                 n += next * amplitude;
                 //aSum += amplitude;
                 pSum += math.pow(Profile.persistence, o);
-                freq *= Profile.lacunarity;
+                freq /= Profile.lacunarity;
                 amplitude *= Profile.persistence;
             }
 
-            Noise[index] = n / pSum; // / amplitudeSum;
+            Noise[index] = n;// / pSum; // / amplitudeSum;
         }
 
-        public JobHandle Schedule(NativeArray<float> output, float2 start, float2 dimensions, float stepSize = 1, int batchCount = 1,
-            JobHandle dependency = default)
-        {
-            throw new NotImplementedException();
-        }
+        public JobHandle Schedule(NativeArray<float> output, NoiseProfile profile, float2 start, float2 dimensions, float stepSize = 1,
+            int innerLoopBatchCount = 1, JobHandle dependency = default) 
+            => new NoiseJob<T>
+            {
+                Profile = profile,
+                Start = start,
+                Dim = dimensions,
+                Step = stepSize,
+
+                Noise = output
+            }.Schedule(output.Length, innerLoopBatchCount, dependency);
     }
 }
 
@@ -229,5 +228,11 @@ public struct NoiseGenerator2D<N> : IDisposable, INoiseJob<float>
         {
             Map.TryAdd(Buffer[index].Key, Buffer[index].Value);
         }
+    }
+
+    public JobHandle Schedule(NativeArray<float> output, NoiseProfile profile, float2 start, float2 dimensions, float stepSize = 1,
+        int innerLoopBatchCount = 1, JobHandle dependency = default)
+    {
+        throw new NotImplementedException();
     }
 }

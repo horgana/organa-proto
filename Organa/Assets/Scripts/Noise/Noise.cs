@@ -15,36 +15,63 @@ using UnityEngine.SocialPlatforms;
 using UnityEngine.UIElements;
 using static Unity.Mathematics.math;
 
-
-[Serializable]
-public class NoiseGenerator : ScriptableObject
+public interface INoiseJob<T> where T : struct
 {
-    public INoiseJob<float> generatorObj;
-
-    public void Set<T>(T obj) where T : struct, INoiseJob<float>
-    {
-        generatorObj = obj;
-    }
-
-    public T Get<T>() where T : struct, INoiseJob<float>
-    {
-        return (T) generatorObj;
-    }
-
-    public void Set(INoiseJob<float> obj)
-    {
-        generatorObj = obj;
-    }
-
-    public object Get()
-    {
-        return generatorObj;
-    }
+    public JobHandle Schedule(NativeArray<T> output, Noise.NoiseProfile profile, float2 start, float2 dimensions, float stepSize = 1,
+        int innerLoopBatchCount = 1, JobHandle dependency = default);
 }
 
-public class TestScriptable : ScriptableObject
+[BurstCompile]
+public static class Noise
 {
-    public int i;
+    public interface INoiseSource<in TIn, out TOut>
+    {
+        public TOut NoiseAt(TIn p);
+    }
+
+    [Serializable]
+    public struct NoiseProfile
+    {
+        public static NoiseProfile Default => new NoiseProfile
+        {
+            seed = 0,
+            octaves = 1,
+            frequency = 16f,
+            amplitude = 16f,
+            lacunarity = 1f,
+            persistence = 0.5f
+        };
+
+        public int seed;
+        [Range(1, 10)] public int octaves;
+        [Range(0.001f, 0.1f)] public float frequency;
+        [Range(1, 256)] public float amplitude;
+        [Range(1, 16)] public float lacunarity;
+        [Range(0, 1)] public float persistence;
+    }
+
+    [CreateAssetMenu(fileName = "NoiseProfile", menuName = "Organa/Noise Profile", order = 1)]
+    public class NoisePreset : ScriptableObject
+    {
+        //public static NoisePreset Default => CreateInstance<NoisePreset>();
+
+        public NoiseProfile profile;
+
+        [SerializeField, Range(1, 16)] public int reloadRadius = 1;
+
+        void Awake()
+        {
+            profile = NoiseProfile.Default;
+        }
+    }
+
+    [NoiseMenu("Perlin")]
+    public struct Perlin : INoiseSource<float2, float>, INoiseSource<float3, float>, INoiseSource<float4, float>
+    {
+        public float NoiseAt(float2 p) => noise.cnoise(p);
+        public float NoiseAt(float3 p) => noise.cnoise(p);
+        public float NoiseAt(float4 p) => noise.cnoise(p);
+    }
 }
 
 public class NoiseMenu : Attribute
@@ -72,64 +99,5 @@ public class NoiseMenu : Attribute
             for (int i = 0; i < Labels.Length; i++)
                 Labels[i] = ((NoiseMenu)Sources[i].GetCustomAttribute(typeof(NoiseMenu))).Label;
         }
-    }
-}
-
-public interface INoiseJob<T> where T : struct
-{
-    public JobHandle Schedule(NativeArray<T> output, float2 start, float2 dimensions, float stepSize = 1,
-        int batchCount = 1, JobHandle dependency = default);
-}
-
-[BurstCompile]
-public static class Noise
-{
-    public interface INoiseSource<in TIn, out TOut>
-    {
-        public TOut NoiseAt(TIn p);
-    }
-
-    [Serializable]
-    public struct NoiseProfile
-    {
-        public static NoiseProfile Default => new NoiseProfile
-        {
-            seed = 0,
-            octaves = 1,
-            frequency = 16f,
-            amplitude = 16f,
-            lacunarity = 1f,
-            persistence = 0.5f
-        };
-
-        public int seed;
-        [Range(1, 10)] public int octaves;
-        [Range(2, 1024)] public float frequency;
-        [Range(1, 256)] public float amplitude;
-        [Range(1, 8)] public float lacunarity;
-        [Range(0, 1)] public float persistence;
-    }
-
-    [CreateAssetMenu(fileName = "NoiseProfile", menuName = "Organa/Noise Profile", order = 1)]
-    public class NoisePreset : ScriptableObject
-    {
-        //public static NoisePreset Default => CreateInstance<NoisePreset>();
-
-        public NoiseProfile profile;
-
-        [SerializeField, Range(1, 16)] public int reloadRadius = 1;
-
-        void Awake()
-        {
-            profile = NoiseProfile.Default;
-        }
-    }
-
-    [NoiseMenu("Perlin")]
-    public struct Perlin : INoiseSource<float2, float>, INoiseSource<float3, float>, INoiseSource<float4, float>
-    {
-        public float NoiseAt(float2 p) => noise.cnoise(p);
-        public float NoiseAt(float3 p) => noise.cnoise(p);
-        public float NoiseAt(float4 p) => noise.cnoise(p);
     }
 }
