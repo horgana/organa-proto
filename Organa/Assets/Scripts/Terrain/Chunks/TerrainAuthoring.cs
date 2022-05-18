@@ -32,7 +32,7 @@ namespace Organa
         [SerializeField] int lodLevels = 1;
         [SerializeField] int maxLoadVolume = 1;
 
-        [SerializeField] List<BiomeParam<IGenerator2D<float>>> biomeParams;
+        [SerializeField] List<BiomeParam<INoiseProcessor2D<float>>> biomeParams;
 
         public void Convert(Entity entity, EntityManager dstManager, GameObjectConversionSystem conversionSystem)
         {

@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Organa
 {
     [Serializable]
-    public struct BiomeGenerator : IGenerator2D<Biome>
+    public struct BiomeGenerator : INoiseProcessor2D<Biome>
     {
         UnsafeMultiHashMap<int2, Biome> biomes;
         

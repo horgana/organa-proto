@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using JetBrains.Annotations;
 using Unity.Burst;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEditor;
@@ -13,13 +17,53 @@ using static Unity.Mathematics.math;
 
 namespace Organa
 {
-    public abstract class GeneratorJob<T> : ScriptableObject where T: struct
+    [Serializable]
+    public class NoiseGenerator : ScriptableObject
     {
-        public abstract JobHandle Schedule(NativeArray<T> output, float2 start, float2 dimensions, float stepSize = 1, 
-            int batchCount = 1, JobHandle dependency = default);
+        public INoiseProcessor2D<float> generatorObj;
+        
+        public void Set<T>(T obj) where T: struct, INoiseProcessor2D<float> 
+        {
+            generatorObj = obj;
+        }
+ 
+        public T Get<T>() where T: struct, INoiseProcessor2D<float> 
+        {
+            return (T)generatorObj;
+        }
+ 
+        public void Set(INoiseProcessor2D<float> obj) {
+            generatorObj = obj;
+        }
+ 
+        public object Get(){
+            return generatorObj;
+        }
+    }
+
+    public class TestScriptable<T> : ScriptableObject
+    {
+        public int i;
     }
     
-    public interface IGenerator2D<T> where T: struct
+    public class NoiseMenu : Attribute
+    {
+        static class NoiseGroup<TIn, TOut>
+        {
+            public static Type[] Sources;
+
+            static NoiseGroup()
+            {
+                // https://makolyte.com/csharp-get-all-classes-with-a-custom-attribute/
+                Sources = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+                    from type in assembly.GetTypes()
+                    where type.IsDefined(typeof(NoiseMenu))
+                    select type).ToArray();
+            }
+        }
+    }
+
+    public interface INoiseProcessor2D<T> where T: struct
     {
         public JobHandle Schedule(NativeArray<T> output, float2 start, float2 dimensions, float stepSize = 1, 
             int batchCount = 1, JobHandle dependency = default);
@@ -28,9 +72,9 @@ namespace Organa
     [BurstCompile]
     public static class Noise
     {
-        public interface INoiseMethod2D
+        public interface INoiseSource<in TIn, out TOut>
         {
-            public float NoiseAt(float2 p);
+            public TOut NoiseAt(TIn p);
         }
 
         [Serializable]
@@ -47,15 +91,15 @@ namespace Organa
             };
 
             public int seed;
-            [SerializeField, Range(1, 10)]
+            [Range(1, 10)]
             public int octaves;
-            [SerializeField, Range(2, 1024)]
+            [Range(2, 1024)]
             public float frequency;
-            [SerializeField, Range(1, 256)]
+            [Range(1, 256)]
             public float amplitude;
-            [SerializeField, Range(1, 8)]
+            [Range(1, 8)]
             public float lacunarity;
-            [SerializeField, Range(0, 1)]
+            [Range(0, 1)]
             public float persistence;
         }
         
@@ -74,12 +118,12 @@ namespace Organa
             }
         }
 
-        public struct Perlin : INoiseMethod2D
+        [NoiseMenu]
+        public struct Perlin : INoiseSource<float2, float>, INoiseSource<float3, float>, INoiseSource<float4, float>
         {
-            public float NoiseAt(float2 p)
-            {
-                return noise.cnoise(p);
-            }
+            public float NoiseAt(float2 p) => noise.cnoise(p);
+            public float NoiseAt(float3 p) => noise.cnoise(p);
+            public float NoiseAt(float4 p) => noise.cnoise(p);
         }
     }
 }

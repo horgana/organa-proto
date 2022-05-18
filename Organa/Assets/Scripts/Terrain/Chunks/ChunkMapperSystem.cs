@@ -24,60 +24,20 @@ namespace Organa
             base.OnCreate();
             
             beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
+            _producer = new NoiseProducer2D<Perlin>(NoiseProfile.Default, allocator: Allocator.Persistent);
+            //_generator = Resources.Load<GeneratorJob<float>>("Noise/Perlin");
         }
 
-        NoiseProfile _profile;
-        GeneratorJob<float> _generator;
+        NoiseProducer2D<Perlin> _producer;
 
         protected override void OnUpdate()
         {
             var ecb = beginSimulationECB.CreateCommandBuffer();
 
-            NoiseProfile profile;
-            try
-            {
-                profile = Resources.Load<NoisePreset>("Noise/Default").profile;
-            }
-            catch (NullReferenceException)
-            {
-                return;
-            }
-            
             var terrainSettings = GetSingleton<TerrainSettings>();
             var chunkSize = terrainSettings.ChunkSize;
-            
-            if (!profile.Equals(_profile))
-            {
-                if (_profile.Equals(null))
-                    _profile = profile;
-                else
-                {
-                    _profile = profile;
-                    
-                    _generator = new NoiseGenerator2D<Perlin>(profile,
-                        (chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
-                    World.GetOrCreateSystem<TerrainMeshSystem>().meshes.Clear();
-                
-                    var count = 0;
-                    Entities
-                        .WithNone<MapChunk>()
-                        .WithNone<IndexBuffer, VertexBuffer>()
-                        .ForEach((Entity entity, in MeshStream meshStream) =>
-                        {
-                            if (count >= terrainSettings.LoadVolume) return;
-                            //count++;
-                            /*ecb.AddBuffer<VertexBuffer>(entity)
-                                .CopyFrom(meshStream.Vertices.ToNativeArray<VertexBuffer>(Allocator.Temp));
-                            ecb.AddBuffer<IndexBuffer>(entity)
-                                .CopyFrom(meshStream.Indices.ToNativeArray<IndexBuffer>(Allocator.Temp));*/
-                            ecb.AddComponent<MapChunk>(entity);
-                            //ecb.AddComponent<UpdateMesh>(entity);
-                        }).Run();
-                }
-            }
-
-            var generator = _generator;
+            var generator = _producer;
             
             Entities
                 .WithoutBurst()

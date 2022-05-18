@@ -6,8 +6,8 @@ namespace Organa
     [Serializable]
     public struct Layer
     {
-        public IGenerator2D<float> Start;
-        public IGenerator2D<float> End;
+        public INoiseProcessor2D<float> Start;
+        public INoiseProcessor2D<float> End;
 
         public TerrainMaterial Material;
     }
