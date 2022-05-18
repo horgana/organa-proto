@@ -68,7 +68,7 @@ public class NoiseGenerator2D : Generator
             float n = 0f;
             for (int o = 0; o < Profile.octaves; o++)
             {
-                var next = _generator.NoiseAt(p * freq);
+                var next = _generator.NoiseAt(p / freq);
 
                 n += next * amplitude;
                 //aSum += amplitude;
@@ -77,7 +77,7 @@ public class NoiseGenerator2D : Generator
                 amplitude *= Profile.persistence;
             }
 
-            Noise[index] = n;// / pSum; // / amplitudeSum;
+            Noise[index] = n / pSum; // / amplitudeSum;
         }
 
         public JobHandle Schedule(NativeArray<float> output, NoiseProfile profile, float2 start, float2 dimensions, float stepSize = 1,

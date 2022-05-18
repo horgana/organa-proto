@@ -22,7 +22,7 @@ public interface INoiseJob<T> where T : struct
 }
 
 [BurstCompile]
-public static class Noise
+public struct Noise
 {
     public interface INoiseSource<in TIn, out TOut>
     {
@@ -44,9 +44,9 @@ public static class Noise
 
         public int seed;
         [Range(1, 10)] public int octaves;
-        [Range(0.001f, 0.1f)] public float frequency;
+        [Range(16, 512)] public float frequency;
         [Range(1, 256)] public float amplitude;
-        [Range(1, 16)] public float lacunarity;
+        [Range(0.5f, 2)] public float lacunarity;
         [Range(0, 1)] public float persistence;
     }
 
@@ -65,12 +65,29 @@ public static class Noise
         }
     }
 
-    [NoiseMenu("Perlin")]
+    [BurstCompile, NoiseMenu("Perlin")]
     public struct Perlin : INoiseSource<float2, float>, INoiseSource<float3, float>, INoiseSource<float4, float>
     {
         public float NoiseAt(float2 p) => noise.cnoise(p);
         public float NoiseAt(float3 p) => noise.cnoise(p);
         public float NoiseAt(float4 p) => noise.cnoise(p);
+    }
+
+    [BurstCompile, NoiseMenu("Perlin Fractal")]
+    public struct PerlinFractal : INoiseSource<float2, float>
+    {
+        public float NoiseAt(float2 p)
+        {
+            var depth = 10;
+            var n = noise.cnoise(p);
+            for (int i = 0; i < depth; i++)
+            {
+                var f = 2 << i;
+                n += noise.cnoise(p * f) / f;
+            }
+
+            return n * (1 << depth) / ((2 << depth) - 1);
+        }
     }
 }
 
@@ -95,6 +112,7 @@ public class NoiseMenu : Attribute
                 from type in assembly.GetTypes()
                 where type.IsDefined(typeof(NoiseMenu))
                 select type).ToArray();
+            
             Labels = new string[Sources.Length];
             for (int i = 0; i < Labels.Length; i++)
                 Labels[i] = ((NoiseMenu)Sources[i].GetCustomAttribute(typeof(NoiseMenu))).Label;
