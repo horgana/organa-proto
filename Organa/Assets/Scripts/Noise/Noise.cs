@@ -49,22 +49,7 @@ public struct Noise
         [Range(0.5f, 2)] public float lacunarity;
         [Range(0, 1)] public float persistence;
     }
-
-    [CreateAssetMenu(fileName = "NoiseProfile", menuName = "Organa/Noise Profile", order = 1)]
-    public class NoisePreset : ScriptableObject
-    {
-        //public static NoisePreset Default => CreateInstance<NoisePreset>();
-
-        public NoiseProfile profile;
-
-        [SerializeField, Range(1, 16)] public int reloadRadius = 1;
-
-        void Awake()
-        {
-            profile = NoiseProfile.Default;
-        }
-    }
-
+    
     [BurstCompile, NoiseMenu("Perlin")]
     public struct Perlin : INoiseSource<float2, float>, INoiseSource<float3, float>, INoiseSource<float4, float>
     {
@@ -100,22 +85,18 @@ public class NoiseMenu : Attribute
         Label = displayName;
     }
     
-    public static class NoiseGroup<TIn, TOut>
+    public static class Source<TIn, TOut>
     {
-        public static Type[] Sources;
-        public static string[] Labels;
+        // ReSharper disable once StaticMemberInGenericType
+        public static List<Type> NoiseTypes;
 
-        static NoiseGroup()
+        static Source()
         {
             // https://makolyte.com/csharp-get-all-classes-with-a-custom-attribute/
-            Sources = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
+            NoiseTypes = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
                 from type in assembly.GetTypes()
-                where type.IsDefined(typeof(NoiseMenu))
-                select type).ToArray();
-            
-            Labels = new string[Sources.Length];
-            for (int i = 0; i < Labels.Length; i++)
-                Labels[i] = ((NoiseMenu)Sources[i].GetCustomAttribute(typeof(NoiseMenu))).Label;
+                where type.IsDefined(typeof(NoiseMenu)) && typeof(Noise.INoiseSource<TIn, TOut>).IsAssignableFrom(type)
+                select type).ToList();
         }
     }
 }

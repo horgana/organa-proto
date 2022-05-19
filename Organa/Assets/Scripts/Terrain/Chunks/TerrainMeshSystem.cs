@@ -36,7 +36,7 @@ public partial class TerrainMeshSystem : SystemBase
         //new VertexAttributeDescriptor(VertexAttribute.Position),
         //new VertexAttributeDescriptor(VertexAttribute.Normal));
 
-        World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
+        //World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
         Entities
             .WithoutBurst()
             .WithAll<UpdateMesh>()

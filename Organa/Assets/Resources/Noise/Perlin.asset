@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddcea5d14e7f4c5ab4ab2b5dc969c878, type: 3}
   m_Name: Perlin
   m_EditorClassIdentifier: 
+  choiceIndex: 0
   profile:
     seed: 0
-    octaves: 0
-    frequency: 0
-    amplitude: 0
-    lacunarity: 0
-    persistence: 0
+    octaves: 6
+    frequency: 86
+    amplitude: 68
+    lacunarity: 1.63
+    persistence: 0.669

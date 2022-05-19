@@ -100,7 +100,7 @@ public partial class ChunkManagerSystem : SystemBase
                 ecb.DestroyEntity(entityInQueryIndex, entity);
             }).Schedule();
 
-            CompleteDependency();
+            //CompleteDependency();
             chunkLoaders.Dispose();
         }
     }

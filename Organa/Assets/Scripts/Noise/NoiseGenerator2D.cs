@@ -10,6 +10,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
 using Unity.Jobs;
 using Unity.Mathematics;
+using Unity.Serialization;
 using UnityEditor;
 using UnityEngine;
 using static Noise;
@@ -21,16 +22,37 @@ public abstract class Generator : ScriptableObject
         int batchCount = 1, JobHandle dependency = default);
 }
 
-[Serializable]
 public class NoiseGenerator2D : Generator
 {
     public static NoiseJob<Perlin> _test;
+    public Type testType;
+    [SerializeField]
     public object selectedNoise;
+    [HideInInspector] public int choiceIndex = 0;
+    
     public NoiseProfile profile = NoiseProfile.Default;
     
     void Init()
     {
         //NoiseMenu.NoiseGroup<float2, float>.Sources
+    }
+
+    public unsafe float test(int* ptr)
+    {
+        return ptr[2];
+    }
+
+    void OnValidate()
+    {
+        unsafe
+        {
+            Debug.Log(test((int*) new NativeArray<int>(3, Allocator.Temp)
+            {
+                [0] = 0,
+                [1] = 1,
+                [2] = 2
+            }.GetUnsafePtr())); }
+        selectedNoise = NoiseMenu.Source<float2, float>.NoiseTypes[choiceIndex];
     }
 
     T GetType<T>() where T: struct, INoiseSource<float2, float>
@@ -47,14 +69,15 @@ public class NoiseGenerator2D : Generator
         return noiseJob.Schedule(output, profile, start, dimensions, stepSize, batchCount, dependency);
     }
 
-    public struct NoiseJob<T> : IJobParallelFor, INoiseJob<float> where T : struct, INoiseSource<float2, float>
+    [BurstCompile(FloatPrecision.Low, FloatMode.Fast, CompileSynchronously = true)]
+    public struct NoiseJob<T> : IJobFor, INoiseJob<float> where T : struct, INoiseSource<float2, float>
     { 
         public NoiseProfile Profile;
         public float2 Start;
         public float2 Dim;
         public float Step;
 
-        static T _generator = new T();
+        static readonly T Generator = new T();
 
         [WriteOnly] public NativeArray<float> Noise;
 
@@ -68,7 +91,7 @@ public class NoiseGenerator2D : Generator
             float n = 0f;
             for (int o = 0; o < Profile.octaves; o++)
             {
-                var next = _generator.NoiseAt(p / freq);
+                var next = Generator.NoiseAt(p / freq);
 
                 n += next * amplitude;
                 //aSum += amplitude;
@@ -80,8 +103,9 @@ public class NoiseGenerator2D : Generator
             Noise[index] = n / pSum; // / amplitudeSum;
         }
 
-        public JobHandle Schedule(NativeArray<float> output, NoiseProfile profile, float2 start, float2 dimensions, float stepSize = 1,
-            int innerLoopBatchCount = 1, JobHandle dependency = default) 
+        public JobHandle Schedule(NativeArray<float> output, NoiseProfile profile, float2 start, float2 dimensions,
+            float stepSize = 1,
+            int innerLoopBatchCount = 1, JobHandle dependency = default)
             => new NoiseJob<T>
             {
                 Profile = profile,
@@ -90,7 +114,7 @@ public class NoiseGenerator2D : Generator
                 Step = stepSize,
 
                 Noise = output
-            }.Schedule(output.Length, innerLoopBatchCount, dependency);
+            }.Schedule(output.Length, dependency);
     }
 }
 

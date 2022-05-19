@@ -1,43 +1,58 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
+using UnityEditor.PackageManager;
+using UnityEditor.UIElements;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Object = UnityEngine.Object;
 
 namespace Editor
 {
     [CustomEditor(typeof(NoiseGenerator2D))]
-    class NoiseGenerator2DEditor : UnityEditor.Editor
+    class NoiseGenerator2DEditor : DefaultEditorDrawer
     {
-        SerializedProperty profileProperty;
-        int index = 0;
+        SerializedProperty _choiceIndex;
 
         void OnEnable()
         {
-            profileProperty = serializedObject.FindProperty("profile");
+            _choiceIndex = serializedObject.FindProperty("choiceIndex");
+            //Debug.Log(_choiceIndex.intValue);
         }
 
-        public override void OnInspectorGUI()
+        public override VisualElement CreateInspectorGUI()
         {
-            base.OnInspectorGUI();
-
-            var script = (NoiseGenerator2D) target;
+            var noiseTypes = NoiseMenu.Source<float2, float>.NoiseTypes;
+            if (noiseTypes.Count == 0)
+                return new HelpBox(
+                    "No types implementing INoiseSource<float2, float> were found (with a [NoiseMenu] tag).", 
+                    HelpBoxMessageType.Error);
             
-            var options = NoiseMenu.NoiseGroup<float2, float>.Labels;
-            
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PrefixLabel("Noise Type");
-            
-            script.selectedNoise = NoiseMenu.NoiseGroup<float2, float>.Sources[EditorGUILayout.Popup(index, options)];
-            EditorGUILayout.EndHorizontal();
+            var container = new VisualElement();
 
-            EditorGUILayout.BeginVertical("Box");
+            var choiceTest = new IntegerField("choice")
+            {
+                bindingPath = "selectedIndex"
+            };
 
-            EditorGUILayout.PropertyField(profileProperty, new GUIContent("Noise Profile"));
+            var popup = new PopupField<Type>("Noise Type", NoiseMenu.Source<float2, float>.NoiseTypes, _choiceIndex.intValue)
+            {
+                formatListItemCallback = type => ((NoiseMenu)type.GetCustomAttribute(typeof(NoiseMenu))).Label,
+                formatSelectedValueCallback = type =>
+                {
+                    // probably a better way to do this
+                    _choiceIndex.intValue = noiseTypes.IndexOf(type);
+                    serializedObject.ApplyModifiedProperties();
+                    return ((NoiseMenu) type.GetCustomAttribute(typeof(NoiseMenu))).Label;
+                },
+            };
             
-            EditorGUILayout.EndVertical();
-
-            serializedObject.ApplyModifiedProperties();
+            container.Add(popup);
+            return container;
         }
     }
 }

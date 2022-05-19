@@ -29,7 +29,7 @@ public partial class ProgressManagerSystem : SystemBase
         {
             jobProgress.FrameCount++;
             var dependency = jobProgress.Dependency;
-            if (dependency.IsCompleted || jobProgress.FrameCount > jobProgress.MaxFrameLength)
+            if (dependency.IsCompleted || jobProgress.FrameCount == jobProgress.MaxFrameLength)
             {
                 dependency.Complete();
                 ecb.RemoveComponent<JobProgress>(entity);

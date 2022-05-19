@@ -35,12 +35,14 @@ public partial class ChunkMapperSystem : SystemBase
 
         var generator = _generator;
 
-        Entities
+        if (GetEntityQuery(typeof(JobProgress)).IsEmpty)
+        {
+            Entities
             .WithoutBurst()
             .WithAll<MapChunk>()
             .ForEach((Entity entity, in Chunk chunk) =>
             {
-                //if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainData.LoadVolume) return; 
+                if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainSettings.LoadVolume) return; 
                 var noise = new NativeArray<float>((chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
                 var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize + 1);
@@ -77,7 +79,7 @@ public partial class ChunkMapperSystem : SystemBase
                 ecb.AddComponent(entity, new JobProgress
                 {
                     Dependency = meshStream.Dependency,
-                    MaxFrameLength = 3
+                    MaxFrameLength = -1
                 });
 
                 ecb.RemoveComponent<MapChunk>(entity);
@@ -85,7 +87,9 @@ public partial class ChunkMapperSystem : SystemBase
 
                 noise.Dispose(meshStream.Dependency);
             }).Run();
+        }        
     }
+    
 
     public struct TerrainMeshJob : IJobParallelForBatch
     {
