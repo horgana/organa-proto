@@ -25,16 +25,19 @@ public interface INoiseJob<T> where T : struct
 [BurstCompile]
 public struct Noise
 {
-    public interface INoiseSource<in TIn, out TOut> 
+    public interface INoiseSource {}
+    public interface INoiseSource<in TIn, out TOut> : INoiseSource
         where TIn: unmanaged 
         where TOut: unmanaged
     {
         public TOut NoiseAt(TIn p);
     }
 
-    static class NoisePreset<T>
+    [Serializable]
+    public class NoiseSettings : ScriptableObject
     {
-        NativeMultiHashMap<>
+        public string Name;
+        public NoiseProfile Profile;
     }
 
     [Serializable]
@@ -42,7 +45,6 @@ public struct Noise
     {
         public static NoiseProfile Default => new NoiseProfile
         {
-            name = "Noise Preset",
             seed = 0,
             octaves = 1,
             frequency = 16f,
@@ -51,7 +53,6 @@ public struct Noise
             persistence = 0.5f
         };
 
-        public string name; 
         public int seed;
         [Range(1, 10)] public int octaves;
         [Range(16, 512)] public float frequency;

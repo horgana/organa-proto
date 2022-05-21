@@ -85,6 +85,5 @@ struct TerrainData : IComponentData
     public UnsafeHashMap<int2, Entity> LoadedChunks;
 
     //public IGenerator2D<Biome> BiomeMap; 
-
     public Entity GetChunkEntity(int2 index) => LoadedChunks[index];
 }

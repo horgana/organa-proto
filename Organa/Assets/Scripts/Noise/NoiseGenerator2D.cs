@@ -12,6 +12,7 @@ using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Serialization;
 using UnityEditor;
+using UnityEditor.Presets;
 using UnityEngine;
 using static Noise;
 
@@ -36,7 +37,7 @@ public class NoiseGenerator2D : Generator
     {
         //NoiseMenu.NoiseGroup<float2, float>.Sources
     }
-
+    
     void OnValidate()
     {
         selectedNoise = NoiseMenu.Source<float2, float>.NoiseTypes[choiceIndex];
