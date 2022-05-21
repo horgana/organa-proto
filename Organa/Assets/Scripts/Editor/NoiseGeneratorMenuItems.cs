@@ -23,6 +23,8 @@ namespace Editor
         static void Default()
         {
             var asset = ScriptableObject.CreateInstance<NoiseGenerator2D>();
+            asset.selectedNoise = typeof(Noise.Perlin);
+            asset.choiceIndex = 0;
             CreateAsset(asset);
             //asset.Set(new NoiseProducer2D<Noise.Perlin>(Noise.NoiseProfile.Default, allocator: Allocator.Persistent));
         }

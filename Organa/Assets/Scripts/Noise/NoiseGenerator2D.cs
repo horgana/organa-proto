@@ -40,7 +40,9 @@ public class NoiseGenerator2D : Generator
     
     void OnValidate()
     {
-        selectedNoise = NoiseMenu.Source<float2, float>.NoiseTypes[choiceIndex];
+        var choice = NoiseMenu.Source<float2, float>.NoiseTypes[choiceIndex];
+        if (choice == null) return;
+        selectedNoise = choice;
     }
 
     T GetType<T>() where T: struct, INoiseSource<float2, float>
