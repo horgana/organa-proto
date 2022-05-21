@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
 using JetBrains.Annotations;
@@ -24,9 +25,16 @@ public interface INoiseJob<T> where T : struct
 [BurstCompile]
 public struct Noise
 {
-    public interface INoiseSource<in TIn, out TOut>
+    public interface INoiseSource<in TIn, out TOut> 
+        where TIn: unmanaged 
+        where TOut: unmanaged
     {
         public TOut NoiseAt(TIn p);
+    }
+
+    static class NoisePreset<T>
+    {
+        NativeMultiHashMap<>
     }
 
     [Serializable]
@@ -34,6 +42,7 @@ public struct Noise
     {
         public static NoiseProfile Default => new NoiseProfile
         {
+            name = "Noise Preset",
             seed = 0,
             octaves = 1,
             frequency = 16f,
@@ -42,6 +51,7 @@ public struct Noise
             persistence = 0.5f
         };
 
+        public string name; 
         public int seed;
         [Range(1, 10)] public int octaves;
         [Range(16, 512)] public float frequency;
@@ -72,31 +82,6 @@ public struct Noise
             }
 
             return n * (1 << depth) / ((2 << depth) - 1);
-        }
-    }
-}
-
-public class NoiseMenu : Attribute
-{
-    public string Label;
-
-    public NoiseMenu(string displayName)
-    {
-        Label = displayName;
-    }
-    
-    public static class Source<TIn, TOut>
-    {
-        // ReSharper disable once StaticMemberInGenericType
-        public static List<Type> NoiseTypes;
-
-        static Source()
-        {
-            // https://makolyte.com/csharp-get-all-classes-with-a-custom-attribute/
-            NoiseTypes = (from assembly in AppDomain.CurrentDomain.GetAssemblies()
-                from type in assembly.GetTypes()
-                where type.IsDefined(typeof(NoiseMenu)) && typeof(Noise.INoiseSource<TIn, TOut>).IsAssignableFrom(type)
-                select type).ToList();
         }
     }
 }

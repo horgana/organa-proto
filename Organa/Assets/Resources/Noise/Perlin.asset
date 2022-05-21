@@ -15,8 +15,8 @@ MonoBehaviour:
   choiceIndex: 0
   profile:
     seed: 0
-    octaves: 6
-    frequency: 86
-    amplitude: 68
-    lacunarity: 1.63
-    persistence: 0.669
+    octaves: 5
+    frequency: 17
+    amplitude: 82
+    lacunarity: 1.73
+    persistence: 0.43

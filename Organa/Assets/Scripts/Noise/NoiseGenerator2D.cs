@@ -31,27 +31,14 @@ public class NoiseGenerator2D : Generator
     [HideInInspector] public int choiceIndex = 0;
     
     public NoiseProfile profile = NoiseProfile.Default;
-    
+
     void Init()
     {
         //NoiseMenu.NoiseGroup<float2, float>.Sources
     }
 
-    public unsafe float test(int* ptr)
-    {
-        return ptr[2];
-    }
-
     void OnValidate()
     {
-        unsafe
-        {
-            Debug.Log(test((int*) new NativeArray<int>(3, Allocator.Temp)
-            {
-                [0] = 0,
-                [1] = 1,
-                [2] = 2
-            }.GetUnsafePtr())); }
         selectedNoise = NoiseMenu.Source<float2, float>.NoiseTypes[choiceIndex];
     }
 
@@ -83,7 +70,7 @@ public class NoiseGenerator2D : Generator
 
         public void Execute(int index)
         {
-            var p = new float2(index % Dim.x, (int) (index / Dim.x)) * Step + Start + 50000;
+            var p = new float2(index % Dim.x, (int) (index / Dim.x)) * Step + Start;// + 50000;
 
             var freq = Profile.frequency;
             float amplitude = Profile.amplitude, aSum = 0f, pSum = 0f;
