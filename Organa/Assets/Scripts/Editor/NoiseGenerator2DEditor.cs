@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Unity.Collections;
+using Unity.Entities.UniversalDelegates;
 using Unity.Jobs;
 using Unity.Mathematics;
 using UnityEditor;
@@ -24,15 +25,12 @@ namespace Editor
     {
         SerializedProperty _choiceIndex;
         SerializedProperty _noiseProfile;
-
-        Texture2D _previewTexture;
-
+        
         void OnEnable()
         {
             _choiceIndex = serializedObject.FindProperty("choiceIndex");
             _noiseProfile = serializedObject.FindProperty("profile");
 
-            _previewTexture = PreviewNoise(new Rect(0, 0, 100, 100), (NoiseGenerator2D) target);
             //Debug.Log(_choiceIndex.intValue);
         }
         
@@ -71,6 +69,24 @@ namespace Editor
             //var profileBox = new Box()
             var profile = new PropertyField(_noiseProfile, "Noise Profile") { style = {paddingTop = 10}};
 
+            var zoomSlider = new SliderInt("- ", 10, 200) {
+                value = 100,
+                style =
+                {
+                    paddingRight = 10,
+                    paddingLeft = 5
+                }
+            };
+            zoomSlider.labelElement.style.minWidth = 0;
+            zoomSlider.Add(new Label(" + "));
+            var zoomLabel = new Label(zoomSlider.value + "%")
+            {
+                style =
+                {
+                    unityFontStyleAndWeight = FontStyle.Bold
+                }
+            };
+            zoomSlider.Add(zoomLabel);
             //profileBox.Add(profile);
 
             var preview = new Image
@@ -81,7 +97,7 @@ namespace Editor
                     flexGrow = 1,
                     flexDirection = FlexDirection.ColumnReverse,
                     minWidth = 275,
-                    paddingBottom = 15,
+                    paddingBottom = 5,
                     paddingLeft = 5,
                     paddingRight = 15,
                     paddingTop = 15
@@ -103,14 +119,26 @@ namespace Editor
             foldout.Add(profile);
             preview.Add(foldout);
 
+            zoomSlider.RegisterValueChangedCallback(v =>
+            {
+                zoomLabel.text = v.newValue + "%";
+                UpdatePreview(ref preview, v.newValue, 4);
+            });
+            zoomSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
+            {
+                UpdatePreview(ref preview, zoomSlider.value);
+            });
+
             profile.RegisterCallback<SerializedPropertyChangeEvent>(evt =>
             {
-                UpdatePreview(ref preview);
+                UpdatePreview(ref preview, zoomSlider.value);
             });
+            
             UpdatePreview(ref preview);
             
             container.Add(popup);
             container.Add(preview);
+            container.Add(zoomSlider);
             container.Add(new Label("this is a test"));
 
             // If it works it works ¯\_(ツ)_/¯
@@ -121,29 +149,32 @@ namespace Editor
                 while (element != container.panel.visualTree && fs++ < 20)
                 {
                     element.style.flexGrow = 1;
+                    element.style.flexDirection = FlexDirection.Column;
                     element = element.GetFirstAncestorOfType<VisualElement>();
                 }
             });
             
-            
             return container;
         }
 
-        void UpdatePreview(ref Image preview)
+        void UpdatePreview(ref Image preview, int zoom = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
         {
-            preview.image = PreviewNoise(new Rect(0, 0, 100, 100), (NoiseGenerator2D) target);
-            preview.MarkDirtyRepaint();
-        }
+            var rect = new Rect(0, 0, 100 / step, 100 / step);
+            if (rect.IsNullOrInverted() || rect.size == Vector2.zero) return;
 
-        Texture2D PreviewNoise(Rect rect, NoiseGenerator2D generator)
-        {
-            if (rect.IsNullOrInverted() || rect.size == Vector2.zero) return Texture2D.redTexture;
-
+            var generator = (NoiseGenerator2D) target;
+            
+            // remove this
+            var oldFreq = generator.profile.frequency;
+            generator.profile.frequency *= zoom / 100f / step;
+            
             float2 start = 100000 * generator.profile.frequency;
             
             var noise = new NativeArray<float>((int) (rect.width * rect.height), Allocator.TempJob);
             generator.Schedule(noise, start, rect.size).Complete();
 
+            generator.profile.frequency = oldFreq;
+            
             var pixels = new Color[noise.Length];
             var min = noise.Min();
             var scale = noise.Max() - min;
@@ -158,8 +189,9 @@ namespace Editor
 
             noise.Dispose();
 
-            texture.filterMode = FilterMode.Point;
-            return texture;
+            texture.filterMode = filterMode;
+
+            preview.image = texture;
         }
 
         Color GetColor(float n)
