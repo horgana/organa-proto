@@ -69,16 +69,36 @@ namespace Editor
             //var profileBox = new Box()
             var profile = new PropertyField(_noiseProfile, "Noise Profile") { style = {paddingTop = 10}};
 
+            var previewAreaBox = new Box
+            {
+                style =
+                {
+                    flexDirection = FlexDirection.Row,
+                    backgroundColor = Color.clear
+                }
+            };
+            
+            var previewScale = new IntegerField("Scale (m)", 1000)
+            {
+                style =
+                {
+                    flexDirection = FlexDirection.Row,
+                    flexGrow = 1,
+                    maxWidth = 150
+                }
+            };
+            previewScale.labelElement.style.minWidth = 20;
+
             var zoomSlider = new SliderInt("- ", 10, 200) {
                 value = 100,
                 style =
                 {
+                    flexGrow = 1,
                     paddingRight = 10,
                     paddingLeft = 5
                 }
             };
             zoomSlider.labelElement.style.minWidth = 0;
-            zoomSlider.Add(new Label(" + "));
             var zoomLabel = new Label(zoomSlider.value + "%")
             {
                 style =
@@ -86,9 +106,14 @@ namespace Editor
                     unityFontStyleAndWeight = FontStyle.Bold
                 }
             };
-            zoomSlider.Add(zoomLabel);
-            //profileBox.Add(profile);
 
+            zoomSlider.Add(new Label(" + "));
+            zoomSlider.Add(zoomLabel);
+            
+            previewAreaBox.Add(previewScale);
+            previewAreaBox.Add(zoomSlider);
+            //profileBox.Add(profile);
+            
             var preview = new Image
             {
                 scaleMode = ScaleMode.ScaleAndCrop,
@@ -138,7 +163,7 @@ namespace Editor
             
             container.Add(popup);
             container.Add(preview);
-            container.Add(zoomSlider);
+            container.Add(previewAreaBox);
             container.Add(new Label("this is a test"));
 
             // If it works it works ¯\_(ツ)_/¯
