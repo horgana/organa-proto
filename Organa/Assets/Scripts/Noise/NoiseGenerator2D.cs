@@ -163,7 +163,7 @@ public struct NoiseGenerator2D<N> : IDisposable, INoiseJob<float>
         {
             GeneratorJob = this,
 
-            Start = start + 100000,
+            Start = start,
             Dim = dimensions,
             Step = stepSize,
 

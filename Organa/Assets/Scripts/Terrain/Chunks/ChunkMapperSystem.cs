@@ -45,7 +45,7 @@ public partial class ChunkMapperSystem : SystemBase
                 if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainSettings.LoadVolume) return; 
                 var noise = new NativeArray<float>((chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
 
-                var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize, chunkSize + 1);
+                var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize+ 100000, chunkSize + 1);
 
                 var meshStream = new MeshStream
                 {

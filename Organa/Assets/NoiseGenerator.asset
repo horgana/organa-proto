@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddcea5d14e7f4c5ab4ab2b5dc969c878, type: 3}
-  m_Name: Perlin
+  m_Name: NoiseGenerator
   m_EditorClassIdentifier: 
   choiceIndex: 0
   profile:
     seed: 0
-    octaves: 10
-    frequency: 243
-    amplitude: 76
-    lacunarity: 2
-    persistence: 0.43
+    octaves: 1
+    frequency: 16
+    amplitude: 16
+    lacunarity: 1
+    persistence: 0.5

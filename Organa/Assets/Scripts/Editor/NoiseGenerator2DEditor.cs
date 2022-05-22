@@ -79,34 +79,6 @@ namespace Editor
                 }
             };
             var profile = new PropertyField(_noiseProfile, "Noise Profile") { style = {paddingTop = 10}};
-            
-            var zoomSlider = new SliderInt("-", 10, 200) {
-                value = 100,
-                direction = SliderDirection.Vertical,
-                style =
-                {
-                    maxWidth = 20,
-                    maxHeight = 300,
-                    paddingRight = 20,
-                    paddingLeft = 5,
-                    alignSelf = Align.Center,
-                    flexGrow = 1
-                }
-            };
-            zoomSlider.labelElement.style.minWidth = 0;
-            var zoomLabel = new Label(zoomSlider.value + "%")
-            {
-                style =
-                {
-                    unityFontStyleAndWeight = FontStyle.Bold,
-                    alignSelf = Align.FlexEnd
-                }
-            };
-
-            zoomSlider.Add(new Label("+"));
-            //zoomSlider.Q<VisualElement>("unity-dragger-border").Add(zoomLabel);
-            zoomSlider.Add(zoomLabel);
-
 
             var scaleSlider = new Slider("Scale", 4, 64)
             {
@@ -156,28 +128,23 @@ namespace Editor
             
             foldout.Add(profile);
             preview.Add(foldout);
-            previewBox.Add(zoomSlider);
             previewBox.Add(preview);
-
-            zoomSlider.RegisterValueChangedCallback(v =>
-            {
-                zoomLabel.text = v.newValue + "%";
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), v.newValue, 4);
-            });
-            zoomSlider.RegisterCallback<MouseCaptureOutEvent>(evt => {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), zoomSlider.value); });
 
             scaleSlider.RegisterValueChangedCallback(v =>
             {
                 scaleLabel.text = Scaled(v.newValue) + "m";
-                UpdatePreview(ref preview, Scaled(v.newValue), zoomSlider.value, 4);
+                UpdatePreview(ref preview, Scaled(v.newValue), 4);
             });
             scaleSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), zoomSlider.value);
+                UpdatePreview(ref preview, Scaled(scaleSlider.value));
             });
             profile.RegisterCallback<SerializedPropertyChangeEvent>(evt => {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), zoomSlider.value); });
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), 4); });
+            profile.RegisterCallback<MouseCaptureOutEvent>(evt =>
+            {
+                UpdatePreview(ref preview, Scaled(scaleSlider.value));
+            });
             
             
             
@@ -203,10 +170,10 @@ namespace Editor
             return container;
         }
 
-        void UpdatePreview(ref Image preview, int scale = 100, int zoom = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
+        void UpdatePreview(ref Image preview, int scale = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
         {
-            var res = 128;
-            var rect = new Rect(0, 0, res / step, res / step);
+            var res = 128 / step;
+            var rect = new Rect(0, 0, res, res);
             if (rect.IsNullOrInverted() || rect.size == Vector2.zero) return;
 
             var generator = (NoiseGenerator2D) target;
@@ -214,10 +181,9 @@ namespace Editor
             // remove this
             var oldFreq = generator.profile.frequency;
             generator.profile.frequency *= res / (float) scale;
-            generator.profile.frequency *= zoom / 100f;
-            generator.profile.frequency /= step;
-            
-            float2 start = 100000 * generator.profile.frequency;
+            //generator.profile.frequency /= step;
+
+            float2 start = res * -((generator.profile.frequency-0.5f)/generator.profile.frequency) ;
             
             var noise = new NativeArray<float>((int) (rect.width * rect.height), Allocator.TempJob);
             generator.Schedule(noise, start, rect.size).Complete();
