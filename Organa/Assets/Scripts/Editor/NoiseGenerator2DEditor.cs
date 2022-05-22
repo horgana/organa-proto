@@ -25,6 +25,8 @@ namespace Editor
     {
         SerializedProperty _choiceIndex;
         SerializedProperty _noiseProfile;
+
+        int Scaled(float n) => (int) (n * n);
         
         void OnEnable()
         {
@@ -66,36 +68,29 @@ namespace Editor
                 },
             };
 
-            //var profileBox = new Box()
+            var previewBox = new Box()
+            {
+                style =
+                {
+                    backgroundColor = Color.clear,
+                    paddingLeft = 5,
+                    flexDirection = FlexDirection.Row,
+                    flexGrow = 1
+                }
+            };
             var profile = new PropertyField(_noiseProfile, "Noise Profile") { style = {paddingTop = 10}};
-
-            var previewAreaBox = new Box
-            {
-                style =
-                {
-                    flexDirection = FlexDirection.Row,
-                    backgroundColor = Color.clear
-                }
-            };
             
-            var previewScale = new IntegerField("Scale (m)", 1000)
-            {
-                style =
-                {
-                    flexDirection = FlexDirection.Row,
-                    flexGrow = 1,
-                    maxWidth = 150
-                }
-            };
-            previewScale.labelElement.style.minWidth = 20;
-
-            var zoomSlider = new SliderInt("- ", 10, 200) {
+            var zoomSlider = new SliderInt("-", 10, 200) {
                 value = 100,
+                direction = SliderDirection.Vertical,
                 style =
                 {
-                    flexGrow = 1,
-                    paddingRight = 10,
-                    paddingLeft = 5
+                    maxWidth = 20,
+                    maxHeight = 300,
+                    paddingRight = 20,
+                    paddingLeft = 5,
+                    alignSelf = Align.Center,
+                    flexGrow = 1
                 }
             };
             zoomSlider.labelElement.style.minWidth = 0;
@@ -103,15 +98,33 @@ namespace Editor
             {
                 style =
                 {
-                    unityFontStyleAndWeight = FontStyle.Bold
+                    unityFontStyleAndWeight = FontStyle.Bold,
+                    alignSelf = Align.FlexEnd
                 }
             };
 
-            zoomSlider.Add(new Label(" + "));
+            zoomSlider.Add(new Label("+"));
+            //zoomSlider.Q<VisualElement>("unity-dragger-border").Add(zoomLabel);
             zoomSlider.Add(zoomLabel);
+
+
+            var scaleSlider = new Slider("Scale", 4, 64)
+            {
+                value = 8,
+                style =
+                {
+                    paddingLeft = 40,
+                    paddingRight = 30,
+                    maxHeight = 20,
+                    flexGrow = 0.5f,
+                    flexDirection = FlexDirection.Row,
+                   // alignSelf = Align.Center
+                }
+            };
+            scaleSlider.labelElement.style.minWidth = 0;
             
-            previewAreaBox.Add(previewScale);
-            previewAreaBox.Add(zoomSlider);
+            var scaleLabel = new Label(Scaled(scaleSlider.value) + "m") {style = {paddingLeft = 5}};
+            scaleSlider.Add(scaleLabel);
             //profileBox.Add(profile);
             
             var preview = new Image
@@ -143,28 +156,36 @@ namespace Editor
             
             foldout.Add(profile);
             preview.Add(foldout);
+            previewBox.Add(zoomSlider);
+            previewBox.Add(preview);
 
             zoomSlider.RegisterValueChangedCallback(v =>
             {
                 zoomLabel.text = v.newValue + "%";
-                UpdatePreview(ref preview, v.newValue, 4);
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), v.newValue, 4);
             });
-            zoomSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
-            {
-                UpdatePreview(ref preview, zoomSlider.value);
-            });
+            zoomSlider.RegisterCallback<MouseCaptureOutEvent>(evt => {
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), zoomSlider.value); });
 
-            profile.RegisterCallback<SerializedPropertyChangeEvent>(evt =>
+            scaleSlider.RegisterValueChangedCallback(v =>
             {
-                UpdatePreview(ref preview, zoomSlider.value);
+                scaleLabel.text = Scaled(v.newValue) + "m";
+                UpdatePreview(ref preview, Scaled(v.newValue), zoomSlider.value, 4);
             });
+            scaleSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
+            {
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), zoomSlider.value);
+            });
+            profile.RegisterCallback<SerializedPropertyChangeEvent>(evt => {
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), zoomSlider.value); });
+            
+            
             
             UpdatePreview(ref preview);
             
             container.Add(popup);
-            container.Add(preview);
-            container.Add(previewAreaBox);
-            container.Add(new Label("this is a test"));
+            container.Add(previewBox);
+            container.Add(scaleSlider);
 
             // If it works it works ¯\_(ツ)_/¯
             container.RegisterCallback<AttachToPanelEvent>(evt =>
@@ -182,16 +203,19 @@ namespace Editor
             return container;
         }
 
-        void UpdatePreview(ref Image preview, int zoom = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
+        void UpdatePreview(ref Image preview, int scale = 100, int zoom = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
         {
-            var rect = new Rect(0, 0, 100 / step, 100 / step);
+            var res = 128;
+            var rect = new Rect(0, 0, res / step, res / step);
             if (rect.IsNullOrInverted() || rect.size == Vector2.zero) return;
 
             var generator = (NoiseGenerator2D) target;
             
             // remove this
             var oldFreq = generator.profile.frequency;
-            generator.profile.frequency *= zoom / 100f / step;
+            generator.profile.frequency *= res / (float) scale;
+            generator.profile.frequency *= zoom / 100f;
+            generator.profile.frequency /= step;
             
             float2 start = 100000 * generator.profile.frequency;
             
@@ -202,11 +226,11 @@ namespace Editor
             
             var pixels = new Color[noise.Length];
             var min = noise.Min();
-            var scale = noise.Max() - min;
+            var range = noise.Max() - min;
             
             for (int i = 0; i < noise.Length; i++)
             {
-                pixels[i] = GetColor((noise[i] - min) / scale);
+                pixels[i] = GetColor((noise[i] - min) / range);
             }
             var texture = new Texture2D((int) rect.width, (int) rect.height);
             texture.SetPixels(pixels);
