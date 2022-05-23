@@ -42,10 +42,11 @@ public partial class ChunkMapperSystem : SystemBase
             .WithAll<MapChunk>()
             .ForEach((Entity entity, in Chunk chunk) =>
             {
+                var scale = 4;
                 if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainSettings.LoadVolume) return; 
-                var noise = new NativeArray<float>((chunkSize + 1) * (chunkSize + 1), Allocator.Persistent);
+                var noise = new NativeArray<float>((chunkSize / scale + 1) * (chunkSize / scale + 1), Allocator.Persistent);
 
-                var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize+ 100000, chunkSize + 1);
+                var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize+ 100000, chunkSize / scale + 1, scale);
 
                 var meshStream = new MeshStream
                 {
@@ -57,14 +58,15 @@ public partial class ChunkMapperSystem : SystemBase
                 {
                     Noise = noise,
 
-                    Length = chunkSize,
+                    Length = chunkSize / scale,
                     Start = chunk.Index * terrainSettings.ChunkSize,
+                    Scale = scale,
 
                     VertexStream = meshStream.Vertices.AsWriter(),
                     IndexStream = meshStream.Indices.AsWriter()
                 };
 
-                meshStream.Dependency = meshJob.ScheduleBatch(chunkSize * chunkSize, 64, noiseJob);
+                meshStream.Dependency = meshJob.ScheduleBatch((chunkSize * chunkSize) / (scale * scale), 64 / scale, noiseJob);
                 ecb.SetComponent(entity, meshStream);
                 if (HasComponent<JobProgress>(entity))
                 {
@@ -96,6 +98,8 @@ public partial class ChunkMapperSystem : SystemBase
         [ReadOnly] public NativeArray<float> Noise;
 
         public int Length;
+        public int Scale;
+        public bool Smooth;
 
         public float2 Start;
 
@@ -109,16 +113,39 @@ public partial class ChunkMapperSystem : SystemBase
             VertexStream.BeginForEachIndex(startIndex);
             IndexStream.BeginForEachIndex(startIndex);
 
-            for (int i = startIndex; i < startIndex + count; i++)
+            for (int i = startIndex; i < (startIndex + count); i++)
             {
-                var v = new float3((i % Length), 0, (int) (i / Length)) + new float3(Start.x, 0, Start.y);
+                var v = new float3((i % Length), 0, (int) (i / Length)) * Scale + new float3(Start.x, 0, Start.y);
                 var ni = i + i / Length;
-
+                
                 var v1 = v + new float3(0, Noise[ni], 0);
-                var v2 = v + new float3(0, Noise[ni + Length + 1], 1);
-                var v3 = v + new float3(1, Noise[ni + 1], 0);
+                var v2 = v + new float3(0, Noise[ni + Length + 1], Scale);
+                var v3 = v + new float3(Scale, Noise[ni + 1], 0);
                 var n = math.cross(v2 - v1, v3 - v1);
-
+                
+                /*if (Smooth)
+                {
+                    var offs = (i + i / Length) * 2;
+                    Noise[offs++] = v1;
+                    Noise[offs++] = n;
+                    if ((i + 1) % Length == 0)
+                    {
+                        Noise[offs++] = v2;
+                        Noise[offs++] = n;
+                    }
+                    if ((i + 1) / Length > Length)
+                    {
+                        for (int j = 0; j < Length + 1; j++)
+                        {
+                            v1 = v + new float3(0, Noise[ni], 0);
+                            v2 = v + new float3(0, Noise[ni+1], Step);
+                            v3 = v + new float3(-Step, Noise[ni-Length-1], 0);
+                            n = math.cross(v2 - v1, v3 - v1);
+                            Noise[offs++] = v1;
+                            Noise[offs++] = n;
+                        }
+                    }
+                }*/
                 VertexStream.Write(v1);
                 VertexStream.Write(n);
                 VertexStream.Write(v2);
@@ -126,7 +153,7 @@ public partial class ChunkMapperSystem : SystemBase
                 VertexStream.Write(v3);
                 VertexStream.Write(n);
 
-                v1 = v + new float3(1, Noise[ni + Length + 1 + 1], 1);
+                v1 = v + new float3(Scale, Noise[ni + Length + 1 + 1], Scale);
                 n = math.cross(v3 - v1, v2 - v1);
 
                 VertexStream.Write(v1);

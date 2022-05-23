@@ -183,7 +183,7 @@ namespace Editor
             generator.profile.frequency *= res / (float) scale;
             //generator.profile.frequency /= step;
 
-            float2 start = res * -((generator.profile.frequency-0.5f)/generator.profile.frequency) ;
+            float2 start = 10000 + res * -((generator.profile.frequency-0.5f)/generator.profile.frequency) ;
             
             var noise = new NativeArray<float>((int) (rect.width * rect.height), Allocator.TempJob);
             generator.Schedule(noise, start, rect.size).Complete();
