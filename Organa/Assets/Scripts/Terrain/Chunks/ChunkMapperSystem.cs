@@ -21,7 +21,7 @@ public partial class ChunkMapperSystem : SystemBase
         base.OnCreate();
 
         beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-        _generator = Resources.Load<NoiseGenerator2D>("Noise/Perlin");
+        _generator = Resources.Load<NoiseGenerator2D>("Noise/Recip");
     }
 
     Generator _generator;
@@ -42,11 +42,11 @@ public partial class ChunkMapperSystem : SystemBase
             .WithAll<MapChunk>()
             .ForEach((Entity entity, in Chunk chunk) =>
             {
-                var scale = 4;
+                var scale = 1;
                 if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainSettings.LoadVolume) return; 
                 var noise = new NativeArray<float>((chunkSize / scale + 1) * (chunkSize / scale + 1), Allocator.Persistent);
 
-                var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize+ 100000, chunkSize / scale + 1, scale);
+                var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize+100000, chunkSize / scale + 1, scale);
 
                 var meshStream = new MeshStream
                 {

@@ -6,7 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="81f6a75d-57df-46f2-88bf-62d9fc9ad350" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Editor/NoiseGenerator2DEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Editor/NoiseGenerator2DEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NoiseGenerator.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Noise/Recip.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/NoiseGenerator.asset.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Noise/Recip.asset.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Noise/Noise.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Noise/Noise.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

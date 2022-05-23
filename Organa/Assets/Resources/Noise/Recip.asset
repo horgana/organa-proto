@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddcea5d14e7f4c5ab4ab2b5dc969c878, type: 3}
-  m_Name: NoiseGenerator
+  m_Name: Recip
   m_EditorClassIdentifier: 
   choiceIndex: 0
   profile:
     seed: 0
-    octaves: 1
-    frequency: 16
-    amplitude: 16
-    lacunarity: 1
-    persistence: 0.5
+    octaves: 10
+    frequency: 267
+    amplitude: 192
+    lacunarity: 1.33
+    persistence: 0.69
