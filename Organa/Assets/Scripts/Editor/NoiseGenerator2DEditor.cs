@@ -98,6 +98,8 @@ namespace Editor
             var scaleLabel = new Label(Scaled(scaleSlider.value) + "m") {style = {paddingLeft = 5}};
             scaleSlider.Add(scaleLabel);
             //profileBox.Add(profile);
+
+            var filterMode = new EnumField("Filter Mode", FilterMode.Bilinear) {style = {paddingTop = 10}};
             
             var preview = new Image
             {
@@ -133,19 +135,22 @@ namespace Editor
             scaleSlider.RegisterValueChangedCallback(v =>
             {
                 scaleLabel.text = Scaled(v.newValue) + "m";
-                UpdatePreview(ref preview, Scaled(v.newValue), 4);
+                UpdatePreview(ref preview, Scaled(v.newValue), 4, filterMode: (FilterMode)filterMode.value);
             });
             scaleSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value));
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), filterMode: (FilterMode)filterMode.value);
             });
             profile.RegisterCallback<SerializedPropertyChangeEvent>(evt => {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), 4); });
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), 4, filterMode: (FilterMode)filterMode.value); });
             profile.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value));
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), filterMode: (FilterMode)filterMode.value);
             });
-            
+            filterMode.RegisterValueChangedCallback(evt =>
+            {
+                UpdatePreview(ref preview, Scaled(scaleSlider.value), filterMode: (FilterMode)evt.newValue);
+            });
             
             
             UpdatePreview(ref preview);
@@ -153,6 +158,7 @@ namespace Editor
             container.Add(popup);
             container.Add(previewBox);
             container.Add(scaleSlider);
+            container.Add(filterMode);
 
             // If it works it works ¯\_(ツ)_/¯
             container.RegisterCallback<AttachToPanelEvent>(evt =>

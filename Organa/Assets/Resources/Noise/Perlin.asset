@@ -16,7 +16,7 @@ MonoBehaviour:
   profile:
     seed: 0
     octaves: 10
-    frequency: 243
-    amplitude: 76
+    frequency: 282
+    amplitude: 180
     lacunarity: 2
-    persistence: 0.43
+    persistence: 0.399

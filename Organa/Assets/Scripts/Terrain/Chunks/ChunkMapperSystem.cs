@@ -21,7 +21,7 @@ public partial class ChunkMapperSystem : SystemBase
         base.OnCreate();
 
         beginSimulationECB = World.GetOrCreateSystem<BeginSimulationEntityCommandBufferSystem>();
-        _generator = Resources.Load<NoiseGenerator2D>("Noise/Recip");
+        _generator = Resources.Load<NoiseGenerator2D>("Noise/Perlin");
     }
 
     Generator _generator;

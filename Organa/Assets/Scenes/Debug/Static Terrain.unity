@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0abe59ce857b456f9a613f3936bd4150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 8
+  radius: 32
   lodLevels: 1
   unloadOffset: 1.5
   parent: {fileID: 2138348875}
@@ -450,7 +450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb71f6d95c0e95a4c8d83c6d3d62a2d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chunkSize: 64
+  chunkSize: 32
   lodLevels: 1
   maxLoadVolume: 1
   biomeParams:
