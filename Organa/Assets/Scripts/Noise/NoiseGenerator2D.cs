@@ -30,8 +30,10 @@ public class NoiseGenerator2D : Generator
     [SerializeField]
     public object selectedNoise;
     [HideInInspector] public int choiceIndex = 0;
-    
+
     public NoiseProfile profile = NoiseProfile.Default;
+
+    [SerializeField] float scale = 64;
 
     void Init()
     {

@@ -50,7 +50,7 @@ public struct Noise
             frequency = 16f,
             amplitude = 16f,
             lacunarity = 1f,
-            persistence = 0.5f
+            persistence = 0.5f,
         };
 
         public int seed;

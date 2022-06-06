@@ -25,14 +25,15 @@ namespace Editor
     {
         SerializedProperty _choiceIndex;
         SerializedProperty _noiseProfile;
-
-        int _scale = 64;
+        SerializedProperty _scale;
+        
         //int Scaled(float n) => (int) (n * n);
         
         void OnEnable()
         {
             _choiceIndex = serializedObject.FindProperty("choiceIndex");
             _noiseProfile = serializedObject.FindProperty("profile");
+            _scale = serializedObject.FindProperty("scale");
 
             //Debug.Log(_choiceIndex.intValue);
         }
@@ -83,7 +84,7 @@ namespace Editor
 
             var scaleSlider = new Slider("Scale", 4, 64)
             {
-                value = math.sqrt(_scale),
+                value = math.sqrt(_scale.floatValue),
                 style =
                 {
                     paddingLeft = 40,
@@ -96,7 +97,7 @@ namespace Editor
             };
             scaleSlider.labelElement.style.minWidth = 0;
             
-            var scaleLabel = new Label(_scale + "m") {style = {paddingLeft = 5}};
+            var scaleLabel = new Label((int)_scale.floatValue + "m") {style = {paddingLeft = 5}};
             scaleSlider.Add(scaleLabel);
             //profileBox.Add(profile);
 
@@ -135,27 +136,29 @@ namespace Editor
 
             scaleSlider.RegisterValueChangedCallback(v =>
             {
-                _scale = (int)(scaleSlider.value * scaleSlider.value);
-                scaleLabel.text = _scale + "m";
-                UpdatePreview(ref preview, _scale, 4, filterMode: (FilterMode)filterMode.value);
+                _scale.floatValue = v.newValue*v.newValue;
+                serializedObject.ApplyModifiedProperties();
+                
+                scaleLabel.text = (int)_scale.floatValue + "m";
+                UpdatePreview(ref preview, _scale.floatValue, 4, filterMode: (FilterMode)filterMode.value);
             });
             scaleSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, _scale, filterMode: (FilterMode)filterMode.value);
+                UpdatePreview(ref preview, _scale.floatValue, filterMode: (FilterMode)filterMode.value);
             });
             profile.RegisterCallback<SerializedPropertyChangeEvent>(evt => {
-                UpdatePreview(ref preview, _scale, 4, filterMode: (FilterMode)filterMode.value); });
+                UpdatePreview(ref preview, _scale.floatValue, 4, filterMode: (FilterMode)filterMode.value); });
             profile.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, _scale, filterMode: (FilterMode)filterMode.value);
+                UpdatePreview(ref preview, _scale.floatValue, filterMode: (FilterMode)filterMode.value);
             });
             filterMode.RegisterValueChangedCallback(evt =>
             {
-                UpdatePreview(ref preview, _scale, filterMode: (FilterMode)evt.newValue);
+                UpdatePreview(ref preview, _scale.floatValue, filterMode: (FilterMode)evt.newValue);
             });
             
             
-            UpdatePreview(ref preview);
+            UpdatePreview(ref preview, _scale.floatValue, filterMode: (FilterMode)filterMode.value);
             
             container.Add(popup);
             container.Add(previewBox);
@@ -174,11 +177,12 @@ namespace Editor
                     element = element.GetFirstAncestorOfType<VisualElement>();
                 }
             });
+            serializedObject.ApplyModifiedProperties();
             
             return container;
         }
 
-        void UpdatePreview(ref Image preview, int scale = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
+        void UpdatePreview(ref Image preview, float scale = 100, int step = 1, FilterMode filterMode = FilterMode.Bilinear)
         {
             var res = 128 / step;
             var rect = new Rect(0, 0, res, res);
