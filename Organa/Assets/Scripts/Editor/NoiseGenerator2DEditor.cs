@@ -26,7 +26,8 @@ namespace Editor
         SerializedProperty _choiceIndex;
         SerializedProperty _noiseProfile;
 
-        int Scaled(float n) => (int) (n * n);
+        int _scale = 64;
+        //int Scaled(float n) => (int) (n * n);
         
         void OnEnable()
         {
@@ -82,7 +83,7 @@ namespace Editor
 
             var scaleSlider = new Slider("Scale", 4, 64)
             {
-                value = 8,
+                value = math.sqrt(_scale),
                 style =
                 {
                     paddingLeft = 40,
@@ -95,7 +96,7 @@ namespace Editor
             };
             scaleSlider.labelElement.style.minWidth = 0;
             
-            var scaleLabel = new Label(Scaled(scaleSlider.value) + "m") {style = {paddingLeft = 5}};
+            var scaleLabel = new Label(_scale + "m") {style = {paddingLeft = 5}};
             scaleSlider.Add(scaleLabel);
             //profileBox.Add(profile);
 
@@ -134,22 +135,23 @@ namespace Editor
 
             scaleSlider.RegisterValueChangedCallback(v =>
             {
-                scaleLabel.text = Scaled(v.newValue) + "m";
-                UpdatePreview(ref preview, Scaled(v.newValue), 4, filterMode: (FilterMode)filterMode.value);
+                _scale = (int)(scaleSlider.value * scaleSlider.value);
+                scaleLabel.text = _scale + "m";
+                UpdatePreview(ref preview, _scale, 4, filterMode: (FilterMode)filterMode.value);
             });
             scaleSlider.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), filterMode: (FilterMode)filterMode.value);
+                UpdatePreview(ref preview, _scale, filterMode: (FilterMode)filterMode.value);
             });
             profile.RegisterCallback<SerializedPropertyChangeEvent>(evt => {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), 4, filterMode: (FilterMode)filterMode.value); });
+                UpdatePreview(ref preview, _scale, 4, filterMode: (FilterMode)filterMode.value); });
             profile.RegisterCallback<MouseCaptureOutEvent>(evt =>
             {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), filterMode: (FilterMode)filterMode.value);
+                UpdatePreview(ref preview, _scale, filterMode: (FilterMode)filterMode.value);
             });
             filterMode.RegisterValueChangedCallback(evt =>
             {
-                UpdatePreview(ref preview, Scaled(scaleSlider.value), filterMode: (FilterMode)evt.newValue);
+                UpdatePreview(ref preview, _scale, filterMode: (FilterMode)evt.newValue);
             });
             
             
@@ -189,7 +191,7 @@ namespace Editor
             generator.profile.frequency *= res / (float) scale;
             //generator.profile.frequency /= step;
 
-            float2 start = 10000 + res * -((generator.profile.frequency-0.5f)/generator.profile.frequency) ;
+            float2 start = -res / 2f;
             
             var noise = new NativeArray<float>((int) (rect.width * rect.height), Allocator.TempJob);
             generator.Schedule(noise, start, rect.size).Complete();
