@@ -48,7 +48,7 @@ public partial class TerrainMeshSystem : SystemBase
         if (updatedChunks.Length > 0)
         {
             var dataArray = Mesh.AllocateWritableMeshData(updatedChunks.Length);
-            
+
             Entities
                 .WithStoreEntityQueryInField(ref meshStreamQuery)
                 .WithAll<UpdateMesh, Chunk>()
@@ -61,20 +61,21 @@ public partial class TerrainMeshSystem : SystemBase
                     var vertices = meshStream.Vertices.ToNativeArray<float3>(Allocator.Temp);
                     var indices = meshStream.Indices.ToNativeArray<uint>(Allocator.Temp);
 
-                    meshData.SetVertexBufferParams(indices.Length, new VertexAttributeDescriptor(VertexAttribute.Position),
+                    meshData.SetVertexBufferParams(indices.Length,
+                        new VertexAttributeDescriptor(VertexAttribute.Position),
                         new VertexAttributeDescriptor(VertexAttribute.Normal));
                     meshData.GetVertexData<float3>().CopyFrom(vertices);
                     //meshData.GetVertexData<float3>().ReinterpretStore(0, meshStream.Vertices);
 
                     meshData.SetIndexBufferParams(indices.Length, IndexFormat.UInt32);
                     meshData.GetIndexData<uint>().CopyFrom(indices);
-                    
+
                     meshData.SetSubMesh(0, new SubMeshDescriptor(0, indices.Length));
-                    
+
                     //meshData.RecalculateBounds();
-                    
+
                     ecb.RemoveComponent<UpdateMesh>(entityInQueryIndex, entity);
-                }).ScheduleParallel();
+                }).WithScheduleGranularity(ScheduleGranularity.Entity).ScheduleParallel();
             
             CompleteDependency();
             
