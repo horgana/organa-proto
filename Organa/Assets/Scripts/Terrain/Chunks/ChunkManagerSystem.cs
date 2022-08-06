@@ -85,7 +85,10 @@ public partial class ChunkManagerSystem : SystemBase
                     }
                 }).WithScheduleGranularity(ScheduleGranularity.Entity).ScheduleParallel();
 
-            Entities.ForEach((int entityInQueryIndex, Entity entity, in Chunk chunk) =>
+            var meshMap = World.GetOrCreateSystem<TerrainMeshSystem>().meshMap;
+            Entities
+                .WithoutBurst()
+                .ForEach((int entityInQueryIndex, Entity entity, in Chunk chunk) =>
             {
                 foreach (var loaderEntity in chunkLoaders)
                 {
@@ -97,8 +100,9 @@ public partial class ChunkManagerSystem : SystemBase
                 }
 
                 loadedChunks.Remove(chunk.Index);
+                meshMap.Remove(chunk);
                 ecb.DestroyEntity(entityInQueryIndex, entity);
-            }).Schedule();
+            }).Run();
 
             //CompleteDependency();
             chunkLoaders.Dispose();

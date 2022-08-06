@@ -90,7 +90,7 @@ public partial class TerrainMeshSystem : SystemBase
                 meshMap[updatedChunks[i]] = meshBuffer[i];
             }
             
-            meshes.AddRange(meshBuffer);
+            //meshes.AddRange(meshBuffer);
             
             //Mesh.ApplyAndDisposeWritableMeshData(dataArray, meshes);
             //dataArray.Dispose();
@@ -125,7 +125,7 @@ public partial class TerrainMeshSystem : SystemBase
             }).Run();*/
         
         var material = Resources.Load<Material>("New Material");
-        foreach (var mesh in meshes)
+        foreach (var mesh in meshMap.Values)
         {
             Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 0);
         }
