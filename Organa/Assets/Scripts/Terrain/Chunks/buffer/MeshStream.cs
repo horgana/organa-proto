@@ -23,4 +23,10 @@ public struct MeshStream : IComponentData
         Vertices.Dispose(Dependency);
         Indices.Dispose(Dependency);
     }
+
+    public void DisposeNow()
+    {
+        Vertices.Dispose();
+        Indices.Dispose();
+    }
 }

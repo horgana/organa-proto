@@ -53,7 +53,7 @@ public partial class ChunkMapperSystem : SystemBase
                     Vertices = new UnsafeStream(noise.Length * 12, Allocator.Persistent),
                     Indices = new UnsafeStream(noise.Length * 6, Allocator.Persistent)
                 };
-
+                
                 var meshJob = new TerrainMeshJob
                 {
                     Noise = noise,

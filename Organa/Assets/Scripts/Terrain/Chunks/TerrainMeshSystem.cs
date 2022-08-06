@@ -73,7 +73,7 @@ public partial class TerrainMeshSystem : SystemBase
                     meshData.SetSubMesh(0, new SubMeshDescriptor(0, indices.Length));
 
                     //meshData.RecalculateBounds();
-
+                    meshStream.DisposeNow();
                     ecb.RemoveComponent<UpdateMesh>(entityInQueryIndex, entity);
                 }).WithScheduleGranularity(ScheduleGranularity.Entity).ScheduleParallel();
             

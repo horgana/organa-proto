@@ -99,8 +99,13 @@ public partial class ChunkManagerSystem : SystemBase
                     if (math.distance(loaderIndex, chunk.Index) < loader.Radius * loader.UnloadOffset) return;
                 }
 
+                if (HasComponent<MeshStream>(entity))
+                {
+                    GetComponent<MeshStream>(entity).DisposeNow();
+                    meshMap.Remove(chunk);
+                }
+
                 loadedChunks.Remove(chunk.Index);
-                meshMap.Remove(chunk);
                 ecb.DestroyEntity(entityInQueryIndex, entity);
             }).Run();
 
