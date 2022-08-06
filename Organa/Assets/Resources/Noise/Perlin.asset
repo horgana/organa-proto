@@ -19,4 +19,5 @@ MonoBehaviour:
     frequency: 282
     amplitude: 180
     lacunarity: 2
-    persistence: 0.399
+    persistence: 0.368
+  scale: 554.13165

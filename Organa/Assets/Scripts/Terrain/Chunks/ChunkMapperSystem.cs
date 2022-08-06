@@ -74,7 +74,7 @@ public partial class ChunkMapperSystem : SystemBase
                     ecb.SetComponent(entity, new JobProgress
                     {
                         Dependency = meshStream.Dependency,
-                        MaxFrameLength = 3
+                        MaxFrameLength = -1
                     });
                 }
 

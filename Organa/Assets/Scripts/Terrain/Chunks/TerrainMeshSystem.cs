@@ -4,18 +4,20 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
 using Unity.Entities;
+using Unity.Jobs;
 using Unity.Mathematics;
 using Unity.Rendering;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.UIElements;
 
-
+ // add mesh batch count property
 public partial class TerrainMeshSystem : SystemBase
 {
     EndSimulationEntityCommandBufferSystem endSimulationECB;
 
     public List<Mesh> meshes;
+    public Dictionary<Chunk, Mesh> meshMap;
 
     protected override void OnCreate()
     {
@@ -24,11 +26,14 @@ public partial class TerrainMeshSystem : SystemBase
 
         endSimulationECB = World.GetOrCreateSystem<EndSimulationEntityCommandBufferSystem>();
         meshes = new List<Mesh>();
+        meshMap = new Dictionary<Chunk, Mesh>();
     }
 
+    EntityQuery meshStreamQuery;
+    
     protected override void OnUpdate()
     {
-        var ecb = endSimulationECB.CreateCommandBuffer();
+        var ecb = endSimulationECB.CreateCommandBuffer().AsParallelWriter();
 
         var terrainSettings = GetSingleton<TerrainSettings>();
         //var mesh = new Mesh();
@@ -36,8 +41,62 @@ public partial class TerrainMeshSystem : SystemBase
         //new VertexAttributeDescriptor(VertexAttribute.Position),
         //new VertexAttributeDescriptor(VertexAttribute.Normal));
 
-        //World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete();
-        Entities
+        //World.GetOrCreateSystem<ChunkManagerSystem>().LoaderJob.Complete()
+
+        var updatedChunks = meshStreamQuery.ToComponentDataArray<Chunk>(Allocator.Temp);
+
+        if (updatedChunks.Length > 0)
+        {
+            var dataArray = Mesh.AllocateWritableMeshData(updatedChunks.Length);
+            
+            Entities
+                .WithStoreEntityQueryInField(ref meshStreamQuery)
+                .WithAll<UpdateMesh, Chunk>()
+                .WithNone<JobProgress, MapChunk>()
+                .ForEach((int entityInQueryIndex, Entity entity, ref MeshStream meshStream) =>
+                {
+                    var meshData = dataArray[entityInQueryIndex];
+                    meshData.subMeshCount = 1;
+
+                    var vertices = meshStream.Vertices.ToNativeArray<float3>(Allocator.Temp);
+                    var indices = meshStream.Indices.ToNativeArray<uint>(Allocator.Temp);
+
+                    meshData.SetVertexBufferParams(indices.Length, new VertexAttributeDescriptor(VertexAttribute.Position),
+                        new VertexAttributeDescriptor(VertexAttribute.Normal));
+                    meshData.GetVertexData<float3>().CopyFrom(vertices);
+                    //meshData.GetVertexData<float3>().ReinterpretStore(0, meshStream.Vertices);
+
+                    meshData.SetIndexBufferParams(indices.Length, IndexFormat.UInt32);
+                    meshData.GetIndexData<uint>().CopyFrom(indices);
+                    
+                    meshData.SetSubMesh(0, new SubMeshDescriptor(0, indices.Length));
+                    
+                    //meshData.RecalculateBounds();
+                    
+                    ecb.RemoveComponent<UpdateMesh>(entityInQueryIndex, entity);
+                }).ScheduleParallel();
+            
+            CompleteDependency();
+            
+            var meshBuffer = new Mesh[dataArray.Length];
+            for (int i = 0; i < meshBuffer.Length; i++) meshBuffer[i] = new Mesh();
+            
+            Mesh.ApplyAndDisposeWritableMeshData(dataArray, meshBuffer);
+            
+            for (int i = 0; i < meshBuffer.Length; i++)
+            {
+                meshBuffer[i].RecalculateBounds();
+                meshMap[updatedChunks[i]] = meshBuffer[i];
+            }
+            
+            meshes.AddRange(meshBuffer);
+            
+            //Mesh.ApplyAndDisposeWritableMeshData(dataArray, meshes);
+            //dataArray.Dispose();
+        }
+        
+        
+        /*Entities
             .WithoutBurst()
             .WithAll<UpdateMesh>()
             .WithNone<JobProgress, MapChunk>()
@@ -45,6 +104,7 @@ public partial class TerrainMeshSystem : SystemBase
             {
                 var mesh = new Mesh();
                 //mesh.Clear();
+                
                 var vertices = meshStream.Vertices.ToNativeArray<float3>(Allocator.Temp);
                 var indices = meshStream.Indices.ToNativeArray<uint>(Allocator.Temp);
 
@@ -60,16 +120,18 @@ public partial class TerrainMeshSystem : SystemBase
                 mesh.RecalculateBounds();
 
                 meshes.Add(mesh);
-                ecb.RemoveComponent<UpdateMesh>(entity);
-            }).Run();
-
+                ecb.RemoveComponent<UpdateMesh>(entityInQueryIndex, entity);
+            }).Run();*/
+        
         var material = Resources.Load<Material>("New Material");
         foreach (var mesh in meshes)
         {
             Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 0);
         }
 
-        Entities
+        
+
+        /*Entities
             .WithoutBurst()
             .ForEach((Entity entity, in Chunk chunk, in DynamicBuffer<VertexBuffer> vertexBuffer,
                 in DynamicBuffer<IndexBuffer> indexBuffer) =>
@@ -94,7 +156,7 @@ public partial class TerrainMeshSystem : SystemBase
                     new Vector3(chunk.Index.x * terrainSettings.ChunkSize, 0,
                         chunk.Index.y * terrainSettings.ChunkSize),
                     Quaternion.identity, Resources.Load<Material>("New Material"), 0);
-            }).Run();
+            }).Run();*/
 
 
         /*var meshGroups = GetBuffer<LinkedEntityGroup>(GetSingletonEntity<ChunkLoader>());
