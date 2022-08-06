@@ -96,11 +96,13 @@ public partial class ChunkManagerSystem : SystemBase
                     var loaderIndex = GetComponent<LocalToWorld>(loaderEntity).Position.xz
                         / terrainSettings.ChunkSize + 0.5f;
 
-                    if (math.distance(loaderIndex, chunk.Index) < loader.Radius * loader.UnloadOffset) return;
+                    if (math.distance(loaderIndex, chunk.Index) < loader.Radius * loader.UnloadOffset + 1) return;
                 }
 
                 if (HasComponent<MeshStream>(entity))
                 {
+                    if (!GetComponent<MeshStream>(entity).IsCompleted) return;
+                    
                     GetComponent<MeshStream>(entity).DisposeNow();
                     meshMap.Remove(chunk);
                 }
