@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="81f6a75d-57df-46f2-88bf-62d9fc9ad350" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/BiomeNode.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/BiomeNode.cs.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Organa/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkManagerSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkManagerSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Debug/Static Terrain.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Debug/Static Terrain.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Noise/NoiseGenerator2D.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Noise/NoiseGenerator2D.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Chunks/ChunkMapperSystem.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Layer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Terrain/Data/Layer.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

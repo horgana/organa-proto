@@ -224,7 +224,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 32
   lodLevels: 1
-  unloadOffset: 1.5
+  unloadOffset: 1
   parent: {fileID: 2138348875}
 --- !u!114 &231624156
 MonoBehaviour:

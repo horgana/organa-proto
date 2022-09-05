@@ -35,15 +35,20 @@ public partial class ChunkMapperSystem : SystemBase
 
         var generator = _generator;
 
-        if (GetEntityQuery(typeof(JobProgress)).IsEmpty)
+        var availableChunks = terrainSettings.LoadVolume 
+                              - GetEntityQuery(typeof(JobProgress)).CalculateEntityCount();
+        
+        if (availableChunks > 0)
         {
             Entities
-            .WithoutBurst()
-            .WithAll<MapChunk>()
-            .ForEach((Entity entity, in Chunk chunk) =>
+                .WithoutBurst()
+                .WithAll<MapChunk>()
+                .ForEach((Entity entity, in Chunk chunk) =>
             {
+                if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainSettings.LoadVolume) return;
+                //availableChunks--;
+                
                 var scale = 1;
-                if (GetEntityQuery(typeof(JobProgress)).CalculateEntityCount() >= terrainSettings.LoadVolume) return; 
                 var noise = new NativeArray<float>((chunkSize / scale + 1) * (chunkSize / scale + 1), Allocator.Persistent);
 
                 var noiseJob = generator.Schedule(noise, chunk.Index * chunkSize+100000, chunkSize / scale + 1, scale);
